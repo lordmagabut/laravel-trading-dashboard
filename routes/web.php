@@ -10,6 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\MarketChartController;
+use App\Http\Controllers\TechnicalContextController;
+
+Route::get('/technical-context', [TechnicalContextController::class, 'page'])
+    ->name('technical.context.page');
+
+Route::get('/api/technical-context', [TechnicalContextController::class, 'api'])
+    ->name('technical.context.api');
+    
+Route::get('/market-chart', [MarketChartController::class, 'index'])
+    ->name('market.chart');
+
+Route::get('/market-chart/candles', [MarketChartController::class, 'candles'])
+    ->name('market.chart.candles');
 
 Route::get('/', function () {
     return view('dashboard');
