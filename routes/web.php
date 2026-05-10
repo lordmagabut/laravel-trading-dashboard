@@ -12,13 +12,61 @@
 */
 use App\Http\Controllers\MarketChartController;
 use App\Http\Controllers\TechnicalContextController;
+use App\Http\Controllers\SignalDashboardController;
+use App\Http\Controllers\TechnicalAnalysisWorkflowController;
+use App\Http\Controllers\BotPairSettingController;
+
+Route::get('/bot-pair-settings', [BotPairSettingController::class, 'index'])
+    ->name('bot-pairs.index');
+
+Route::post('/bot-pair-settings', [BotPairSettingController::class, 'store'])
+    ->name('bot-pairs.store');
+
+Route::get('/bot-pair-settings/{tradingBotPair}/edit', [BotPairSettingController::class, 'edit'])
+    ->name('bot-pairs.edit');
+
+Route::put('/bot-pair-settings/{tradingBotPair}', [BotPairSettingController::class, 'update'])
+    ->name('bot-pairs.update');
+
+Route::post('/bot-pair-settings/{tradingBotPair}/toggle-enabled', [BotPairSettingController::class, 'toggleEnabled'])
+    ->name('bot-pairs.toggle-enabled');
+
+Route::post('/bot-pair-settings/{tradingBotPair}/toggle-auto-generate', [BotPairSettingController::class, 'toggleAutoGenerate'])
+    ->name('bot-pairs.toggle-auto-generate');
+
+Route::delete('/bot-pair-settings/{tradingBotPair}', [BotPairSettingController::class, 'destroy'])
+    ->name('bot-pairs.destroy');
+
+Route::get('/technical-analyses', [TechnicalAnalysisWorkflowController::class, 'index'])
+    ->name('technical-analyses.index');
+
+Route::post('/technical-analyses/generate', [TechnicalAnalysisWorkflowController::class, 'generate'])
+    ->name('technical-analyses.generate');
+
+Route::get('/technical-analyses/{technicalAnalysis}', [TechnicalAnalysisWorkflowController::class, 'show'])
+    ->name('technical-analyses.show');
+
+Route::get('/signal-dashboard', [SignalDashboardController::class, 'index'])
+    ->name('signals.index');
+
+Route::post('/signal-dashboard/{tradeSignal}/approve', [SignalDashboardController::class, 'approve'])
+    ->name('signals.approve');
+
+Route::post('/signal-dashboard/{tradeSignal}/reject', [SignalDashboardController::class, 'reject'])
+    ->name('signals.reject');
+
+Route::post('/signal-dashboard/{tradeSignal}/cancel', [SignalDashboardController::class, 'cancel'])
+    ->name('signals.cancel');
+
+Route::post('/signal-dashboard/{tradeSignal}/send-to-executor', [SignalDashboardController::class, 'sendToExecutor'])
+    ->name('signals.sendToExecutor');
 
 Route::get('/technical-context', [TechnicalContextController::class, 'page'])
     ->name('technical.context.page');
 
 Route::get('/api/technical-context', [TechnicalContextController::class, 'api'])
     ->name('technical.context.api');
-    
+
 Route::get('/market-chart', [MarketChartController::class, 'index'])
     ->name('market.chart');
 

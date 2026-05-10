@@ -1,0 +1,2481 @@
+[2026-05-08 03:18:23] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'decision' cannot be null (SQL: insert into `technical_analyses` (`analysis_uuid`, `symbol`, `execution_timeframe`, `higher_timeframe_bias`, `execution_bias`, `preferred_action`, `current_price`, `raw_context_json`, `prompt_text`, `agent_name`, `agent_model`, `decision`, `confidence`, `reason_summary`, `reasons_json`, `status`, `notes`, `updated_at`, `created_at`) values (ef7df16f-39b9-4b70-a3e4-3538abeebce6, XAUUSD, M30, neutral, neutral, NO_TRADE, ?, {"symbol":"XAUUSD","execution_timeframe":"M30","generated_at_utc":"2026-05-08 03:18:23","current_price":null,"bias":{"D1":{"timeframe":"D1","bias":"neutral","score":-1,"last_close":4699.373,"last_candle_time":"2026-05-08 00:00:00","ema":{"ema20":4670.56588,"ema50":4724.21671,"ema200":4431.44811},"atr14":83.88543,"structure":{"structure":"ranging","bos":"none","last_swing_high":{"time":"2026-04-17 00:00:00","price":4889.785},"previous_swing_high":{"time":"2026-04-08 00:00:00","price":4857.415},"last_swing_low":{"time":"2026-05-04 00:00:00","price":4500.661},"previous_swing_low":{"time":"2026-04-29 00:00:00","price":4510.146}},"levels":{"support":[{"time":"2026-02-06 00:00:00","price":4655.26},{"time":"2026-04-12 00:00:00","price":4644.205},{"time":"2026-01-16 00:00:00","price":4536.753},{"time":"2026-04-29 00:00:00","price":4510.146},{"time":"2026-05-04 00:00:00","price":4500.661}],"resistance":[{"time":"2026-04-01 00:00:00","price":4800.347},{"time":"2026-04-08 00:00:00","price":4857.415},{"time":"2026-04-17 00:00:00","price":4889.785},{"time":"2026-02-04 00:00:00","price":5091.909},{"time":"2026-02-11 00:00:00","price":5119.313}]},"reason":["Close berada di bawah EMA50.","EMA50 berada di atas EMA200.","Slope EMA20 turun."]},"H4":{"timeframe":"H4","bias":"neutral","score":1,"last_close":4699.373,"last_candle_time":"2026-05-08 00:00:00","ema":{"ema20":4670.02959,"ema50":4649.78373,"ema200":4728.88285},"atr14":39.79814,"structure":{"structure":"ranging","bos":"none","last_swing_high":{"time":"2026-05-07 12:00:00","price":4764.841},"previous_swing_high":{"time":"2026-05-06 08:00:00","price":4723.076},"last_swing_low":{"time":"2026-05-04 16:00:00","price":4500.661},"previous_swing_low":{"time":"2026-05-01 08:00:00","price":4559.805}},"levels":{"support":[{"time":"2026-04-09 00:00:00","price":4698.217},{"time":"2026-04-21 16:00:00","price":4668.229},{"time":"2026-04-24 04:00:00","price":4657.703},{"time":"2026-04-12 20:00:00","price":4644.205},{"time":"2026-04-07 12:00:00","price":4607.3}],"resistance":[{"time":"2026-04-06 08:00:00","price":4706.728},{"time":"2026-05-06 08:00:00","price":4723.076},{"time":"2026-04-27 04:00:00","price":4730.17},{"time":"2026-03-20 00:00:00","price":4735.848},{"time":"2026-04-24 12:00:00","price":4740.37}]},"reason":["Close berada di atas EMA50.","EMA50 berada di bawah EMA200.","Slope EMA20 naik."]},"H1":{"timeframe":"H1","bias":"neutral","score":1,"last_close":4713.416,"last_candle_time":"2026-05-08 02:00:00","ema":{"ema20":4711.7014,"ema50":4688.58904,"ema200":4655.51047},"atr14":24.2275,"structure":{"structure":"ranging","bos":"none","last_swing_high":{"time":"2026-05-07 15:00:00","price":4764.841},"previous_swing_high":{"time":"2026-05-07 08:00:00","price":4753.428},"last_swing_low":{"time":"2026-05-07 22:00:00","price":4681.821},"previous_swing_low":{"time":"2026-05-07 01:00:00","price":4685.246}},"levels":{"support":[{"time":"2026-04-23 00:00:00","price":4694.066},{"time":"2026-04-23 05:00:00","price":4692.216},{"time":"2026-05-07 01:00:00","price":4685.246},{"time":"2026-04-23 10:00:00","price":4684.188},{"time":"2026-05-07 22:00:00","price":4681.821}],"resistance":[{"time":"2026-05-07 01:00:00","price":4721.328},{"time":"2026-05-06 10:00:00","price":4723.076},{"time":"2026-04-23 08:00:00","price":4724.858},{"time":"2026-04-27 04:00:00","price":4730.17},{"time":"2026-04-24 14:00:00","price":4740.37}]},"reason":["Close berada di atas EMA50.","EMA50 berada di atas EMA200.","Slope EMA20 turun."]},"M15":{"timeframe":"M15","bias":"bullish","score":5,"last_close":4719.865,"last_candle_time":"2026-05-08 03:00:00","ema":{"ema20":4710.75827,"ema50":4712.36071,"ema200":4679.02217},"atr14":10.8665,"structure":{"structure":"bullish","bos":"none","last_swing_high":{"time":"2026-05-08 02:00:00","price":4732.836},"previous_swing_high":{"time":"2026-05-08 00:00:00","price":4709.406},"last_swing_low":{"time":"2026-05-08 00:15:00","price":4693.951},"previous_swing_low":{"time":"2026-05-07 22:45:00","price":4681.821}},"levels":{"support":[{"time":"2026-05-07 16:15:00","price":4704.348},{"time":"2026-05-07 02:30:00","price":4699.739},{"time":"2026-05-07 18:45:00","price":4695.546},{"time":"2026-05-08 00:15:00","price":4693.951},{"time":"2026-05-07 04:30:00","price":4692.297}],"resistance":[{"time":"2026-05-07 01:45:00","price":4721.328},{"time":"2026-05-06 10:45:00","price":4723.076},{"time":"2026-05-08 02:00:00","price":4732.836},{"time":"2026-05-07 09:30:00","price":4739.397},{"time":"2026-05-07 10:45:00","price":4739.737}]},"reason":["Market structure membentuk Higher High dan Higher Low.","Close berada di atas EMA50.","EMA50 berada di atas EMA200.","Slope EMA20 naik."]},"M5":{"timeframe":"M5","bias":"bullish","score":3,"last_close":4719.865,"last_candle_time":"2026-05-08 03:10:00","ema":{"ema20":4716.45527,"ema50":4711.96714,"ema200":4714.17308},"atr14":5.80493,"structure":{"structure":"bullish","bos":"none","last_swing_high":{"time":"2026-05-08 02:00:00","price":4732.836},"previous_swing_high":{"time":"2026-05-08 01:05:00","price":4719.276},"last_swing_low":{"time":"2026-05-08 02:35:00","price":4706.836},"previous_swing_low":{"time":"2026-05-08 01:35:00","price":4705.269}},"levels":{"support":[{"time":"2026-05-07 16:40:00","price":4710.277},{"time":"2026-05-08 02:35:00","price":4706.836},{"time":"2026-05-08 01:35:00","price":4705.269},{"time":"2026-05-07 16:15:00","price":4704.348},{"time":"2026-05-07 03:10:00","price":4704.147}],"resistance":[{"time":"2026-05-07 01:50:00","price":4721.328},{"time":"2026-05-07 16:25:00","price":4723.055},{"time":"2026-05-08 02:00:00","price":4732.836},{"time":"2026-05-07 10:15:00","price":4736.125},{"time":"2026-05-07 09:40:00","price":4739.397}]},"reason":["Market structure membentuk Higher High dan Higher Low.","Close berada di atas EMA50.","EMA50 berada di bawah EMA200.","Slope EMA20 naik."]}},"summary":{"higher_timeframe_bias":"neutral","execution_bias":"neutral","preferred_action":"NO_TRADE","reason":["Bias antar timeframe belum selaras."]}}, You are OpenClaw Technical Agent.
+
+Your task:
+Analyze the provided technical context and return ONLY valid JSON.
+
+Trading instrument:
+- Symbol: XAUUSD
+- Execution timeframe: M30
+- Higher timeframe bias: neutral
+- Execution bias: neutral
+- Preferred action: NO_TRADE
+- Current price: 
+
+Rules:
+1. Decision must be one of: BUY, SELL, NO_TRADE.
+2. Only return BUY or SELL if setup is clear, aligned, and has valid risk-reward.
+3. If context is unclear, mixed, late entry, near invalidation, or bad risk-reward, return NO_TRADE.
+4. Do not force trade.
+5. Use technical reasons from EMA, ATR, swing, BOS, support/resistance, and multi-timeframe bias.
+6. Return JSON only. No markdown. No explanation outside JSON.
+
+Expected JSON format:
+
+{
+  "decision": "BUY | SELL | NO_TRADE",
+  "confidence": 0,
+  "reason_summary": "short explanation",
+  "reasons": [
+    "reason 1",
+    "reason 2"
+  ],
+  "signal": {
+    "entry_type": "MARKET | LIMIT | STOP | NONE",
+    "entry_price": null,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "take_profit_3": null,
+    "risk_reward": null,
+    "risk_percent": 1,
+    "lot_size": null,
+    "invalidation": "what invalidates this setup"
+  }
+}
+
+Technical Context JSON:
+{
+    "symbol": "XAUUSD",
+    "execution_timeframe": "M30",
+    "generated_at_utc": "2026-05-08 03:18:23",
+    "current_price": null,
+    "bias": {
+        "D1": {
+            "timeframe": "D1",
+            "bias": "neutral",
+            "score": -1,
+            "last_close": 4699.373,
+            "last_candle_time": "2026-05-08 00:00:00",
+            "ema": {
+                "ema20": 4670.56588,
+                "ema50": 4724.21671,
+                "ema200": 4431.44811
+            },
+            "atr14": 83.88543,
+            "structure": {
+                "structure": "ranging",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-04-17 00:00:00",
+                    "price": 4889.785
+                },
+                "previous_swing_high": {
+                    "time": "2026-04-08 00:00:00",
+                    "price": 4857.415
+                },
+                "last_swing_low": {
+                    "time": "2026-05-04 00:00:00",
+                    "price": 4500.661
+                },
+                "previous_swing_low": {
+                    "time": "2026-04-29 00:00:00",
+                    "price": 4510.146
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-02-06 00:00:00",
+                        "price": 4655.26
+                    },
+                    {
+                        "time": "2026-04-12 00:00:00",
+                        "price": 4644.205
+                    },
+                    {
+                        "time": "2026-01-16 00:00:00",
+                        "price": 4536.753
+                    },
+                    {
+                        "time": "2026-04-29 00:00:00",
+                        "price": 4510.146
+                    },
+                    {
+                        "time": "2026-05-04 00:00:00",
+                        "price": 4500.661
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-04-01 00:00:00",
+                        "price": 4800.347
+                    },
+                    {
+                        "time": "2026-04-08 00:00:00",
+                        "price": 4857.415
+                    },
+                    {
+                        "time": "2026-04-17 00:00:00",
+                        "price": 4889.785
+                    },
+                    {
+                        "time": "2026-02-04 00:00:00",
+                        "price": 5091.909
+                    },
+                    {
+                        "time": "2026-02-11 00:00:00",
+                        "price": 5119.313
+                    }
+                ]
+            },
+            "reason": [
+                "Close berada di bawah EMA50.",
+                "EMA50 berada di atas EMA200.",
+                "Slope EMA20 turun."
+            ]
+        },
+        "H4": {
+            "timeframe": "H4",
+            "bias": "neutral",
+            "score": 1,
+            "last_close": 4699.373,
+            "last_candle_time": "2026-05-08 00:00:00",
+            "ema": {
+                "ema20": 4670.02959,
+                "ema50": 4649.78373,
+                "ema200": 4728.88285
+            },
+            "atr14": 39.79814,
+            "structure": {
+                "structure": "ranging",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-07 12:00:00",
+                    "price": 4764.841
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-06 08:00:00",
+                    "price": 4723.076
+                },
+                "last_swing_low": {
+                    "time": "2026-05-04 16:00:00",
+                    "price": 4500.661
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-01 08:00:00",
+                    "price": 4559.805
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-04-09 00:00:00",
+                        "price": 4698.217
+                    },
+                    {
+                        "time": "2026-04-21 16:00:00",
+                        "price": 4668.229
+                    },
+                    {
+                        "time": "2026-04-24 04:00:00",
+                        "price": 4657.703
+                    },
+                    {
+                        "time": "2026-04-12 20:00:00",
+                        "price": 4644.205
+                    },
+                    {
+                        "time": "2026-04-07 12:00:00",
+                        "price": 4607.3
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-04-06 08:00:00",
+                        "price": 4706.728
+                    },
+                    {
+                        "time": "2026-05-06 08:00:00",
+                        "price": 4723.076
+                    },
+                    {
+                        "time": "2026-04-27 04:00:00",
+                        "price": 4730.17
+                    },
+                    {
+                        "time": "2026-03-20 00:00:00",
+                        "price": 4735.848
+                    },
+                    {
+                        "time": "2026-04-24 12:00:00",
+                        "price": 4740.37
+                    }
+                ]
+            },
+            "reason": [
+                "Close berada di atas EMA50.",
+                "EMA50 berada di bawah EMA200.",
+                "Slope EMA20 naik."
+            ]
+        },
+        "H1": {
+            "timeframe": "H1",
+            "bias": "neutral",
+            "score": 1,
+            "last_close": 4713.416,
+            "last_candle_time": "2026-05-08 02:00:00",
+            "ema": {
+                "ema20": 4711.7014,
+                "ema50": 4688.58904,
+                "ema200": 4655.51047
+            },
+            "atr14": 24.2275,
+            "structure": {
+                "structure": "ranging",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-07 15:00:00",
+                    "price": 4764.841
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-07 08:00:00",
+                    "price": 4753.428
+                },
+                "last_swing_low": {
+                    "time": "2026-05-07 22:00:00",
+                    "price": 4681.821
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-07 01:00:00",
+                    "price": 4685.246
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-04-23 00:00:00",
+                        "price": 4694.066
+                    },
+                    {
+                        "time": "2026-04-23 05:00:00",
+                        "price": 4692.216
+                    },
+                    {
+                        "time": "2026-05-07 01:00:00",
+                        "price": 4685.246
+                    },
+                    {
+                        "time": "2026-04-23 10:00:00",
+                        "price": 4684.188
+                    },
+                    {
+                        "time": "2026-05-07 22:00:00",
+                        "price": 4681.821
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-05-07 01:00:00",
+                        "price": 4721.328
+                    },
+                    {
+                        "time": "2026-05-06 10:00:00",
+                        "price": 4723.076
+                    },
+                    {
+                        "time": "2026-04-23 08:00:00",
+                        "price": 4724.858
+                    },
+                    {
+                        "time": "2026-04-27 04:00:00",
+                        "price": 4730.17
+                    },
+                    {
+                        "time": "2026-04-24 14:00:00",
+                        "price": 4740.37
+                    }
+                ]
+            },
+            "reason": [
+                "Close berada di atas EMA50.",
+                "EMA50 berada di atas EMA200.",
+                "Slope EMA20 turun."
+            ]
+        },
+        "M15": {
+            "timeframe": "M15",
+            "bias": "bullish",
+            "score": 5,
+            "last_close": 4719.865,
+            "last_candle_time": "2026-05-08 03:00:00",
+            "ema": {
+                "ema20": 4710.75827,
+                "ema50": 4712.36071,
+                "ema200": 4679.02217
+            },
+            "atr14": 10.8665,
+            "structure": {
+                "structure": "bullish",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-08 02:00:00",
+                    "price": 4732.836
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-08 00:00:00",
+                    "price": 4709.406
+                },
+                "last_swing_low": {
+                    "time": "2026-05-08 00:15:00",
+                    "price": 4693.951
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-07 22:45:00",
+                    "price": 4681.821
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-05-07 16:15:00",
+                        "price": 4704.348
+                    },
+                    {
+                        "time": "2026-05-07 02:30:00",
+                        "price": 4699.739
+                    },
+                    {
+                        "time": "2026-05-07 18:45:00",
+                        "price": 4695.546
+                    },
+                    {
+                        "time": "2026-05-08 00:15:00",
+                        "price": 4693.951
+                    },
+                    {
+                        "time": "2026-05-07 04:30:00",
+                        "price": 4692.297
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-05-07 01:45:00",
+                        "price": 4721.328
+                    },
+                    {
+                        "time": "2026-05-06 10:45:00",
+                        "price": 4723.076
+                    },
+                    {
+                        "time": "2026-05-08 02:00:00",
+                        "price": 4732.836
+                    },
+                    {
+                        "time": "2026-05-07 09:30:00",
+                        "price": 4739.397
+                    },
+                    {
+                        "time": "2026-05-07 10:45:00",
+                        "price": 4739.737
+                    }
+                ]
+            },
+            "reason": [
+                "Market structure membentuk Higher High dan Higher Low.",
+                "Close berada di atas EMA50.",
+                "EMA50 berada di atas EMA200.",
+                "Slope EMA20 naik."
+            ]
+        },
+        "M5": {
+            "timeframe": "M5",
+            "bias": "bullish",
+            "score": 3,
+            "last_close": 4719.865,
+            "last_candle_time": "2026-05-08 03:10:00",
+            "ema": {
+                "ema20": 4716.45527,
+                "ema50": 4711.96714,
+                "ema200": 4714.17308
+            },
+            "atr14": 5.80493,
+            "structure": {
+                "structure": "bullish",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-08 02:00:00",
+                    "price": 4732.836
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-08 01:05:00",
+                    "price": 4719.276
+                },
+                "last_swing_low": {
+                    "time": "2026-05-08 02:35:00",
+                    "price": 4706.836
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-08 01:35:00",
+                    "price": 4705.269
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-05-07 16:40:00",
+                        "price": 4710.277
+                    },
+                    {
+                        "time": "2026-05-08 02:35:00",
+                        "price": 4706.836
+                    },
+                    {
+                        "time": "2026-05-08 01:35:00",
+                        "price": 4705.269
+                    },
+                    {
+                        "time": "2026-05-07 16:15:00",
+                        "price": 4704.348
+                    },
+                    {
+                        "time": "2026-05-07 03:10:00",
+                        "price": 4704.147
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-05-07 01:50:00",
+                        "price": 4721.328
+                    },
+                    {
+                        "time": "2026-05-07 16:25:00",
+                        "price": 4723.055
+                    },
+                    {
+                        "time": "2026-05-08 02:00:00",
+                        "price": 4732.836
+                    },
+                    {
+                        "time": "2026-05-07 10:15:00",
+                        "price": 4736.125
+                    },
+                    {
+                        "time": "2026-05-07 09:40:00",
+                        "price": 4739.397
+                    }
+                ]
+            },
+            "reason": [
+                "Market structure membentuk Higher High dan Higher Low.",
+                "Close berada di atas EMA50.",
+                "EMA50 berada di bawah EMA200.",
+                "Slope EMA20 naik."
+            ]
+        }
+    },
+    "summary": {
+        "higher_timeframe_bias": "neutral",
+        "execution_bias": "neutral",
+        "preferred_action": "NO_TRADE",
+        "reason": [
+            "Bias antar timeframe belum selaras."
+        ]
+    }
+}, OpenClaw Technical Agent, ?, ?, ?, ?, ?, GENERATED, Generated by Laravel Control Tower., 2026-05-08 03:18:23, 2026-05-08 03:18:23)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'decision' cannot be null (SQL: insert into `technical_analyses` (`analysis_uuid`, `symbol`, `execution_timeframe`, `higher_timeframe_bias`, `execution_bias`, `preferred_action`, `current_price`, `raw_context_json`, `prompt_text`, `agent_name`, `agent_model`, `decision`, `confidence`, `reason_summary`, `reasons_json`, `status`, `notes`, `updated_at`, `created_at`) values (ef7df16f-39b9-4b70-a3e4-3538abeebce6, XAUUSD, M30, neutral, neutral, NO_TRADE, ?, {\"symbol\":\"XAUUSD\",\"execution_timeframe\":\"M30\",\"generated_at_utc\":\"2026-05-08 03:18:23\",\"current_price\":null,\"bias\":{\"D1\":{\"timeframe\":\"D1\",\"bias\":\"neutral\",\"score\":-1,\"last_close\":4699.373,\"last_candle_time\":\"2026-05-08 00:00:00\",\"ema\":{\"ema20\":4670.56588,\"ema50\":4724.21671,\"ema200\":4431.44811},\"atr14\":83.88543,\"structure\":{\"structure\":\"ranging\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-04-17 00:00:00\",\"price\":4889.785},\"previous_swing_high\":{\"time\":\"2026-04-08 00:00:00\",\"price\":4857.415},\"last_swing_low\":{\"time\":\"2026-05-04 00:00:00\",\"price\":4500.661},\"previous_swing_low\":{\"time\":\"2026-04-29 00:00:00\",\"price\":4510.146}},\"levels\":{\"support\":[{\"time\":\"2026-02-06 00:00:00\",\"price\":4655.26},{\"time\":\"2026-04-12 00:00:00\",\"price\":4644.205},{\"time\":\"2026-01-16 00:00:00\",\"price\":4536.753},{\"time\":\"2026-04-29 00:00:00\",\"price\":4510.146},{\"time\":\"2026-05-04 00:00:00\",\"price\":4500.661}],\"resistance\":[{\"time\":\"2026-04-01 00:00:00\",\"price\":4800.347},{\"time\":\"2026-04-08 00:00:00\",\"price\":4857.415},{\"time\":\"2026-04-17 00:00:00\",\"price\":4889.785},{\"time\":\"2026-02-04 00:00:00\",\"price\":5091.909},{\"time\":\"2026-02-11 00:00:00\",\"price\":5119.313}]},\"reason\":[\"Close berada di bawah EMA50.\",\"EMA50 berada di atas EMA200.\",\"Slope EMA20 turun.\"]},\"H4\":{\"timeframe\":\"H4\",\"bias\":\"neutral\",\"score\":1,\"last_close\":4699.373,\"last_candle_time\":\"2026-05-08 00:00:00\",\"ema\":{\"ema20\":4670.02959,\"ema50\":4649.78373,\"ema200\":4728.88285},\"atr14\":39.79814,\"structure\":{\"structure\":\"ranging\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-07 12:00:00\",\"price\":4764.841},\"previous_swing_high\":{\"time\":\"2026-05-06 08:00:00\",\"price\":4723.076},\"last_swing_low\":{\"time\":\"2026-05-04 16:00:00\",\"price\":4500.661},\"previous_swing_low\":{\"time\":\"2026-05-01 08:00:00\",\"price\":4559.805}},\"levels\":{\"support\":[{\"time\":\"2026-04-09 00:00:00\",\"price\":4698.217},{\"time\":\"2026-04-21 16:00:00\",\"price\":4668.229},{\"time\":\"2026-04-24 04:00:00\",\"price\":4657.703},{\"time\":\"2026-04-12 20:00:00\",\"price\":4644.205},{\"time\":\"2026-04-07 12:00:00\",\"price\":4607.3}],\"resistance\":[{\"time\":\"2026-04-06 08:00:00\",\"price\":4706.728},{\"time\":\"2026-05-06 08:00:00\",\"price\":4723.076},{\"time\":\"2026-04-27 04:00:00\",\"price\":4730.17},{\"time\":\"2026-03-20 00:00:00\",\"price\":4735.848},{\"time\":\"2026-04-24 12:00:00\",\"price\":4740.37}]},\"reason\":[\"Close berada di atas EMA50.\",\"EMA50 berada di bawah EMA200.\",\"Slope EMA20 naik.\"]},\"H1\":{\"timeframe\":\"H1\",\"bias\":\"neutral\",\"score\":1,\"last_close\":4713.416,\"last_candle_time\":\"2026-05-08 02:00:00\",\"ema\":{\"ema20\":4711.7014,\"ema50\":4688.58904,\"ema200\":4655.51047},\"atr14\":24.2275,\"structure\":{\"structure\":\"ranging\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-07 15:00:00\",\"price\":4764.841},\"previous_swing_high\":{\"time\":\"2026-05-07 08:00:00\",\"price\":4753.428},\"last_swing_low\":{\"time\":\"2026-05-07 22:00:00\",\"price\":4681.821},\"previous_swing_low\":{\"time\":\"2026-05-07 01:00:00\",\"price\":4685.246}},\"levels\":{\"support\":[{\"time\":\"2026-04-23 00:00:00\",\"price\":4694.066},{\"time\":\"2026-04-23 05:00:00\",\"price\":4692.216},{\"time\":\"2026-05-07 01:00:00\",\"price\":4685.246},{\"time\":\"2026-04-23 10:00:00\",\"price\":4684.188},{\"time\":\"2026-05-07 22:00:00\",\"price\":4681.821}],\"resistance\":[{\"time\":\"2026-05-07 01:00:00\",\"price\":4721.328},{\"time\":\"2026-05-06 10:00:00\",\"price\":4723.076},{\"time\":\"2026-04-23 08:00:00\",\"price\":4724.858},{\"time\":\"2026-04-27 04:00:00\",\"price\":4730.17},{\"time\":\"2026-04-24 14:00:00\",\"price\":4740.37}]},\"reason\":[\"Close berada di atas EMA50.\",\"EMA50 berada di atas EMA200.\",\"Slope EMA20 turun.\"]},\"M15\":{\"timeframe\":\"M15\",\"bias\":\"bullish\",\"score\":5,\"last_close\":4719.865,\"last_candle_time\":\"2026-05-08 03:00:00\",\"ema\":{\"ema20\":4710.75827,\"ema50\":4712.36071,\"ema200\":4679.02217},\"atr14\":10.8665,\"structure\":{\"structure\":\"bullish\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},\"previous_swing_high\":{\"time\":\"2026-05-08 00:00:00\",\"price\":4709.406},\"last_swing_low\":{\"time\":\"2026-05-08 00:15:00\",\"price\":4693.951},\"previous_swing_low\":{\"time\":\"2026-05-07 22:45:00\",\"price\":4681.821}},\"levels\":{\"support\":[{\"time\":\"2026-05-07 16:15:00\",\"price\":4704.348},{\"time\":\"2026-05-07 02:30:00\",\"price\":4699.739},{\"time\":\"2026-05-07 18:45:00\",\"price\":4695.546},{\"time\":\"2026-05-08 00:15:00\",\"price\":4693.951},{\"time\":\"2026-05-07 04:30:00\",\"price\":4692.297}],\"resistance\":[{\"time\":\"2026-05-07 01:45:00\",\"price\":4721.328},{\"time\":\"2026-05-06 10:45:00\",\"price\":4723.076},{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},{\"time\":\"2026-05-07 09:30:00\",\"price\":4739.397},{\"time\":\"2026-05-07 10:45:00\",\"price\":4739.737}]},\"reason\":[\"Market structure membentuk Higher High dan Higher Low.\",\"Close berada di atas EMA50.\",\"EMA50 berada di atas EMA200.\",\"Slope EMA20 naik.\"]},\"M5\":{\"timeframe\":\"M5\",\"bias\":\"bullish\",\"score\":3,\"last_close\":4719.865,\"last_candle_time\":\"2026-05-08 03:10:00\",\"ema\":{\"ema20\":4716.45527,\"ema50\":4711.96714,\"ema200\":4714.17308},\"atr14\":5.80493,\"structure\":{\"structure\":\"bullish\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},\"previous_swing_high\":{\"time\":\"2026-05-08 01:05:00\",\"price\":4719.276},\"last_swing_low\":{\"time\":\"2026-05-08 02:35:00\",\"price\":4706.836},\"previous_swing_low\":{\"time\":\"2026-05-08 01:35:00\",\"price\":4705.269}},\"levels\":{\"support\":[{\"time\":\"2026-05-07 16:40:00\",\"price\":4710.277},{\"time\":\"2026-05-08 02:35:00\",\"price\":4706.836},{\"time\":\"2026-05-08 01:35:00\",\"price\":4705.269},{\"time\":\"2026-05-07 16:15:00\",\"price\":4704.348},{\"time\":\"2026-05-07 03:10:00\",\"price\":4704.147}],\"resistance\":[{\"time\":\"2026-05-07 01:50:00\",\"price\":4721.328},{\"time\":\"2026-05-07 16:25:00\",\"price\":4723.055},{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},{\"time\":\"2026-05-07 10:15:00\",\"price\":4736.125},{\"time\":\"2026-05-07 09:40:00\",\"price\":4739.397}]},\"reason\":[\"Market structure membentuk Higher High dan Higher Low.\",\"Close berada di atas EMA50.\",\"EMA50 berada di bawah EMA200.\",\"Slope EMA20 naik.\"]}},\"summary\":{\"higher_timeframe_bias\":\"neutral\",\"execution_bias\":\"neutral\",\"preferred_action\":\"NO_TRADE\",\"reason\":[\"Bias antar timeframe belum selaras.\"]}}, You are OpenClaw Technical Agent.
+
+
+
+Your task:
+
+Analyze the provided technical context and return ONLY valid JSON.
+
+
+
+Trading instrument:
+
+- Symbol: XAUUSD
+
+- Execution timeframe: M30
+
+- Higher timeframe bias: neutral
+
+- Execution bias: neutral
+
+- Preferred action: NO_TRADE
+
+- Current price: 
+
+
+
+Rules:
+
+1. Decision must be one of: BUY, SELL, NO_TRADE.
+
+2. Only return BUY or SELL if setup is clear, aligned, and has valid risk-reward.
+
+3. If context is unclear, mixed, late entry, near invalidation, or bad risk-reward, return NO_TRADE.
+
+4. Do not force trade.
+
+5. Use technical reasons from EMA, ATR, swing, BOS, support/resistance, and multi-timeframe bias.
+
+6. Return JSON only. No markdown. No explanation outside JSON.
+
+
+
+Expected JSON format:
+
+
+
+{
+
+  \"decision\": \"BUY | SELL | NO_TRADE\",
+
+  \"confidence\": 0,
+
+  \"reason_summary\": \"short explanation\",
+
+  \"reasons\": [
+
+    \"reason 1\",
+
+    \"reason 2\"
+
+  ],
+
+  \"signal\": {
+
+    \"entry_type\": \"MARKET | LIMIT | STOP | NONE\",
+
+    \"entry_price\": null,
+
+    \"stop_loss\": null,
+
+    \"take_profit_1\": null,
+
+    \"take_profit_2\": null,
+
+    \"take_profit_3\": null,
+
+    \"risk_reward\": null,
+
+    \"risk_percent\": 1,
+
+    \"lot_size\": null,
+
+    \"invalidation\": \"what invalidates this setup\"
+
+  }
+
+}
+
+
+
+Technical Context JSON:
+
+{
+    \"symbol\": \"XAUUSD\",
+    \"execution_timeframe\": \"M30\",
+    \"generated_at_utc\": \"2026-05-08 03:18:23\",
+    \"current_price\": null,
+    \"bias\": {
+        \"D1\": {
+            \"timeframe\": \"D1\",
+            \"bias\": \"neutral\",
+            \"score\": -1,
+            \"last_close\": 4699.373,
+            \"last_candle_time\": \"2026-05-08 00:00:00\",
+            \"ema\": {
+                \"ema20\": 4670.56588,
+                \"ema50\": 4724.21671,
+                \"ema200\": 4431.44811
+            },
+            \"atr14\": 83.88543,
+            \"structure\": {
+                \"structure\": \"ranging\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-04-17 00:00:00\",
+                    \"price\": 4889.785
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-04-08 00:00:00\",
+                    \"price\": 4857.415
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-04 00:00:00\",
+                    \"price\": 4500.661
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-04-29 00:00:00\",
+                    \"price\": 4510.146
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-02-06 00:00:00\",
+                        \"price\": 4655.26
+                    },
+                    {
+                        \"time\": \"2026-04-12 00:00:00\",
+                        \"price\": 4644.205
+                    },
+                    {
+                        \"time\": \"2026-01-16 00:00:00\",
+                        \"price\": 4536.753
+                    },
+                    {
+                        \"time\": \"2026-04-29 00:00:00\",
+                        \"price\": 4510.146
+                    },
+                    {
+                        \"time\": \"2026-05-04 00:00:00\",
+                        \"price\": 4500.661
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-04-01 00:00:00\",
+                        \"price\": 4800.347
+                    },
+                    {
+                        \"time\": \"2026-04-08 00:00:00\",
+                        \"price\": 4857.415
+                    },
+                    {
+                        \"time\": \"2026-04-17 00:00:00\",
+                        \"price\": 4889.785
+                    },
+                    {
+                        \"time\": \"2026-02-04 00:00:00\",
+                        \"price\": 5091.909
+                    },
+                    {
+                        \"time\": \"2026-02-11 00:00:00\",
+                        \"price\": 5119.313
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Close berada di bawah EMA50.\",
+                \"EMA50 berada di atas EMA200.\",
+                \"Slope EMA20 turun.\"
+            ]
+        },
+        \"H4\": {
+            \"timeframe\": \"H4\",
+            \"bias\": \"neutral\",
+            \"score\": 1,
+            \"last_close\": 4699.373,
+            \"last_candle_time\": \"2026-05-08 00:00:00\",
+            \"ema\": {
+                \"ema20\": 4670.02959,
+                \"ema50\": 4649.78373,
+                \"ema200\": 4728.88285
+            },
+            \"atr14\": 39.79814,
+            \"structure\": {
+                \"structure\": \"ranging\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-07 12:00:00\",
+                    \"price\": 4764.841
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-06 08:00:00\",
+                    \"price\": 4723.076
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-04 16:00:00\",
+                    \"price\": 4500.661
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-01 08:00:00\",
+                    \"price\": 4559.805
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-04-09 00:00:00\",
+                        \"price\": 4698.217
+                    },
+                    {
+                        \"time\": \"2026-04-21 16:00:00\",
+                        \"price\": 4668.229
+                    },
+                    {
+                        \"time\": \"2026-04-24 04:00:00\",
+                        \"price\": 4657.703
+                    },
+                    {
+                        \"time\": \"2026-04-12 20:00:00\",
+                        \"price\": 4644.205
+                    },
+                    {
+                        \"time\": \"2026-04-07 12:00:00\",
+                        \"price\": 4607.3
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-04-06 08:00:00\",
+                        \"price\": 4706.728
+                    },
+                    {
+                        \"time\": \"2026-05-06 08:00:00\",
+                        \"price\": 4723.076
+                    },
+                    {
+                        \"time\": \"2026-04-27 04:00:00\",
+                        \"price\": 4730.17
+                    },
+                    {
+                        \"time\": \"2026-03-20 00:00:00\",
+                        \"price\": 4735.848
+                    },
+                    {
+                        \"time\": \"2026-04-24 12:00:00\",
+                        \"price\": 4740.37
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di bawah EMA200.\",
+                \"Slope EMA20 naik.\"
+            ]
+        },
+        \"H1\": {
+            \"timeframe\": \"H1\",
+            \"bias\": \"neutral\",
+            \"score\": 1,
+            \"last_close\": 4713.416,
+            \"last_candle_time\": \"2026-05-08 02:00:00\",
+            \"ema\": {
+                \"ema20\": 4711.7014,
+                \"ema50\": 4688.58904,
+                \"ema200\": 4655.51047
+            },
+            \"atr14\": 24.2275,
+            \"structure\": {
+                \"structure\": \"ranging\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-07 15:00:00\",
+                    \"price\": 4764.841
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-07 08:00:00\",
+                    \"price\": 4753.428
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-07 22:00:00\",
+                    \"price\": 4681.821
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-07 01:00:00\",
+                    \"price\": 4685.246
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-04-23 00:00:00\",
+                        \"price\": 4694.066
+                    },
+                    {
+                        \"time\": \"2026-04-23 05:00:00\",
+                        \"price\": 4692.216
+                    },
+                    {
+                        \"time\": \"2026-05-07 01:00:00\",
+                        \"price\": 4685.246
+                    },
+                    {
+                        \"time\": \"2026-04-23 10:00:00\",
+                        \"price\": 4684.188
+                    },
+                    {
+                        \"time\": \"2026-05-07 22:00:00\",
+                        \"price\": 4681.821
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-05-07 01:00:00\",
+                        \"price\": 4721.328
+                    },
+                    {
+                        \"time\": \"2026-05-06 10:00:00\",
+                        \"price\": 4723.076
+                    },
+                    {
+                        \"time\": \"2026-04-23 08:00:00\",
+                        \"price\": 4724.858
+                    },
+                    {
+                        \"time\": \"2026-04-27 04:00:00\",
+                        \"price\": 4730.17
+                    },
+                    {
+                        \"time\": \"2026-04-24 14:00:00\",
+                        \"price\": 4740.37
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di atas EMA200.\",
+                \"Slope EMA20 turun.\"
+            ]
+        },
+        \"M15\": {
+            \"timeframe\": \"M15\",
+            \"bias\": \"bullish\",
+            \"score\": 5,
+            \"last_close\": 4719.865,
+            \"last_candle_time\": \"2026-05-08 03:00:00\",
+            \"ema\": {
+                \"ema20\": 4710.75827,
+                \"ema50\": 4712.36071,
+                \"ema200\": 4679.02217
+            },
+            \"atr14\": 10.8665,
+            \"structure\": {
+                \"structure\": \"bullish\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-08 02:00:00\",
+                    \"price\": 4732.836
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-08 00:00:00\",
+                    \"price\": 4709.406
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-08 00:15:00\",
+                    \"price\": 4693.951
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-07 22:45:00\",
+                    \"price\": 4681.821
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-05-07 16:15:00\",
+                        \"price\": 4704.348
+                    },
+                    {
+                        \"time\": \"2026-05-07 02:30:00\",
+                        \"price\": 4699.739
+                    },
+                    {
+                        \"time\": \"2026-05-07 18:45:00\",
+                        \"price\": 4695.546
+                    },
+                    {
+                        \"time\": \"2026-05-08 00:15:00\",
+                        \"price\": 4693.951
+                    },
+                    {
+                        \"time\": \"2026-05-07 04:30:00\",
+                        \"price\": 4692.297
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-05-07 01:45:00\",
+                        \"price\": 4721.328
+                    },
+                    {
+                        \"time\": \"2026-05-06 10:45:00\",
+                        \"price\": 4723.076
+                    },
+                    {
+                        \"time\": \"2026-05-08 02:00:00\",
+                        \"price\": 4732.836
+                    },
+                    {
+                        \"time\": \"2026-05-07 09:30:00\",
+                        \"price\": 4739.397
+                    },
+                    {
+                        \"time\": \"2026-05-07 10:45:00\",
+                        \"price\": 4739.737
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Market structure membentuk Higher High dan Higher Low.\",
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di atas EMA200.\",
+                \"Slope EMA20 naik.\"
+            ]
+        },
+        \"M5\": {
+            \"timeframe\": \"M5\",
+            \"bias\": \"bullish\",
+            \"score\": 3,
+            \"last_close\": 4719.865,
+            \"last_candle_time\": \"2026-05-08 03:10:00\",
+            \"ema\": {
+                \"ema20\": 4716.45527,
+                \"ema50\": 4711.96714,
+                \"ema200\": 4714.17308
+            },
+            \"atr14\": 5.80493,
+            \"structure\": {
+                \"structure\": \"bullish\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-08 02:00:00\",
+                    \"price\": 4732.836
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-08 01:05:00\",
+                    \"price\": 4719.276
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-08 02:35:00\",
+                    \"price\": 4706.836
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-08 01:35:00\",
+                    \"price\": 4705.269
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-05-07 16:40:00\",
+                        \"price\": 4710.277
+                    },
+                    {
+                        \"time\": \"2026-05-08 02:35:00\",
+                        \"price\": 4706.836
+                    },
+                    {
+                        \"time\": \"2026-05-08 01:35:00\",
+                        \"price\": 4705.269
+                    },
+                    {
+                        \"time\": \"2026-05-07 16:15:00\",
+                        \"price\": 4704.348
+                    },
+                    {
+                        \"time\": \"2026-05-07 03:10:00\",
+                        \"price\": 4704.147
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-05-07 01:50:00\",
+                        \"price\": 4721.328
+                    },
+                    {
+                        \"time\": \"2026-05-07 16:25:00\",
+                        \"price\": 4723.055
+                    },
+                    {
+                        \"time\": \"2026-05-08 02:00:00\",
+                        \"price\": 4732.836
+                    },
+                    {
+                        \"time\": \"2026-05-07 10:15:00\",
+                        \"price\": 4736.125
+                    },
+                    {
+                        \"time\": \"2026-05-07 09:40:00\",
+                        \"price\": 4739.397
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Market structure membentuk Higher High dan Higher Low.\",
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di bawah EMA200.\",
+                \"Slope EMA20 naik.\"
+            ]
+        }
+    },
+    \"summary\": {
+        \"higher_timeframe_bias\": \"neutral\",
+        \"execution_bias\": \"neutral\",
+        \"preferred_action\": \"NO_TRADE\",
+        \"reason\": [
+            \"Bias antar timeframe belum selaras.\"
+        ]
+    }
+}, OpenClaw Technical Agent, ?, ?, ?, ?, ?, GENERATED, Generated by Laravel Control Tower., 2026-05-08 03:18:23, 2026-05-08 03:18:23)) at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:760)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(720): Illuminate\\Database\\Connection->runQueryCallback('insert into `te...', Array, Object(Closure))
+#1 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(534): Illuminate\\Database\\Connection->run('insert into `te...', Array, Object(Closure))
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(498): Illuminate\\Database\\Connection->statement('insert into `te...', Array)
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Processors\\Processor.php(32): Illuminate\\Database\\Connection->insert('insert into `te...', Array)
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php(3322): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId(Object(Illuminate\\Database\\Query\\Builder), 'insert into `te...', Array, 'id')
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(1869): Illuminate\\Database\\Query\\Builder->insertGetId(Array, 'id')
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1330): Illuminate\\Database\\Eloquent\\Builder->__call('insertGetId', Array)
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1295): Illuminate\\Database\\Eloquent\\Model->insertAndSetId(Object(Illuminate\\Database\\Eloquent\\Builder), Array)
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1138): Illuminate\\Database\\Eloquent\\Model->performInsert(Object(Illuminate\\Database\\Eloquent\\Builder))
+#9 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(986): Illuminate\\Database\\Eloquent\\Model->save()
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(319): Illuminate\\Database\\Eloquent\\Builder->Illuminate\\Database\\Eloquent\\{closure}(Object(App\\Models\\TechnicalAnalysis))
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(985): tap(Object(App\\Models\\TechnicalAnalysis), Object(Closure))
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\ForwardsCalls.php(23): Illuminate\\Database\\Eloquent\\Builder->create(Array)
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2330): Illuminate\\Database\\Eloquent\\Model->forwardCallTo(Object(Illuminate\\Database\\Eloquent\\Builder), 'create', Array)
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2342): Illuminate\\Database\\Eloquent\\Model->__call('create', Array)
+#15 C:\\np\\laravel-trading-dashboard\\app\\Http\\Controllers\\TechnicalAnalysisWorkflowController.php(81): Illuminate\\Database\\Eloquent\\Model::__callStatic('create', Array)
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\TechnicalAnalysisWorkflowController->generate(Object(Illuminate\\Http\\Request), Object(App\\Services\\TechnicalContextService), Object(App\\Services\\TechnicalAnalysisPromptService))
+#17 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(43): Illuminate\\Routing\\Controller->callAction('generate', Array)
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\TechnicalAnalysisWorkflowController), 'generate')
+#19 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#20 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#21 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#30 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#37 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#38 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#39 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#40 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#41 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#42 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#56 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#57 C:\\np\\laravel-trading-dashboard\\public\\index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#58 C:\\np\\laravel-trading-dashboard\\server.php(21): require_once('C:\\\\np\\\\laravel-t...')
+#59 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'decision' cannot be null at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:545)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(545): PDOStatement->execute()
+#1 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(753): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}('insert into `te...', Array)
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(720): Illuminate\\Database\\Connection->runQueryCallback('insert into `te...', Array, Object(Closure))
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(534): Illuminate\\Database\\Connection->run('insert into `te...', Array, Object(Closure))
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(498): Illuminate\\Database\\Connection->statement('insert into `te...', Array)
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Processors\\Processor.php(32): Illuminate\\Database\\Connection->insert('insert into `te...', Array)
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php(3322): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId(Object(Illuminate\\Database\\Query\\Builder), 'insert into `te...', Array, 'id')
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(1869): Illuminate\\Database\\Query\\Builder->insertGetId(Array, 'id')
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1330): Illuminate\\Database\\Eloquent\\Builder->__call('insertGetId', Array)
+#9 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1295): Illuminate\\Database\\Eloquent\\Model->insertAndSetId(Object(Illuminate\\Database\\Eloquent\\Builder), Array)
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1138): Illuminate\\Database\\Eloquent\\Model->performInsert(Object(Illuminate\\Database\\Eloquent\\Builder))
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(986): Illuminate\\Database\\Eloquent\\Model->save()
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(319): Illuminate\\Database\\Eloquent\\Builder->Illuminate\\Database\\Eloquent\\{closure}(Object(App\\Models\\TechnicalAnalysis))
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(985): tap(Object(App\\Models\\TechnicalAnalysis), Object(Closure))
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\ForwardsCalls.php(23): Illuminate\\Database\\Eloquent\\Builder->create(Array)
+#15 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2330): Illuminate\\Database\\Eloquent\\Model->forwardCallTo(Object(Illuminate\\Database\\Eloquent\\Builder), 'create', Array)
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2342): Illuminate\\Database\\Eloquent\\Model->__call('create', Array)
+#17 C:\\np\\laravel-trading-dashboard\\app\\Http\\Controllers\\TechnicalAnalysisWorkflowController.php(81): Illuminate\\Database\\Eloquent\\Model::__callStatic('create', Array)
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\TechnicalAnalysisWorkflowController->generate(Object(Illuminate\\Http\\Request), Object(App\\Services\\TechnicalContextService), Object(App\\Services\\TechnicalAnalysisPromptService))
+#19 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(43): Illuminate\\Routing\\Controller->callAction('generate', Array)
+#20 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\TechnicalAnalysisWorkflowController), 'generate')
+#21 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#22 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#23 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#32 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#39 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#40 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#41 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#42 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#43 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#44 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#58 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#59 C:\\np\\laravel-trading-dashboard\\public\\index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#60 C:\\np\\laravel-trading-dashboard\\server.php(21): require_once('C:\\\\np\\\\laravel-t...')
+#61 {main}
+"} 
+[2026-05-08 03:19:10] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'decision' cannot be null (SQL: insert into `technical_analyses` (`analysis_uuid`, `symbol`, `execution_timeframe`, `higher_timeframe_bias`, `execution_bias`, `preferred_action`, `current_price`, `raw_context_json`, `prompt_text`, `agent_name`, `agent_model`, `decision`, `confidence`, `reason_summary`, `reasons_json`, `status`, `notes`, `updated_at`, `created_at`) values (2d73733d-076f-4e75-a668-cd31dd18eff2, XAUUSD, M15, neutral, bullish, NO_TRADE, 4719.865, {"symbol":"XAUUSD","execution_timeframe":"M15","generated_at_utc":"2026-05-08 03:19:10","current_price":4719.865,"bias":{"D1":{"timeframe":"D1","bias":"neutral","score":-1,"last_close":4699.373,"last_candle_time":"2026-05-08 00:00:00","ema":{"ema20":4670.56588,"ema50":4724.21671,"ema200":4431.44811},"atr14":83.88543,"structure":{"structure":"ranging","bos":"none","last_swing_high":{"time":"2026-04-17 00:00:00","price":4889.785},"previous_swing_high":{"time":"2026-04-08 00:00:00","price":4857.415},"last_swing_low":{"time":"2026-05-04 00:00:00","price":4500.661},"previous_swing_low":{"time":"2026-04-29 00:00:00","price":4510.146}},"levels":{"support":[{"time":"2026-02-06 00:00:00","price":4655.26},{"time":"2026-04-12 00:00:00","price":4644.205},{"time":"2026-01-16 00:00:00","price":4536.753},{"time":"2026-04-29 00:00:00","price":4510.146},{"time":"2026-05-04 00:00:00","price":4500.661}],"resistance":[{"time":"2026-04-01 00:00:00","price":4800.347},{"time":"2026-04-08 00:00:00","price":4857.415},{"time":"2026-04-17 00:00:00","price":4889.785},{"time":"2026-02-04 00:00:00","price":5091.909},{"time":"2026-02-11 00:00:00","price":5119.313}]},"reason":["Close berada di bawah EMA50.","EMA50 berada di atas EMA200.","Slope EMA20 turun."]},"H4":{"timeframe":"H4","bias":"neutral","score":1,"last_close":4699.373,"last_candle_time":"2026-05-08 00:00:00","ema":{"ema20":4670.02959,"ema50":4649.78373,"ema200":4728.88285},"atr14":39.79814,"structure":{"structure":"ranging","bos":"none","last_swing_high":{"time":"2026-05-07 12:00:00","price":4764.841},"previous_swing_high":{"time":"2026-05-06 08:00:00","price":4723.076},"last_swing_low":{"time":"2026-05-04 16:00:00","price":4500.661},"previous_swing_low":{"time":"2026-05-01 08:00:00","price":4559.805}},"levels":{"support":[{"time":"2026-04-09 00:00:00","price":4698.217},{"time":"2026-04-21 16:00:00","price":4668.229},{"time":"2026-04-24 04:00:00","price":4657.703},{"time":"2026-04-12 20:00:00","price":4644.205},{"time":"2026-04-07 12:00:00","price":4607.3}],"resistance":[{"time":"2026-04-06 08:00:00","price":4706.728},{"time":"2026-05-06 08:00:00","price":4723.076},{"time":"2026-04-27 04:00:00","price":4730.17},{"time":"2026-03-20 00:00:00","price":4735.848},{"time":"2026-04-24 12:00:00","price":4740.37}]},"reason":["Close berada di atas EMA50.","EMA50 berada di bawah EMA200.","Slope EMA20 naik."]},"H1":{"timeframe":"H1","bias":"neutral","score":1,"last_close":4713.416,"last_candle_time":"2026-05-08 02:00:00","ema":{"ema20":4711.7014,"ema50":4688.58904,"ema200":4655.51047},"atr14":24.2275,"structure":{"structure":"ranging","bos":"none","last_swing_high":{"time":"2026-05-07 15:00:00","price":4764.841},"previous_swing_high":{"time":"2026-05-07 08:00:00","price":4753.428},"last_swing_low":{"time":"2026-05-07 22:00:00","price":4681.821},"previous_swing_low":{"time":"2026-05-07 01:00:00","price":4685.246}},"levels":{"support":[{"time":"2026-04-23 00:00:00","price":4694.066},{"time":"2026-04-23 05:00:00","price":4692.216},{"time":"2026-05-07 01:00:00","price":4685.246},{"time":"2026-04-23 10:00:00","price":4684.188},{"time":"2026-05-07 22:00:00","price":4681.821}],"resistance":[{"time":"2026-05-07 01:00:00","price":4721.328},{"time":"2026-05-06 10:00:00","price":4723.076},{"time":"2026-04-23 08:00:00","price":4724.858},{"time":"2026-04-27 04:00:00","price":4730.17},{"time":"2026-04-24 14:00:00","price":4740.37}]},"reason":["Close berada di atas EMA50.","EMA50 berada di atas EMA200.","Slope EMA20 turun."]},"M15":{"timeframe":"M15","bias":"bullish","score":5,"last_close":4719.865,"last_candle_time":"2026-05-08 03:00:00","ema":{"ema20":4710.75827,"ema50":4712.36071,"ema200":4679.02217},"atr14":10.8665,"structure":{"structure":"bullish","bos":"none","last_swing_high":{"time":"2026-05-08 02:00:00","price":4732.836},"previous_swing_high":{"time":"2026-05-08 00:00:00","price":4709.406},"last_swing_low":{"time":"2026-05-08 00:15:00","price":4693.951},"previous_swing_low":{"time":"2026-05-07 22:45:00","price":4681.821}},"levels":{"support":[{"time":"2026-05-07 16:15:00","price":4704.348},{"time":"2026-05-07 02:30:00","price":4699.739},{"time":"2026-05-07 18:45:00","price":4695.546},{"time":"2026-05-08 00:15:00","price":4693.951},{"time":"2026-05-07 04:30:00","price":4692.297}],"resistance":[{"time":"2026-05-07 01:45:00","price":4721.328},{"time":"2026-05-06 10:45:00","price":4723.076},{"time":"2026-05-08 02:00:00","price":4732.836},{"time":"2026-05-07 09:30:00","price":4739.397},{"time":"2026-05-07 10:45:00","price":4739.737}]},"reason":["Market structure membentuk Higher High dan Higher Low.","Close berada di atas EMA50.","EMA50 berada di atas EMA200.","Slope EMA20 naik."]},"M5":{"timeframe":"M5","bias":"bullish","score":3,"last_close":4719.865,"last_candle_time":"2026-05-08 03:10:00","ema":{"ema20":4716.45527,"ema50":4711.96714,"ema200":4714.17308},"atr14":5.80493,"structure":{"structure":"bullish","bos":"none","last_swing_high":{"time":"2026-05-08 02:00:00","price":4732.836},"previous_swing_high":{"time":"2026-05-08 01:05:00","price":4719.276},"last_swing_low":{"time":"2026-05-08 02:35:00","price":4706.836},"previous_swing_low":{"time":"2026-05-08 01:35:00","price":4705.269}},"levels":{"support":[{"time":"2026-05-07 16:40:00","price":4710.277},{"time":"2026-05-08 02:35:00","price":4706.836},{"time":"2026-05-08 01:35:00","price":4705.269},{"time":"2026-05-07 16:15:00","price":4704.348},{"time":"2026-05-07 03:10:00","price":4704.147}],"resistance":[{"time":"2026-05-07 01:50:00","price":4721.328},{"time":"2026-05-07 16:25:00","price":4723.055},{"time":"2026-05-08 02:00:00","price":4732.836},{"time":"2026-05-07 10:15:00","price":4736.125},{"time":"2026-05-07 09:40:00","price":4739.397}]},"reason":["Market structure membentuk Higher High dan Higher Low.","Close berada di atas EMA50.","EMA50 berada di bawah EMA200.","Slope EMA20 naik."]}},"summary":{"higher_timeframe_bias":"neutral","execution_bias":"bullish","preferred_action":"NO_TRADE","reason":["Bias antar timeframe belum selaras."]}}, You are OpenClaw Technical Agent.
+
+Your task:
+Analyze the provided technical context and return ONLY valid JSON.
+
+Trading instrument:
+- Symbol: XAUUSD
+- Execution timeframe: M15
+- Higher timeframe bias: neutral
+- Execution bias: bullish
+- Preferred action: NO_TRADE
+- Current price: 4719.865
+
+Rules:
+1. Decision must be one of: BUY, SELL, NO_TRADE.
+2. Only return BUY or SELL if setup is clear, aligned, and has valid risk-reward.
+3. If context is unclear, mixed, late entry, near invalidation, or bad risk-reward, return NO_TRADE.
+4. Do not force trade.
+5. Use technical reasons from EMA, ATR, swing, BOS, support/resistance, and multi-timeframe bias.
+6. Return JSON only. No markdown. No explanation outside JSON.
+
+Expected JSON format:
+
+{
+  "decision": "BUY | SELL | NO_TRADE",
+  "confidence": 0,
+  "reason_summary": "short explanation",
+  "reasons": [
+    "reason 1",
+    "reason 2"
+  ],
+  "signal": {
+    "entry_type": "MARKET | LIMIT | STOP | NONE",
+    "entry_price": null,
+    "stop_loss": null,
+    "take_profit_1": null,
+    "take_profit_2": null,
+    "take_profit_3": null,
+    "risk_reward": null,
+    "risk_percent": 1,
+    "lot_size": null,
+    "invalidation": "what invalidates this setup"
+  }
+}
+
+Technical Context JSON:
+{
+    "symbol": "XAUUSD",
+    "execution_timeframe": "M15",
+    "generated_at_utc": "2026-05-08 03:19:10",
+    "current_price": 4719.865,
+    "bias": {
+        "D1": {
+            "timeframe": "D1",
+            "bias": "neutral",
+            "score": -1,
+            "last_close": 4699.373,
+            "last_candle_time": "2026-05-08 00:00:00",
+            "ema": {
+                "ema20": 4670.56588,
+                "ema50": 4724.21671,
+                "ema200": 4431.44811
+            },
+            "atr14": 83.88543,
+            "structure": {
+                "structure": "ranging",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-04-17 00:00:00",
+                    "price": 4889.785
+                },
+                "previous_swing_high": {
+                    "time": "2026-04-08 00:00:00",
+                    "price": 4857.415
+                },
+                "last_swing_low": {
+                    "time": "2026-05-04 00:00:00",
+                    "price": 4500.661
+                },
+                "previous_swing_low": {
+                    "time": "2026-04-29 00:00:00",
+                    "price": 4510.146
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-02-06 00:00:00",
+                        "price": 4655.26
+                    },
+                    {
+                        "time": "2026-04-12 00:00:00",
+                        "price": 4644.205
+                    },
+                    {
+                        "time": "2026-01-16 00:00:00",
+                        "price": 4536.753
+                    },
+                    {
+                        "time": "2026-04-29 00:00:00",
+                        "price": 4510.146
+                    },
+                    {
+                        "time": "2026-05-04 00:00:00",
+                        "price": 4500.661
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-04-01 00:00:00",
+                        "price": 4800.347
+                    },
+                    {
+                        "time": "2026-04-08 00:00:00",
+                        "price": 4857.415
+                    },
+                    {
+                        "time": "2026-04-17 00:00:00",
+                        "price": 4889.785
+                    },
+                    {
+                        "time": "2026-02-04 00:00:00",
+                        "price": 5091.909
+                    },
+                    {
+                        "time": "2026-02-11 00:00:00",
+                        "price": 5119.313
+                    }
+                ]
+            },
+            "reason": [
+                "Close berada di bawah EMA50.",
+                "EMA50 berada di atas EMA200.",
+                "Slope EMA20 turun."
+            ]
+        },
+        "H4": {
+            "timeframe": "H4",
+            "bias": "neutral",
+            "score": 1,
+            "last_close": 4699.373,
+            "last_candle_time": "2026-05-08 00:00:00",
+            "ema": {
+                "ema20": 4670.02959,
+                "ema50": 4649.78373,
+                "ema200": 4728.88285
+            },
+            "atr14": 39.79814,
+            "structure": {
+                "structure": "ranging",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-07 12:00:00",
+                    "price": 4764.841
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-06 08:00:00",
+                    "price": 4723.076
+                },
+                "last_swing_low": {
+                    "time": "2026-05-04 16:00:00",
+                    "price": 4500.661
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-01 08:00:00",
+                    "price": 4559.805
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-04-09 00:00:00",
+                        "price": 4698.217
+                    },
+                    {
+                        "time": "2026-04-21 16:00:00",
+                        "price": 4668.229
+                    },
+                    {
+                        "time": "2026-04-24 04:00:00",
+                        "price": 4657.703
+                    },
+                    {
+                        "time": "2026-04-12 20:00:00",
+                        "price": 4644.205
+                    },
+                    {
+                        "time": "2026-04-07 12:00:00",
+                        "price": 4607.3
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-04-06 08:00:00",
+                        "price": 4706.728
+                    },
+                    {
+                        "time": "2026-05-06 08:00:00",
+                        "price": 4723.076
+                    },
+                    {
+                        "time": "2026-04-27 04:00:00",
+                        "price": 4730.17
+                    },
+                    {
+                        "time": "2026-03-20 00:00:00",
+                        "price": 4735.848
+                    },
+                    {
+                        "time": "2026-04-24 12:00:00",
+                        "price": 4740.37
+                    }
+                ]
+            },
+            "reason": [
+                "Close berada di atas EMA50.",
+                "EMA50 berada di bawah EMA200.",
+                "Slope EMA20 naik."
+            ]
+        },
+        "H1": {
+            "timeframe": "H1",
+            "bias": "neutral",
+            "score": 1,
+            "last_close": 4713.416,
+            "last_candle_time": "2026-05-08 02:00:00",
+            "ema": {
+                "ema20": 4711.7014,
+                "ema50": 4688.58904,
+                "ema200": 4655.51047
+            },
+            "atr14": 24.2275,
+            "structure": {
+                "structure": "ranging",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-07 15:00:00",
+                    "price": 4764.841
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-07 08:00:00",
+                    "price": 4753.428
+                },
+                "last_swing_low": {
+                    "time": "2026-05-07 22:00:00",
+                    "price": 4681.821
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-07 01:00:00",
+                    "price": 4685.246
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-04-23 00:00:00",
+                        "price": 4694.066
+                    },
+                    {
+                        "time": "2026-04-23 05:00:00",
+                        "price": 4692.216
+                    },
+                    {
+                        "time": "2026-05-07 01:00:00",
+                        "price": 4685.246
+                    },
+                    {
+                        "time": "2026-04-23 10:00:00",
+                        "price": 4684.188
+                    },
+                    {
+                        "time": "2026-05-07 22:00:00",
+                        "price": 4681.821
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-05-07 01:00:00",
+                        "price": 4721.328
+                    },
+                    {
+                        "time": "2026-05-06 10:00:00",
+                        "price": 4723.076
+                    },
+                    {
+                        "time": "2026-04-23 08:00:00",
+                        "price": 4724.858
+                    },
+                    {
+                        "time": "2026-04-27 04:00:00",
+                        "price": 4730.17
+                    },
+                    {
+                        "time": "2026-04-24 14:00:00",
+                        "price": 4740.37
+                    }
+                ]
+            },
+            "reason": [
+                "Close berada di atas EMA50.",
+                "EMA50 berada di atas EMA200.",
+                "Slope EMA20 turun."
+            ]
+        },
+        "M15": {
+            "timeframe": "M15",
+            "bias": "bullish",
+            "score": 5,
+            "last_close": 4719.865,
+            "last_candle_time": "2026-05-08 03:00:00",
+            "ema": {
+                "ema20": 4710.75827,
+                "ema50": 4712.36071,
+                "ema200": 4679.02217
+            },
+            "atr14": 10.8665,
+            "structure": {
+                "structure": "bullish",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-08 02:00:00",
+                    "price": 4732.836
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-08 00:00:00",
+                    "price": 4709.406
+                },
+                "last_swing_low": {
+                    "time": "2026-05-08 00:15:00",
+                    "price": 4693.951
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-07 22:45:00",
+                    "price": 4681.821
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-05-07 16:15:00",
+                        "price": 4704.348
+                    },
+                    {
+                        "time": "2026-05-07 02:30:00",
+                        "price": 4699.739
+                    },
+                    {
+                        "time": "2026-05-07 18:45:00",
+                        "price": 4695.546
+                    },
+                    {
+                        "time": "2026-05-08 00:15:00",
+                        "price": 4693.951
+                    },
+                    {
+                        "time": "2026-05-07 04:30:00",
+                        "price": 4692.297
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-05-07 01:45:00",
+                        "price": 4721.328
+                    },
+                    {
+                        "time": "2026-05-06 10:45:00",
+                        "price": 4723.076
+                    },
+                    {
+                        "time": "2026-05-08 02:00:00",
+                        "price": 4732.836
+                    },
+                    {
+                        "time": "2026-05-07 09:30:00",
+                        "price": 4739.397
+                    },
+                    {
+                        "time": "2026-05-07 10:45:00",
+                        "price": 4739.737
+                    }
+                ]
+            },
+            "reason": [
+                "Market structure membentuk Higher High dan Higher Low.",
+                "Close berada di atas EMA50.",
+                "EMA50 berada di atas EMA200.",
+                "Slope EMA20 naik."
+            ]
+        },
+        "M5": {
+            "timeframe": "M5",
+            "bias": "bullish",
+            "score": 3,
+            "last_close": 4719.865,
+            "last_candle_time": "2026-05-08 03:10:00",
+            "ema": {
+                "ema20": 4716.45527,
+                "ema50": 4711.96714,
+                "ema200": 4714.17308
+            },
+            "atr14": 5.80493,
+            "structure": {
+                "structure": "bullish",
+                "bos": "none",
+                "last_swing_high": {
+                    "time": "2026-05-08 02:00:00",
+                    "price": 4732.836
+                },
+                "previous_swing_high": {
+                    "time": "2026-05-08 01:05:00",
+                    "price": 4719.276
+                },
+                "last_swing_low": {
+                    "time": "2026-05-08 02:35:00",
+                    "price": 4706.836
+                },
+                "previous_swing_low": {
+                    "time": "2026-05-08 01:35:00",
+                    "price": 4705.269
+                }
+            },
+            "levels": {
+                "support": [
+                    {
+                        "time": "2026-05-07 16:40:00",
+                        "price": 4710.277
+                    },
+                    {
+                        "time": "2026-05-08 02:35:00",
+                        "price": 4706.836
+                    },
+                    {
+                        "time": "2026-05-08 01:35:00",
+                        "price": 4705.269
+                    },
+                    {
+                        "time": "2026-05-07 16:15:00",
+                        "price": 4704.348
+                    },
+                    {
+                        "time": "2026-05-07 03:10:00",
+                        "price": 4704.147
+                    }
+                ],
+                "resistance": [
+                    {
+                        "time": "2026-05-07 01:50:00",
+                        "price": 4721.328
+                    },
+                    {
+                        "time": "2026-05-07 16:25:00",
+                        "price": 4723.055
+                    },
+                    {
+                        "time": "2026-05-08 02:00:00",
+                        "price": 4732.836
+                    },
+                    {
+                        "time": "2026-05-07 10:15:00",
+                        "price": 4736.125
+                    },
+                    {
+                        "time": "2026-05-07 09:40:00",
+                        "price": 4739.397
+                    }
+                ]
+            },
+            "reason": [
+                "Market structure membentuk Higher High dan Higher Low.",
+                "Close berada di atas EMA50.",
+                "EMA50 berada di bawah EMA200.",
+                "Slope EMA20 naik."
+            ]
+        }
+    },
+    "summary": {
+        "higher_timeframe_bias": "neutral",
+        "execution_bias": "bullish",
+        "preferred_action": "NO_TRADE",
+        "reason": [
+            "Bias antar timeframe belum selaras."
+        ]
+    }
+}, OpenClaw Technical Agent, ?, ?, ?, ?, ?, GENERATED, Generated by Laravel Control Tower., 2026-05-08 03:19:10, 2026-05-08 03:19:10)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'decision' cannot be null (SQL: insert into `technical_analyses` (`analysis_uuid`, `symbol`, `execution_timeframe`, `higher_timeframe_bias`, `execution_bias`, `preferred_action`, `current_price`, `raw_context_json`, `prompt_text`, `agent_name`, `agent_model`, `decision`, `confidence`, `reason_summary`, `reasons_json`, `status`, `notes`, `updated_at`, `created_at`) values (2d73733d-076f-4e75-a668-cd31dd18eff2, XAUUSD, M15, neutral, bullish, NO_TRADE, 4719.865, {\"symbol\":\"XAUUSD\",\"execution_timeframe\":\"M15\",\"generated_at_utc\":\"2026-05-08 03:19:10\",\"current_price\":4719.865,\"bias\":{\"D1\":{\"timeframe\":\"D1\",\"bias\":\"neutral\",\"score\":-1,\"last_close\":4699.373,\"last_candle_time\":\"2026-05-08 00:00:00\",\"ema\":{\"ema20\":4670.56588,\"ema50\":4724.21671,\"ema200\":4431.44811},\"atr14\":83.88543,\"structure\":{\"structure\":\"ranging\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-04-17 00:00:00\",\"price\":4889.785},\"previous_swing_high\":{\"time\":\"2026-04-08 00:00:00\",\"price\":4857.415},\"last_swing_low\":{\"time\":\"2026-05-04 00:00:00\",\"price\":4500.661},\"previous_swing_low\":{\"time\":\"2026-04-29 00:00:00\",\"price\":4510.146}},\"levels\":{\"support\":[{\"time\":\"2026-02-06 00:00:00\",\"price\":4655.26},{\"time\":\"2026-04-12 00:00:00\",\"price\":4644.205},{\"time\":\"2026-01-16 00:00:00\",\"price\":4536.753},{\"time\":\"2026-04-29 00:00:00\",\"price\":4510.146},{\"time\":\"2026-05-04 00:00:00\",\"price\":4500.661}],\"resistance\":[{\"time\":\"2026-04-01 00:00:00\",\"price\":4800.347},{\"time\":\"2026-04-08 00:00:00\",\"price\":4857.415},{\"time\":\"2026-04-17 00:00:00\",\"price\":4889.785},{\"time\":\"2026-02-04 00:00:00\",\"price\":5091.909},{\"time\":\"2026-02-11 00:00:00\",\"price\":5119.313}]},\"reason\":[\"Close berada di bawah EMA50.\",\"EMA50 berada di atas EMA200.\",\"Slope EMA20 turun.\"]},\"H4\":{\"timeframe\":\"H4\",\"bias\":\"neutral\",\"score\":1,\"last_close\":4699.373,\"last_candle_time\":\"2026-05-08 00:00:00\",\"ema\":{\"ema20\":4670.02959,\"ema50\":4649.78373,\"ema200\":4728.88285},\"atr14\":39.79814,\"structure\":{\"structure\":\"ranging\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-07 12:00:00\",\"price\":4764.841},\"previous_swing_high\":{\"time\":\"2026-05-06 08:00:00\",\"price\":4723.076},\"last_swing_low\":{\"time\":\"2026-05-04 16:00:00\",\"price\":4500.661},\"previous_swing_low\":{\"time\":\"2026-05-01 08:00:00\",\"price\":4559.805}},\"levels\":{\"support\":[{\"time\":\"2026-04-09 00:00:00\",\"price\":4698.217},{\"time\":\"2026-04-21 16:00:00\",\"price\":4668.229},{\"time\":\"2026-04-24 04:00:00\",\"price\":4657.703},{\"time\":\"2026-04-12 20:00:00\",\"price\":4644.205},{\"time\":\"2026-04-07 12:00:00\",\"price\":4607.3}],\"resistance\":[{\"time\":\"2026-04-06 08:00:00\",\"price\":4706.728},{\"time\":\"2026-05-06 08:00:00\",\"price\":4723.076},{\"time\":\"2026-04-27 04:00:00\",\"price\":4730.17},{\"time\":\"2026-03-20 00:00:00\",\"price\":4735.848},{\"time\":\"2026-04-24 12:00:00\",\"price\":4740.37}]},\"reason\":[\"Close berada di atas EMA50.\",\"EMA50 berada di bawah EMA200.\",\"Slope EMA20 naik.\"]},\"H1\":{\"timeframe\":\"H1\",\"bias\":\"neutral\",\"score\":1,\"last_close\":4713.416,\"last_candle_time\":\"2026-05-08 02:00:00\",\"ema\":{\"ema20\":4711.7014,\"ema50\":4688.58904,\"ema200\":4655.51047},\"atr14\":24.2275,\"structure\":{\"structure\":\"ranging\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-07 15:00:00\",\"price\":4764.841},\"previous_swing_high\":{\"time\":\"2026-05-07 08:00:00\",\"price\":4753.428},\"last_swing_low\":{\"time\":\"2026-05-07 22:00:00\",\"price\":4681.821},\"previous_swing_low\":{\"time\":\"2026-05-07 01:00:00\",\"price\":4685.246}},\"levels\":{\"support\":[{\"time\":\"2026-04-23 00:00:00\",\"price\":4694.066},{\"time\":\"2026-04-23 05:00:00\",\"price\":4692.216},{\"time\":\"2026-05-07 01:00:00\",\"price\":4685.246},{\"time\":\"2026-04-23 10:00:00\",\"price\":4684.188},{\"time\":\"2026-05-07 22:00:00\",\"price\":4681.821}],\"resistance\":[{\"time\":\"2026-05-07 01:00:00\",\"price\":4721.328},{\"time\":\"2026-05-06 10:00:00\",\"price\":4723.076},{\"time\":\"2026-04-23 08:00:00\",\"price\":4724.858},{\"time\":\"2026-04-27 04:00:00\",\"price\":4730.17},{\"time\":\"2026-04-24 14:00:00\",\"price\":4740.37}]},\"reason\":[\"Close berada di atas EMA50.\",\"EMA50 berada di atas EMA200.\",\"Slope EMA20 turun.\"]},\"M15\":{\"timeframe\":\"M15\",\"bias\":\"bullish\",\"score\":5,\"last_close\":4719.865,\"last_candle_time\":\"2026-05-08 03:00:00\",\"ema\":{\"ema20\":4710.75827,\"ema50\":4712.36071,\"ema200\":4679.02217},\"atr14\":10.8665,\"structure\":{\"structure\":\"bullish\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},\"previous_swing_high\":{\"time\":\"2026-05-08 00:00:00\",\"price\":4709.406},\"last_swing_low\":{\"time\":\"2026-05-08 00:15:00\",\"price\":4693.951},\"previous_swing_low\":{\"time\":\"2026-05-07 22:45:00\",\"price\":4681.821}},\"levels\":{\"support\":[{\"time\":\"2026-05-07 16:15:00\",\"price\":4704.348},{\"time\":\"2026-05-07 02:30:00\",\"price\":4699.739},{\"time\":\"2026-05-07 18:45:00\",\"price\":4695.546},{\"time\":\"2026-05-08 00:15:00\",\"price\":4693.951},{\"time\":\"2026-05-07 04:30:00\",\"price\":4692.297}],\"resistance\":[{\"time\":\"2026-05-07 01:45:00\",\"price\":4721.328},{\"time\":\"2026-05-06 10:45:00\",\"price\":4723.076},{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},{\"time\":\"2026-05-07 09:30:00\",\"price\":4739.397},{\"time\":\"2026-05-07 10:45:00\",\"price\":4739.737}]},\"reason\":[\"Market structure membentuk Higher High dan Higher Low.\",\"Close berada di atas EMA50.\",\"EMA50 berada di atas EMA200.\",\"Slope EMA20 naik.\"]},\"M5\":{\"timeframe\":\"M5\",\"bias\":\"bullish\",\"score\":3,\"last_close\":4719.865,\"last_candle_time\":\"2026-05-08 03:10:00\",\"ema\":{\"ema20\":4716.45527,\"ema50\":4711.96714,\"ema200\":4714.17308},\"atr14\":5.80493,\"structure\":{\"structure\":\"bullish\",\"bos\":\"none\",\"last_swing_high\":{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},\"previous_swing_high\":{\"time\":\"2026-05-08 01:05:00\",\"price\":4719.276},\"last_swing_low\":{\"time\":\"2026-05-08 02:35:00\",\"price\":4706.836},\"previous_swing_low\":{\"time\":\"2026-05-08 01:35:00\",\"price\":4705.269}},\"levels\":{\"support\":[{\"time\":\"2026-05-07 16:40:00\",\"price\":4710.277},{\"time\":\"2026-05-08 02:35:00\",\"price\":4706.836},{\"time\":\"2026-05-08 01:35:00\",\"price\":4705.269},{\"time\":\"2026-05-07 16:15:00\",\"price\":4704.348},{\"time\":\"2026-05-07 03:10:00\",\"price\":4704.147}],\"resistance\":[{\"time\":\"2026-05-07 01:50:00\",\"price\":4721.328},{\"time\":\"2026-05-07 16:25:00\",\"price\":4723.055},{\"time\":\"2026-05-08 02:00:00\",\"price\":4732.836},{\"time\":\"2026-05-07 10:15:00\",\"price\":4736.125},{\"time\":\"2026-05-07 09:40:00\",\"price\":4739.397}]},\"reason\":[\"Market structure membentuk Higher High dan Higher Low.\",\"Close berada di atas EMA50.\",\"EMA50 berada di bawah EMA200.\",\"Slope EMA20 naik.\"]}},\"summary\":{\"higher_timeframe_bias\":\"neutral\",\"execution_bias\":\"bullish\",\"preferred_action\":\"NO_TRADE\",\"reason\":[\"Bias antar timeframe belum selaras.\"]}}, You are OpenClaw Technical Agent.
+
+
+
+Your task:
+
+Analyze the provided technical context and return ONLY valid JSON.
+
+
+
+Trading instrument:
+
+- Symbol: XAUUSD
+
+- Execution timeframe: M15
+
+- Higher timeframe bias: neutral
+
+- Execution bias: bullish
+
+- Preferred action: NO_TRADE
+
+- Current price: 4719.865
+
+
+
+Rules:
+
+1. Decision must be one of: BUY, SELL, NO_TRADE.
+
+2. Only return BUY or SELL if setup is clear, aligned, and has valid risk-reward.
+
+3. If context is unclear, mixed, late entry, near invalidation, or bad risk-reward, return NO_TRADE.
+
+4. Do not force trade.
+
+5. Use technical reasons from EMA, ATR, swing, BOS, support/resistance, and multi-timeframe bias.
+
+6. Return JSON only. No markdown. No explanation outside JSON.
+
+
+
+Expected JSON format:
+
+
+
+{
+
+  \"decision\": \"BUY | SELL | NO_TRADE\",
+
+  \"confidence\": 0,
+
+  \"reason_summary\": \"short explanation\",
+
+  \"reasons\": [
+
+    \"reason 1\",
+
+    \"reason 2\"
+
+  ],
+
+  \"signal\": {
+
+    \"entry_type\": \"MARKET | LIMIT | STOP | NONE\",
+
+    \"entry_price\": null,
+
+    \"stop_loss\": null,
+
+    \"take_profit_1\": null,
+
+    \"take_profit_2\": null,
+
+    \"take_profit_3\": null,
+
+    \"risk_reward\": null,
+
+    \"risk_percent\": 1,
+
+    \"lot_size\": null,
+
+    \"invalidation\": \"what invalidates this setup\"
+
+  }
+
+}
+
+
+
+Technical Context JSON:
+
+{
+    \"symbol\": \"XAUUSD\",
+    \"execution_timeframe\": \"M15\",
+    \"generated_at_utc\": \"2026-05-08 03:19:10\",
+    \"current_price\": 4719.865,
+    \"bias\": {
+        \"D1\": {
+            \"timeframe\": \"D1\",
+            \"bias\": \"neutral\",
+            \"score\": -1,
+            \"last_close\": 4699.373,
+            \"last_candle_time\": \"2026-05-08 00:00:00\",
+            \"ema\": {
+                \"ema20\": 4670.56588,
+                \"ema50\": 4724.21671,
+                \"ema200\": 4431.44811
+            },
+            \"atr14\": 83.88543,
+            \"structure\": {
+                \"structure\": \"ranging\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-04-17 00:00:00\",
+                    \"price\": 4889.785
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-04-08 00:00:00\",
+                    \"price\": 4857.415
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-04 00:00:00\",
+                    \"price\": 4500.661
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-04-29 00:00:00\",
+                    \"price\": 4510.146
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-02-06 00:00:00\",
+                        \"price\": 4655.26
+                    },
+                    {
+                        \"time\": \"2026-04-12 00:00:00\",
+                        \"price\": 4644.205
+                    },
+                    {
+                        \"time\": \"2026-01-16 00:00:00\",
+                        \"price\": 4536.753
+                    },
+                    {
+                        \"time\": \"2026-04-29 00:00:00\",
+                        \"price\": 4510.146
+                    },
+                    {
+                        \"time\": \"2026-05-04 00:00:00\",
+                        \"price\": 4500.661
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-04-01 00:00:00\",
+                        \"price\": 4800.347
+                    },
+                    {
+                        \"time\": \"2026-04-08 00:00:00\",
+                        \"price\": 4857.415
+                    },
+                    {
+                        \"time\": \"2026-04-17 00:00:00\",
+                        \"price\": 4889.785
+                    },
+                    {
+                        \"time\": \"2026-02-04 00:00:00\",
+                        \"price\": 5091.909
+                    },
+                    {
+                        \"time\": \"2026-02-11 00:00:00\",
+                        \"price\": 5119.313
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Close berada di bawah EMA50.\",
+                \"EMA50 berada di atas EMA200.\",
+                \"Slope EMA20 turun.\"
+            ]
+        },
+        \"H4\": {
+            \"timeframe\": \"H4\",
+            \"bias\": \"neutral\",
+            \"score\": 1,
+            \"last_close\": 4699.373,
+            \"last_candle_time\": \"2026-05-08 00:00:00\",
+            \"ema\": {
+                \"ema20\": 4670.02959,
+                \"ema50\": 4649.78373,
+                \"ema200\": 4728.88285
+            },
+            \"atr14\": 39.79814,
+            \"structure\": {
+                \"structure\": \"ranging\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-07 12:00:00\",
+                    \"price\": 4764.841
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-06 08:00:00\",
+                    \"price\": 4723.076
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-04 16:00:00\",
+                    \"price\": 4500.661
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-01 08:00:00\",
+                    \"price\": 4559.805
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-04-09 00:00:00\",
+                        \"price\": 4698.217
+                    },
+                    {
+                        \"time\": \"2026-04-21 16:00:00\",
+                        \"price\": 4668.229
+                    },
+                    {
+                        \"time\": \"2026-04-24 04:00:00\",
+                        \"price\": 4657.703
+                    },
+                    {
+                        \"time\": \"2026-04-12 20:00:00\",
+                        \"price\": 4644.205
+                    },
+                    {
+                        \"time\": \"2026-04-07 12:00:00\",
+                        \"price\": 4607.3
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-04-06 08:00:00\",
+                        \"price\": 4706.728
+                    },
+                    {
+                        \"time\": \"2026-05-06 08:00:00\",
+                        \"price\": 4723.076
+                    },
+                    {
+                        \"time\": \"2026-04-27 04:00:00\",
+                        \"price\": 4730.17
+                    },
+                    {
+                        \"time\": \"2026-03-20 00:00:00\",
+                        \"price\": 4735.848
+                    },
+                    {
+                        \"time\": \"2026-04-24 12:00:00\",
+                        \"price\": 4740.37
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di bawah EMA200.\",
+                \"Slope EMA20 naik.\"
+            ]
+        },
+        \"H1\": {
+            \"timeframe\": \"H1\",
+            \"bias\": \"neutral\",
+            \"score\": 1,
+            \"last_close\": 4713.416,
+            \"last_candle_time\": \"2026-05-08 02:00:00\",
+            \"ema\": {
+                \"ema20\": 4711.7014,
+                \"ema50\": 4688.58904,
+                \"ema200\": 4655.51047
+            },
+            \"atr14\": 24.2275,
+            \"structure\": {
+                \"structure\": \"ranging\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-07 15:00:00\",
+                    \"price\": 4764.841
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-07 08:00:00\",
+                    \"price\": 4753.428
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-07 22:00:00\",
+                    \"price\": 4681.821
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-07 01:00:00\",
+                    \"price\": 4685.246
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-04-23 00:00:00\",
+                        \"price\": 4694.066
+                    },
+                    {
+                        \"time\": \"2026-04-23 05:00:00\",
+                        \"price\": 4692.216
+                    },
+                    {
+                        \"time\": \"2026-05-07 01:00:00\",
+                        \"price\": 4685.246
+                    },
+                    {
+                        \"time\": \"2026-04-23 10:00:00\",
+                        \"price\": 4684.188
+                    },
+                    {
+                        \"time\": \"2026-05-07 22:00:00\",
+                        \"price\": 4681.821
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-05-07 01:00:00\",
+                        \"price\": 4721.328
+                    },
+                    {
+                        \"time\": \"2026-05-06 10:00:00\",
+                        \"price\": 4723.076
+                    },
+                    {
+                        \"time\": \"2026-04-23 08:00:00\",
+                        \"price\": 4724.858
+                    },
+                    {
+                        \"time\": \"2026-04-27 04:00:00\",
+                        \"price\": 4730.17
+                    },
+                    {
+                        \"time\": \"2026-04-24 14:00:00\",
+                        \"price\": 4740.37
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di atas EMA200.\",
+                \"Slope EMA20 turun.\"
+            ]
+        },
+        \"M15\": {
+            \"timeframe\": \"M15\",
+            \"bias\": \"bullish\",
+            \"score\": 5,
+            \"last_close\": 4719.865,
+            \"last_candle_time\": \"2026-05-08 03:00:00\",
+            \"ema\": {
+                \"ema20\": 4710.75827,
+                \"ema50\": 4712.36071,
+                \"ema200\": 4679.02217
+            },
+            \"atr14\": 10.8665,
+            \"structure\": {
+                \"structure\": \"bullish\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-08 02:00:00\",
+                    \"price\": 4732.836
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-08 00:00:00\",
+                    \"price\": 4709.406
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-08 00:15:00\",
+                    \"price\": 4693.951
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-07 22:45:00\",
+                    \"price\": 4681.821
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-05-07 16:15:00\",
+                        \"price\": 4704.348
+                    },
+                    {
+                        \"time\": \"2026-05-07 02:30:00\",
+                        \"price\": 4699.739
+                    },
+                    {
+                        \"time\": \"2026-05-07 18:45:00\",
+                        \"price\": 4695.546
+                    },
+                    {
+                        \"time\": \"2026-05-08 00:15:00\",
+                        \"price\": 4693.951
+                    },
+                    {
+                        \"time\": \"2026-05-07 04:30:00\",
+                        \"price\": 4692.297
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-05-07 01:45:00\",
+                        \"price\": 4721.328
+                    },
+                    {
+                        \"time\": \"2026-05-06 10:45:00\",
+                        \"price\": 4723.076
+                    },
+                    {
+                        \"time\": \"2026-05-08 02:00:00\",
+                        \"price\": 4732.836
+                    },
+                    {
+                        \"time\": \"2026-05-07 09:30:00\",
+                        \"price\": 4739.397
+                    },
+                    {
+                        \"time\": \"2026-05-07 10:45:00\",
+                        \"price\": 4739.737
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Market structure membentuk Higher High dan Higher Low.\",
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di atas EMA200.\",
+                \"Slope EMA20 naik.\"
+            ]
+        },
+        \"M5\": {
+            \"timeframe\": \"M5\",
+            \"bias\": \"bullish\",
+            \"score\": 3,
+            \"last_close\": 4719.865,
+            \"last_candle_time\": \"2026-05-08 03:10:00\",
+            \"ema\": {
+                \"ema20\": 4716.45527,
+                \"ema50\": 4711.96714,
+                \"ema200\": 4714.17308
+            },
+            \"atr14\": 5.80493,
+            \"structure\": {
+                \"structure\": \"bullish\",
+                \"bos\": \"none\",
+                \"last_swing_high\": {
+                    \"time\": \"2026-05-08 02:00:00\",
+                    \"price\": 4732.836
+                },
+                \"previous_swing_high\": {
+                    \"time\": \"2026-05-08 01:05:00\",
+                    \"price\": 4719.276
+                },
+                \"last_swing_low\": {
+                    \"time\": \"2026-05-08 02:35:00\",
+                    \"price\": 4706.836
+                },
+                \"previous_swing_low\": {
+                    \"time\": \"2026-05-08 01:35:00\",
+                    \"price\": 4705.269
+                }
+            },
+            \"levels\": {
+                \"support\": [
+                    {
+                        \"time\": \"2026-05-07 16:40:00\",
+                        \"price\": 4710.277
+                    },
+                    {
+                        \"time\": \"2026-05-08 02:35:00\",
+                        \"price\": 4706.836
+                    },
+                    {
+                        \"time\": \"2026-05-08 01:35:00\",
+                        \"price\": 4705.269
+                    },
+                    {
+                        \"time\": \"2026-05-07 16:15:00\",
+                        \"price\": 4704.348
+                    },
+                    {
+                        \"time\": \"2026-05-07 03:10:00\",
+                        \"price\": 4704.147
+                    }
+                ],
+                \"resistance\": [
+                    {
+                        \"time\": \"2026-05-07 01:50:00\",
+                        \"price\": 4721.328
+                    },
+                    {
+                        \"time\": \"2026-05-07 16:25:00\",
+                        \"price\": 4723.055
+                    },
+                    {
+                        \"time\": \"2026-05-08 02:00:00\",
+                        \"price\": 4732.836
+                    },
+                    {
+                        \"time\": \"2026-05-07 10:15:00\",
+                        \"price\": 4736.125
+                    },
+                    {
+                        \"time\": \"2026-05-07 09:40:00\",
+                        \"price\": 4739.397
+                    }
+                ]
+            },
+            \"reason\": [
+                \"Market structure membentuk Higher High dan Higher Low.\",
+                \"Close berada di atas EMA50.\",
+                \"EMA50 berada di bawah EMA200.\",
+                \"Slope EMA20 naik.\"
+            ]
+        }
+    },
+    \"summary\": {
+        \"higher_timeframe_bias\": \"neutral\",
+        \"execution_bias\": \"bullish\",
+        \"preferred_action\": \"NO_TRADE\",
+        \"reason\": [
+            \"Bias antar timeframe belum selaras.\"
+        ]
+    }
+}, OpenClaw Technical Agent, ?, ?, ?, ?, ?, GENERATED, Generated by Laravel Control Tower., 2026-05-08 03:19:10, 2026-05-08 03:19:10)) at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:760)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(720): Illuminate\\Database\\Connection->runQueryCallback('insert into `te...', Array, Object(Closure))
+#1 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(534): Illuminate\\Database\\Connection->run('insert into `te...', Array, Object(Closure))
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(498): Illuminate\\Database\\Connection->statement('insert into `te...', Array)
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Processors\\Processor.php(32): Illuminate\\Database\\Connection->insert('insert into `te...', Array)
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php(3322): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId(Object(Illuminate\\Database\\Query\\Builder), 'insert into `te...', Array, 'id')
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(1869): Illuminate\\Database\\Query\\Builder->insertGetId(Array, 'id')
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1330): Illuminate\\Database\\Eloquent\\Builder->__call('insertGetId', Array)
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1295): Illuminate\\Database\\Eloquent\\Model->insertAndSetId(Object(Illuminate\\Database\\Eloquent\\Builder), Array)
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1138): Illuminate\\Database\\Eloquent\\Model->performInsert(Object(Illuminate\\Database\\Eloquent\\Builder))
+#9 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(986): Illuminate\\Database\\Eloquent\\Model->save()
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(319): Illuminate\\Database\\Eloquent\\Builder->Illuminate\\Database\\Eloquent\\{closure}(Object(App\\Models\\TechnicalAnalysis))
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(985): tap(Object(App\\Models\\TechnicalAnalysis), Object(Closure))
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\ForwardsCalls.php(23): Illuminate\\Database\\Eloquent\\Builder->create(Array)
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2330): Illuminate\\Database\\Eloquent\\Model->forwardCallTo(Object(Illuminate\\Database\\Eloquent\\Builder), 'create', Array)
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2342): Illuminate\\Database\\Eloquent\\Model->__call('create', Array)
+#15 C:\\np\\laravel-trading-dashboard\\app\\Http\\Controllers\\TechnicalAnalysisWorkflowController.php(81): Illuminate\\Database\\Eloquent\\Model::__callStatic('create', Array)
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\TechnicalAnalysisWorkflowController->generate(Object(Illuminate\\Http\\Request), Object(App\\Services\\TechnicalContextService), Object(App\\Services\\TechnicalAnalysisPromptService))
+#17 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(43): Illuminate\\Routing\\Controller->callAction('generate', Array)
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\TechnicalAnalysisWorkflowController), 'generate')
+#19 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#20 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#21 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#30 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#37 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#38 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#39 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#40 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#41 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#42 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#56 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#57 C:\\np\\laravel-trading-dashboard\\public\\index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#58 C:\\np\\laravel-trading-dashboard\\server.php(21): require_once('C:\\\\np\\\\laravel-t...')
+#59 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'decision' cannot be null at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:545)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(545): PDOStatement->execute()
+#1 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(753): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}('insert into `te...', Array)
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(720): Illuminate\\Database\\Connection->runQueryCallback('insert into `te...', Array, Object(Closure))
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(534): Illuminate\\Database\\Connection->run('insert into `te...', Array, Object(Closure))
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(498): Illuminate\\Database\\Connection->statement('insert into `te...', Array)
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Processors\\Processor.php(32): Illuminate\\Database\\Connection->insert('insert into `te...', Array)
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Query\\Builder.php(3322): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId(Object(Illuminate\\Database\\Query\\Builder), 'insert into `te...', Array, 'id')
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(1869): Illuminate\\Database\\Query\\Builder->insertGetId(Array, 'id')
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1330): Illuminate\\Database\\Eloquent\\Builder->__call('insertGetId', Array)
+#9 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1295): Illuminate\\Database\\Eloquent\\Model->insertAndSetId(Object(Illuminate\\Database\\Eloquent\\Builder), Array)
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(1138): Illuminate\\Database\\Eloquent\\Model->performInsert(Object(Illuminate\\Database\\Eloquent\\Builder))
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(986): Illuminate\\Database\\Eloquent\\Model->save()
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(319): Illuminate\\Database\\Eloquent\\Builder->Illuminate\\Database\\Eloquent\\{closure}(Object(App\\Models\\TechnicalAnalysis))
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Builder.php(985): tap(Object(App\\Models\\TechnicalAnalysis), Object(Closure))
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\ForwardsCalls.php(23): Illuminate\\Database\\Eloquent\\Builder->create(Array)
+#15 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2330): Illuminate\\Database\\Eloquent\\Model->forwardCallTo(Object(Illuminate\\Database\\Eloquent\\Builder), 'create', Array)
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Model.php(2342): Illuminate\\Database\\Eloquent\\Model->__call('create', Array)
+#17 C:\\np\\laravel-trading-dashboard\\app\\Http\\Controllers\\TechnicalAnalysisWorkflowController.php(81): Illuminate\\Database\\Eloquent\\Model::__callStatic('create', Array)
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\TechnicalAnalysisWorkflowController->generate(Object(Illuminate\\Http\\Request), Object(App\\Services\\TechnicalContextService), Object(App\\Services\\TechnicalAnalysisPromptService))
+#19 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(43): Illuminate\\Routing\\Controller->callAction('generate', Array)
+#20 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\TechnicalAnalysisWorkflowController), 'generate')
+#21 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#22 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#23 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#32 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#39 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#40 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#41 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#42 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#43 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#44 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#58 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#59 C:\\np\\laravel-trading-dashboard\\public\\index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#60 C:\\np\\laravel-trading-dashboard\\server.php(21): require_once('C:\\\\np\\\\laravel-t...')
+#61 {main}
+"} 
+[2026-05-08 03:50:26] local.ERROR: Class "Illuminate\Support\Facades\Schedule" not found {"exception":"[object] (Error(code: 0): Class \"Illuminate\\Support\\Facades\\Schedule\" not found at C:\\np\\laravel-trading-dashboard\\routes\\console.php:17)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\app\\Console\\Kernel.php(40): require()
+#1 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(389): App\\Console\\Kernel->commands()
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(153): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#3 C:\\np\\laravel-trading-dashboard\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 {main}
+"} 
+[2026-05-08 03:53:38] local.ERROR: Target class [App\Services\TechnicalAnalysisGeneratorService] does not exist. {"exception":"[object] (Illuminate\\Contracts\\Container\\BindingResolutionException(code: 0): Target class [App\\Services\\TechnicalAnalysisGeneratorService] does not exist. at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php:891)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(770): Illuminate\\Container\\Container->build('App\\\\Services\\\\Te...')
+#1 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(881): Illuminate\\Container\\Container->resolve('App\\\\Services\\\\Te...', Array, true)
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(706): Illuminate\\Foundation\\Application->resolve('App\\\\Services\\\\Te...', Array)
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(866): Illuminate\\Container\\Container->make('App\\\\Services\\\\Te...', Array)
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(181): Illuminate\\Foundation\\Application->make('App\\\\Services\\\\Te...')
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(124): Illuminate\\Container\\BoundMethod::addDependencyForCallParameter(Object(Illuminate\\Foundation\\Application), Object(ReflectionParameter), Array, Array)
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Container\\BoundMethod::getMethodDependencies(Object(Illuminate\\Foundation\\Application), Array, Array)
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#9 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(661): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Command\\Command.php(326): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(152): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Application.php(1098): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#15 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand(Object(App\\Console\\Commands\\AutoGenerateAllTechnicalAnalysisCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Application.php(175): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(102): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(155): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\np\\laravel-trading-dashboard\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 {main}
+
+[previous exception] [object] (ReflectionException(code: -1): Class \"App\\Services\\TechnicalAnalysisGeneratorService\" does not exist at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php:889)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(889): ReflectionClass->__construct('App\\\\Services\\\\Te...')
+#1 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(770): Illuminate\\Container\\Container->build('App\\\\Services\\\\Te...')
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(881): Illuminate\\Container\\Container->resolve('App\\\\Services\\\\Te...', Array, true)
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(706): Illuminate\\Foundation\\Application->resolve('App\\\\Services\\\\Te...', Array)
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(866): Illuminate\\Container\\Container->make('App\\\\Services\\\\Te...', Array)
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(181): Illuminate\\Foundation\\Application->make('App\\\\Services\\\\Te...')
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(124): Illuminate\\Container\\BoundMethod::addDependencyForCallParameter(Object(Illuminate\\Foundation\\Application), Object(ReflectionParameter), Array, Array)
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Container\\BoundMethod::getMethodDependencies(Object(Illuminate\\Foundation\\Application), Array, Array)
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#9 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(661): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Command\\Command.php(326): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(152): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#15 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Application.php(1098): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand(Object(App\\Console\\Commands\\AutoGenerateAllTechnicalAnalysisCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 C:\\np\\laravel-trading-dashboard\\vendor\\symfony\\console\\Application.php(175): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(102): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(155): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\np\\laravel-trading-dashboard\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 {main}
+"} 
+[2026-05-08 04:24:18] local.ERROR: Route [bot-pairs.index] not defined. {"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Route [bot-pairs.index] not defined. at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:467)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(826): Illuminate\\Routing\\UrlGenerator->route('bot-pairs.index', Array, true)
+#1 C:\\np\\laravel-trading-dashboard\\resources\\views\\layout\\header.blade.php(270): route('bot-pairs.index')
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\np\\\\laravel-t...')
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\np\\\\laravel-t...', Array)
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\np\\\\laravel-t...', Array)
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\np\\\\laravel-t...', Array)
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#9 C:\\np\\laravel-trading-dashboard\\resources\\views\\layout\\master.blade.php(51): Illuminate\\View\\View->render()
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\np\\\\laravel-t...')
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\np\\\\laravel-t...', Array)
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\np\\\\laravel-t...', Array)
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\np\\\\laravel-t...', Array)
+#15 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#17 C:\\np\\laravel-trading-dashboard\\resources\\views\\dashboard.blade.php(431): Illuminate\\View\\View->render()
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\np\\\\laravel-t...')
+#19 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#20 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\np\\\\laravel-t...', Array)
+#21 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\np\\\\laravel-t...', Array)
+#22 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\np\\\\laravel-t...', Array)
+#23 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#24 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#25 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(69): Illuminate\\View\\View->render()
+#26 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(35): Illuminate\\Http\\Response->setContent(Object(Illuminate\\View\\View))
+#27 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(906): Illuminate\\Http\\Response->__construct(Object(Illuminate\\View\\View), 200, Array)
+#28 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(875): Illuminate\\Routing\\Router::toResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#29 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Routing\\Router->prepareResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#30 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#39 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#46 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#47 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#48 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#49 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#50 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#52 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#53 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#57 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#58 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#59 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#60 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#61 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#62 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#63 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#64 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#65 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#66 C:\\np\\laravel-trading-dashboard\\public\\index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#67 C:\\np\\laravel-trading-dashboard\\server.php(21): require_once('C:\\\\np\\\\laravel-t...')
+#68 {main}
+
+[previous exception] [object] (Symfony\\Component\\Routing\\Exception\\RouteNotFoundException(code: 0): Route [bot-pairs.index] not defined. at C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:467)
+[stacktrace]
+#0 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(826): Illuminate\\Routing\\UrlGenerator->route('bot-pairs.index', Array, true)
+#1 C:\\np\\laravel-trading-dashboard\\storage\\framework\\views\\669845d7479e66cd9d76ea869638b7e997c9d3b5.php(270): route('bot-pairs.index')
+#2 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\np\\\\laravel-t...')
+#3 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#4 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\np\\\\laravel-t...', Array)
+#5 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\np\\\\laravel-t...', Array)
+#6 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\np\\\\laravel-t...', Array)
+#7 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#8 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#9 C:\\np\\laravel-trading-dashboard\\storage\\framework\\views\\741e8facf90d9ca4b2ca16fcbadf558833401942.php(51): Illuminate\\View\\View->render()
+#10 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\np\\\\laravel-t...')
+#11 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#12 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\np\\\\laravel-t...', Array)
+#13 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\np\\\\laravel-t...', Array)
+#14 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\np\\\\laravel-t...', Array)
+#15 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#16 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#17 C:\\np\\laravel-trading-dashboard\\storage\\framework\\views\\b7fd7ef2ae740f6aef17a40e32cdf5dba6ab3684.php(432): Illuminate\\View\\View->render()
+#18 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\np\\\\laravel-t...')
+#19 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#20 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\np\\\\laravel-t...', Array)
+#21 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\np\\\\laravel-t...', Array)
+#22 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\np\\\\laravel-t...', Array)
+#23 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#24 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#25 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(69): Illuminate\\View\\View->render()
+#26 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(35): Illuminate\\Http\\Response->setContent(Object(Illuminate\\View\\View))
+#27 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(906): Illuminate\\Http\\Response->__construct(Object(Illuminate\\View\\View), 200, Array)
+#28 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(875): Illuminate\\Routing\\Router::toResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#29 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Routing\\Router->prepareResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#30 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#39 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#46 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#47 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#48 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#49 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#50 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#52 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#53 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#57 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#58 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#59 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#60 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#61 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#62 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#63 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#64 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#65 C:\\np\\laravel-trading-dashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#66 C:\\np\\laravel-trading-dashboard\\public\\index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#67 C:\\np\\laravel-trading-dashboard\\server.php(21): require_once('C:\\\\np\\\\laravel-t...')
+#68 {main}
+"} 
