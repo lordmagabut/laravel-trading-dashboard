@@ -50,16 +50,19 @@ class TechnicalAnalysisGeneratorService
             'symbol' => $symbol,
             'execution_timeframe' => $executionTimeframe,
             'higher_timeframe_bias' => $this->contextValue($context, [
+                'smc_summary.higher_timeframe_bias',
                 'higher_timeframe_bias',
                 'bias.higher_timeframe_bias',
                 'summary.higher_timeframe_bias',
             ], 'neutral'),
             'execution_bias' => $this->contextValue($context, [
+                'smc_summary.execution_bias',
                 'execution_bias',
                 'bias.execution_bias',
                 'summary.execution_bias',
             ], 'neutral'),
             'preferred_action' => $this->contextValue($context, [
+                'smc_summary.preferred_action',
                 'preferred_action',
                 'summary.preferred_action',
             ], 'WAIT'),

@@ -17,8 +17,15 @@ use App\Http\Controllers\TechnicalAnalysisWorkflowController;
 Route::post('/technical-analyses/generate', [TechnicalAnalysisWorkflowController::class, 'generate'])
     ->name('api.technical-analyses.generate');
 
+Route::get('/technical-analyses/pending', [TechnicalAnalysisWorkflowController::class, 'pendingTechnicalAnalyses'])
+    ->name('api.technical-analyses.pending');
+
+Route::post('/technical-analyses/{technicalAnalysis}/technical-result', [TechnicalAnalysisWorkflowController::class, 'technicalResult'])
+    ->name('api.technical-analyses.technical-result');
+
 Route::post('/technical-analyses/{technicalAnalysis}/ai-result', [TechnicalAnalysisWorkflowController::class, 'aiResult'])
     ->name('api.technical-analyses.ai-result');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

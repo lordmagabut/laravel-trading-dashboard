@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\TechnicalAnalysis;
-use App\Models\TradeSignal;
 use App\Services\TechnicalAnalysisPromptService;
 use App\Services\TechnicalContextService;
 use Illuminate\Http\Request;
@@ -83,16 +82,19 @@ class TechnicalAnalysisWorkflowController extends Controller
             'symbol' => $symbol,
             'execution_timeframe' => $executionTimeframe,
             'higher_timeframe_bias' => $this->contextValue($context, [
+                'smc_summary.higher_timeframe_bias',
                 'higher_timeframe_bias',
                 'bias.higher_timeframe_bias',
                 'summary.higher_timeframe_bias',
             ], 'neutral'),
             'execution_bias' => $this->contextValue($context, [
+                'smc_summary.execution_bias',
                 'execution_bias',
                 'bias.execution_bias',
                 'summary.execution_bias',
             ], 'neutral'),
             'preferred_action' => $this->contextValue($context, [
+                'smc_summary.preferred_action',
                 'preferred_action',
                 'summary.preferred_action',
             ], 'WAIT'),
@@ -134,13 +136,77 @@ class TechnicalAnalysisWorkflowController extends Controller
         return view('technical.analyses.show', compact('technicalAnalysis'));
     }
 
-    public function aiResult(Request $request, TechnicalAnalysis $technicalAnalysis)
+    public function pendingTechnicalAnalyses(Request $request)
+    {
+        $validated = $request->validate([
+            'symbol' => ['nullable', 'string', 'max:20'],
+            'execution_timeframe' => ['nullable', 'string', 'max:10'],
+            'limit' => ['nullable', 'integer', 'min:1', 'max:50'],
+            'mark_sent' => ['nullable', 'boolean'],
+        ]);
+
+        $limit = (int) ($validated['limit'] ?? 10);
+        $markSent = $request->boolean('mark_sent', true);
+
+        return DB::transaction(function () use ($validated, $limit, $markSent) {
+            $analyses = TechnicalAnalysis::query()
+                ->where('status', 'GENERATED')
+                ->when(isset($validated['symbol']), function ($query) use ($validated) {
+                    $query->where('symbol', strtoupper($validated['symbol']));
+                })
+                ->when(isset($validated['execution_timeframe']), function ($query) use ($validated) {
+                    $query->where('execution_timeframe', strtoupper($validated['execution_timeframe']));
+                })
+                ->orderBy('created_at')
+                ->limit($limit)
+                ->lockForUpdate()
+                ->get();
+
+            if ($markSent && $analyses->isNotEmpty()) {
+                $analyses->each(function (TechnicalAnalysis $analysis) {
+                    $analysis->update([
+                        'status' => 'SENT_TO_TECHNICAL_AGENT',
+                        'notes' => $this->appendNote($analysis->notes, 'Sent to Technical Agent.'),
+                    ]);
+                });
+
+                $analyses = TechnicalAnalysis::query()
+                    ->whereIn('id', $analyses->pluck('id'))
+                    ->orderBy('created_at')
+                    ->get();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $analyses->isEmpty()
+                    ? 'No pending technical analyses.'
+                    : 'Pending technical analyses retrieved.',
+                'data' => $analyses->map(fn (TechnicalAnalysis $analysis) => [
+                    'id' => $analysis->id,
+                    'analysis_uuid' => $analysis->analysis_uuid,
+                    'symbol' => $analysis->symbol,
+                    'execution_timeframe' => $analysis->execution_timeframe,
+                    'context_candle_time' => optional($analysis->context_candle_time)->toDateTimeString(),
+                    'higher_timeframe_bias' => $analysis->higher_timeframe_bias,
+                    'execution_bias' => $analysis->execution_bias,
+                    'preferred_action' => $analysis->preferred_action,
+                    'current_price' => $analysis->current_price,
+                    'raw_context_json' => $analysis->raw_context_json,
+                    'prompt_text' => $analysis->prompt_text,
+                    'status' => $analysis->status,
+                ]),
+            ]);
+        });
+    }
+
+    public function technicalResult(Request $request, TechnicalAnalysis $technicalAnalysis)
     {
         $validated = $request->validate([
             'decision' => ['required', 'string', 'in:BUY,SELL,NO_TRADE'],
             'confidence' => ['required', 'integer', 'min:0', 'max:100'],
             'reason_summary' => ['nullable', 'string'],
             'reasons' => ['nullable', 'array'],
+            'technical_setup' => ['nullable', 'array'],
             'agent_name' => ['nullable', 'string', 'max:100'],
             'agent_model' => ['nullable', 'string', 'max:100'],
 
@@ -168,59 +234,21 @@ class TechnicalAnalysisWorkflowController extends Controller
                 'confidence' => $validated['confidence'],
                 'reason_summary' => $validated['reason_summary'] ?? null,
                 'reasons_json' => $validated['reasons'] ?? [],
-                'status' => 'AI_COMPLETED',
-                'notes' => $this->appendNote($technicalAnalysis->notes, 'AI result received.'),
+                'status' => 'TECHNICAL_COMPLETED',
+                'notes' => $this->appendNote($technicalAnalysis->notes, 'Technical Agent result received.'),
             ]);
-
-            $tradeSignal = null;
-
-            if (in_array($decision, ['BUY', 'SELL'], true)) {
-                $signalPayload = $validated['signal'] ?? [];
-
-                $tradeSignal = TradeSignal::firstOrCreate(
-                    [
-                        'technical_analysis_id' => $technicalAnalysis->id,
-                    ],
-                    [
-                        'signal_uuid' => (string) Str::uuid(),
-                        'symbol' => $technicalAnalysis->symbol,
-                        'timeframe' => $technicalAnalysis->execution_timeframe,
-                        'decision' => $decision,
-                        'side' => $decision,
-                        'entry_type' => $signalPayload['entry_type'] ?? 'MARKET',
-                        'entry_price' => $signalPayload['entry_price'] ?? $technicalAnalysis->current_price,
-                        'stop_loss' => $signalPayload['stop_loss'] ?? null,
-                        'take_profit_1' => $signalPayload['take_profit_1'] ?? null,
-                        'take_profit_2' => $signalPayload['take_profit_2'] ?? null,
-                        'take_profit_3' => $signalPayload['take_profit_3'] ?? null,
-                        'risk_reward' => $signalPayload['risk_reward'] ?? null,
-                        'risk_percent' => $signalPayload['risk_percent'] ?? 1,
-                        'lot_size' => $signalPayload['lot_size'] ?? null,
-                        'confidence' => $validated['confidence'],
-                        'reason_summary' => $validated['reason_summary'] ?? null,
-                        'reasons_json' => $validated['reasons'] ?? [],
-                        'invalidation' => $signalPayload['invalidation'] ?? null,
-                        'status' => 'PENDING',
-                        'expired_at' => now()->addMinutes(30),
-                        'notes' => 'Created automatically from AI technical analysis.',
-                    ]
-                );
-
-                $technicalAnalysis->update([
-                    'status' => 'SIGNAL_CREATED',
-                    'notes' => $this->appendNote($technicalAnalysis->notes, 'Trade signal created.'),
-                ]);
-            }
 
             return response()->json([
                 'success' => true,
-                'message' => $tradeSignal
-                    ? 'AI result saved and trade signal created.'
-                    : 'AI result saved. No trade signal created.',
+                'message' => 'Technical result saved. No trade signal created.',
                 'technical_analysis' => $technicalAnalysis->fresh(),
-                'trade_signal' => $tradeSignal,
             ]);
         });
+    }
+
+    public function aiResult(Request $request, TechnicalAnalysis $technicalAnalysis)
+    {
+        return $this->technicalResult($request, $technicalAnalysis);
     }
 
     private function buildContext(

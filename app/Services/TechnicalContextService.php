@@ -8,6 +8,10 @@ class TechnicalContextService
 {
     protected array $analysisTimeframes = ['D1', 'H4', 'H1', 'M15', 'M5'];
 
+    public function __construct(
+        protected SmcContextService $smcContextService
+    ) {}
+
     public function build(string $symbol, string $executionTimeframe = 'M15'): array
     {
         $symbol = strtoupper($symbol);
@@ -25,10 +29,12 @@ class TechnicalContextService
                 'preferred_action' => 'NO_TRADE',
                 'reason' => [],
             ],
+            'smc' => [],
         ];
 
         foreach ($this->analysisTimeframes as $timeframe) {
             $candles = $this->getCandles($symbol, $timeframe, 300);
+            $result['smc'][$timeframe] = $this->smcContextService->analyze($candles, $timeframe);
 
             if (count($candles) < 60) {
                 $result['bias'][$timeframe] = [
@@ -51,6 +57,7 @@ class TechnicalContextService
         }
 
         $result['summary'] = $this->buildSummary($result['bias'], $executionTimeframe);
+        $result['smc_summary'] = $this->buildSmcSummary($result['smc'], $executionTimeframe);
 
         return $result;
     }
@@ -387,6 +394,57 @@ class TechnicalContextService
         return [
             'higher_timeframe_bias' => $higherBias,
             'execution_bias' => $executionBias,
+            'preferred_action' => $preferredAction,
+            'reason' => $reason,
+        ];
+    }
+
+    protected function buildSmcSummary(array $smc, string $executionTimeframe): array
+    {
+        $directions = collect(['D1', 'H4', 'H1'])
+            ->map(fn ($tf) => $smc[$tf]['bias'] ?? 'neutral')
+            ->filter(fn ($value) => in_array($value, ['bullish', 'bearish', 'neutral']))
+            ->values();
+
+        $bullishCount = $directions->filter(fn ($value) => $value === 'bullish')->count();
+        $bearishCount = $directions->filter(fn ($value) => $value === 'bearish')->count();
+
+        $higherBias = 'neutral';
+
+        if ($bullishCount >= 2) {
+            $higherBias = 'bullish';
+        }
+
+        if ($bearishCount >= 2) {
+            $higherBias = 'bearish';
+        }
+
+        $executionBias = $smc[$executionTimeframe]['bias'] ?? 'neutral';
+        $executionStructure = $smc[$executionTimeframe]['structure'] ?? 'unknown';
+        $executionLastEvent = data_get($smc, "{$executionTimeframe}.last_event.type");
+
+        $preferredAction = 'NO_TRADE';
+        $reason = [];
+
+        if ($higherBias === 'bullish' && in_array($executionBias, ['bullish', 'neutral'], true)) {
+            $preferredAction = 'LOOK_FOR_BUY';
+            $reason[] = 'SMC higher timeframe mayoritas bullish.';
+        } elseif ($higherBias === 'bearish' && in_array($executionBias, ['bearish', 'neutral'], true)) {
+            $preferredAction = 'LOOK_FOR_SELL';
+            $reason[] = 'SMC higher timeframe mayoritas bearish.';
+        } else {
+            $reason[] = 'SMC bias antar timeframe belum selaras.';
+        }
+
+        if ($executionLastEvent) {
+            $reason[] = "SMC event terakhir pada {$executionTimeframe}: {$executionLastEvent}.";
+        }
+
+        return [
+            'higher_timeframe_bias' => $higherBias,
+            'execution_bias' => $executionBias,
+            'execution_structure' => $executionStructure,
+            'execution_last_event' => $executionLastEvent,
             'preferred_action' => $preferredAction,
             'reason' => $reason,
         ];

@@ -28,6 +28,12 @@ class TechnicalAnalysisPromptService
             ?? data_get($context, 'latest.close')
             ?? null;
 
+        $smcHigherBias = data_get($context, 'smc_summary.higher_timeframe_bias', 'neutral');
+        $smcExecutionBias = data_get($context, 'smc_summary.execution_bias', 'neutral');
+        $smcExecutionStructure = data_get($context, 'smc_summary.execution_structure', 'unknown');
+        $smcLastEvent = data_get($context, 'smc_summary.execution_last_event', 'none');
+        $smcPreferredAction = data_get($context, 'smc_summary.preferred_action', 'NO_TRADE');
+
         $contextJson = json_encode($context, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         return <<<PROMPT
@@ -44,12 +50,19 @@ Trading instrument:
 - Preferred action: {$preferredAction}
 - Current price: {$currentPrice}
 
+Objective SMC context:
+- SMC higher timeframe bias: {$smcHigherBias}
+- SMC execution bias: {$smcExecutionBias}
+- SMC execution structure: {$smcExecutionStructure}
+- SMC last execution event: {$smcLastEvent}
+- SMC preferred action: {$smcPreferredAction}
+
 Rules:
 1. Decision must be one of: BUY, SELL, NO_TRADE.
 2. Only return BUY or SELL if setup is clear, aligned, and has valid risk-reward.
 3. If context is unclear, mixed, late entry, near invalidation, or bad risk-reward, return NO_TRADE.
 4. Do not force trade.
-5. Use technical reasons from EMA, ATR, swing, BOS, support/resistance, and multi-timeframe bias.
+5. Use technical reasons from SMC structure, BOS, CHoCH, liquidity sweep, supply/demand zones, EMA, ATR, swing, support/resistance, and multi-timeframe bias.
 6. Return JSON only. No markdown. No explanation outside JSON.
 
 Expected JSON format:
