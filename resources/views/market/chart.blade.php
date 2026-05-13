@@ -199,7 +199,7 @@
 
 @push('custom-scripts')
 <script>
-  const candlesUrl = @json(route('market.chart.candles'));
+  const candlesUrl = @json(route('market.chart.candles', [], false));
 
   let chart;
   let candleSeries;

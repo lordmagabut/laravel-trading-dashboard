@@ -373,7 +373,7 @@
 
 @push('custom-scripts')
 <script>
-  const technicalContextUrl = @json(route('technical.context.api'));
+  const technicalContextUrl = @json(route('technical.context.api', [], false));
 
   function toneClass(value) {
     const normalized = String(value ?? '').toLowerCase();
