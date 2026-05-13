@@ -253,36 +253,6 @@
   <nav class="bottom-navbar">
     <div class="container">
       <ul class="nav page-navigation">
-        @if(auth()->user()?->can('view market chart') || auth()->user()?->can('view technical context') || auth()->user()?->can('review trade signals'))
-        <li class="nav-item {{ active_class(['signal-dashboard', 'technical-context', 'market-chart']) }}">
-          <a href="#" class="nav-link">
-            <i class="link-icon" data-feather="database"></i>
-            <span class="menu-title">Data</span>
-            <i class="link-arrow"></i>
-          </a>
-          <div class="submenu">
-            <ul class="submenu-item">
-              @can('review trade signals')
-              <li class="nav-item"><a class="nav-link {{ active_class(['signal-dashboard']) }}" href="{{ route('signals.index') }}">Signal Dashboard</a></li>
-              @endcan
-              @can('view technical context')
-              <li class="nav-item"><a class="nav-link {{ active_class(['technical-context']) }}" href="{{ route('technical.context.page') }}">Technical Context</a></li>
-              @endcan
-              @can('view market chart')
-              <li class="nav-item"><a class="nav-link {{ active_class(['market-chart']) }}" href="{{ route('market.chart') }}">Market Chart</a></li>
-              @endcan
-            </ul>
-          </div>
-        </li>
-        @endif
-        @can('manage technical analyses')
-        <li class="nav-item {{ function_exists('active_class') ? active_class(['technical-analyses']) : '' }}">
-          <a href="{{ route('technical-analyses.index') }}" class="nav-link">
-            <i class="link-icon" data-feather="cpu"></i>
-            <span class="link-title">Technical Analyses</span>
-          </a>
-        </li>
-        @endcan
         @can('manage bot pairs')
         <li class="nav-item {{ function_exists('active_class') ? active_class(['bot-pair-settings', 'bot-pair-settings/*']) : '' }}">
           <a href="{{ route('bot-pairs.index') }}" class="nav-link">
@@ -291,6 +261,37 @@
           </a>
         </li>
         @endcan
+
+        @if(
+          auth()->user()?->can('view market chart') ||
+          auth()->user()?->can('view technical context') ||
+          auth()->user()?->can('manage technical analyses') ||
+          auth()->user()?->can('review trade signals')
+        )
+        <li class="nav-item {{ active_class(['market-chart', 'technical-context', 'technical-analyses', 'technical-analyses/*', 'signal-dashboard']) }}">
+          <a href="#" class="nav-link">
+            <i class="link-icon" data-feather="database"></i>
+            <span class="menu-title">Workflow</span>
+            <i class="link-arrow"></i>
+          </a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              @can('view market chart')
+              <li class="nav-item"><a class="nav-link {{ active_class(['market-chart']) }}" href="{{ route('market.chart') }}">1. Market Chart</a></li>
+              @endcan
+              @can('view technical context')
+              <li class="nav-item"><a class="nav-link {{ active_class(['technical-context']) }}" href="{{ route('technical.context.page') }}">2. Technical Context</a></li>
+              @endcan
+              @can('manage technical analyses')
+              <li class="nav-item"><a class="nav-link {{ active_class(['technical-analyses', 'technical-analyses/*']) }}" href="{{ route('technical-analyses.index') }}">3. Technical Analyses</a></li>
+              @endcan
+              @can('review trade signals')
+              <li class="nav-item"><a class="nav-link {{ active_class(['signal-dashboard']) }}" href="{{ route('signals.index') }}">4. Signal Dashboard</a></li>
+              @endcan
+            </ul>
+          </div>
+        </li>
+        @endif
       </ul>
     </div>
   </nav>

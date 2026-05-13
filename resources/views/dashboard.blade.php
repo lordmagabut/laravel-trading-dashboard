@@ -1,431 +1,434 @@
 @extends('layout.master')
 
-@push('plugin-styles')
-  <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+@push('style')
+<style>
+    .control-hero,
+    .control-panel {
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .control-panel {
+        background: #fff;
+    }
+
+    .metric-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+        height: 100%;
+    }
+
+    .metric-label {
+        font-size: .74rem;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        color: #64748b;
+        font-weight: 700;
+    }
+
+    .metric-value {
+        margin-top: .65rem;
+        margin-bottom: .35rem;
+        font-size: 2rem;
+        line-height: 1.1;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .metric-note {
+        color: #64748b;
+        font-size: .85rem;
+        margin-bottom: 0;
+    }
+
+    .tone-bullish { border-color: #bbf7d0; background: #f4fbf6; }
+    .tone-bullish .metric-value { color: #15803d; }
+    .tone-bearish { border-color: #fecaca; background: #fff5f5; }
+    .tone-bearish .metric-value { color: #dc2626; }
+    .tone-neutral { border-color: #f6d365; background: #fffdf2; }
+    .tone-neutral .metric-value { color: #b7791f; }
+    .tone-info { border-color: #bfdbfe; background: #f8fbff; }
+    .tone-info .metric-value { color: #2563eb; }
+
+    .section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 1rem;
+    }
+
+    .mini-stat {
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 1rem;
+        background: #fff;
+        height: 100%;
+    }
+
+    .mini-stat h3 {
+        margin-bottom: .25rem;
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+
+    .mini-stat p {
+        margin-bottom: 0;
+        color: #64748b;
+        font-size: .85rem;
+    }
+
+    .dashboard-table thead th {
+        background: #f8fafc;
+        color: #334155;
+        font-size: .78rem;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+    }
+
+    #dashboardMarketChart {
+        width: 100%;
+        height: 420px;
+    }
+
+    .dashboard-list-item + .dashboard-list-item {
+        border-top: 1px solid #e5e7eb;
+    }
+</style>
 @endpush
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-  <div>
-    <h4 class="mb-3 mb-md-0">Welcome to Dashboard</h4>
-  </div>
-  <div class="d-flex align-items-center flex-wrap text-nowrap">
-    <div class="input-group flatpickr wd-200 me-2 mb-2 mb-md-0" id="dashboardDate">
-      <span class="input-group-text input-group-addon bg-transparent border-primary" data-toggle><i data-feather="calendar" class="text-primary"></i></span>
-      <input type="text" class="form-control bg-transparent border-primary" placeholder="Select date" data-input>
+@php
+    $marketTone = 'tone-info';
+    $statusText = $smcSummary['preferred_action'] ?? $summary['preferred_action'] ?? 'NO_TRADE';
+    $execBias = $smcSummary['execution_bias'] ?? $summary['execution_bias'] ?? '-';
+    $htfBias = $smcSummary['higher_timeframe_bias'] ?? $summary['higher_timeframe_bias'] ?? '-';
+    $smcStructure = $smcSummary['execution_structure'] ?? '-';
+    $smcLastEvent = $smcSummary['execution_last_event'] ?? '-';
+
+    if (str_contains(strtolower((string) $statusText), 'buy') || str_contains(strtolower((string) $execBias), 'bullish')) {
+        $marketTone = 'tone-bullish';
+    } elseif (str_contains(strtolower((string) $statusText), 'sell') || str_contains(strtolower((string) $execBias), 'bearish')) {
+        $marketTone = 'tone-bearish';
+    } elseif (str_contains(strtolower((string) $statusText), 'no_trade') || str_contains(strtolower((string) $statusText), 'neutral')) {
+        $marketTone = 'tone-neutral';
+    }
+
+    $signalBadge = [
+        'PENDING' => 'warning',
+        'APPROVED' => 'success',
+        'REJECTED' => 'danger',
+        'CANCELLED' => 'secondary',
+        'EXECUTED' => 'success',
+        'FAILED' => 'danger',
+    ];
+@endphp
+
+<div class="page-content">
+    <div class="control-hero p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+            <div>
+                <h4 class="mb-1">Trading Control Room</h4>
+                <p class="text-muted mb-0">Ringkasan kondisi market, antrian analisa, dan status signal dalam satu layar kerja.</p>
+            </div>
+            <div class="text-md-end">
+                <div class="metric-label">Feed terakhir</div>
+                <div class="fw-semibold text-dark">{{ $lastFeedTime ?: '-' }}</div>
+            </div>
+        </div>
     </div>
-    <button type="button" class="btn btn-outline-primary btn-icon-text me-2 mb-2 mb-md-0">
-      <i class="btn-icon-prepend" data-feather="printer"></i>
-      Print
-    </button>
-    <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
-      <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-      Download Report
-    </button>
-  </div>
+
+    <div class="row">
+        <div class="col-xl-8 grid-margin stretch-card">
+            <div class="card control-panel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+                        <div>
+                            <div class="section-title mb-1">Market Overview</div>
+                            <p class="text-muted mb-0">{{ $focusSymbol ?: '-' }} · {{ $focusTimeframe ?: '-' }}</p>
+                        </div>
+                        <div class="text-md-end">
+                            <div class="metric-label">Current Price</div>
+                            <div class="fw-bold fs-4 text-dark">{{ $lastCandle ? number_format((float) $lastCandle->close, 3) : '-' }}</div>
+                            <small class="{{ ($priceChange ?? 0) >= 0 ? 'text-success' : 'text-danger' }}">
+                                @if($priceChange !== null)
+                                    {{ $priceChange >= 0 ? '+' : '' }}{{ number_format($priceChange, 3) }}
+                                    ({{ $priceChangePercent >= 0 ? '+' : '' }}{{ number_format($priceChangePercent, 2) }}%)
+                                @else
+                                    -
+                                @endif
+                            </small>
+                        </div>
+                    </div>
+
+                    <div id="dashboardMarketChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 grid-margin stretch-card">
+            <div class="card metric-card {{ $marketTone }}">
+                <div class="card-body">
+                    <div class="metric-label">Market Condition</div>
+                    <div class="metric-value">{{ str_replace('_', ' ', $statusText) }}</div>
+                    <p class="metric-note">
+                        {{ $focusSymbol ?: '-' }} {{ $focusTimeframe ?: '-' }} sedang dibaca dengan konteks classic + SMC.
+                    </p>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-6">
+                            <div class="mini-stat">
+                                <h3>{{ $htfBias ?: '-' }}</h3>
+                                <p>HTF Bias</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mini-stat">
+                                <h3>{{ $execBias ?: '-' }}</h3>
+                                <p>Execution Bias</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mini-stat">
+                                <h3>{{ $smcStructure ?: '-' }}</h3>
+                                <p>SMC Structure</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mini-stat">
+                                <h3>{{ $smcLastEvent ?: '-' }}</h3>
+                                <p>Last Event</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 grid-margin stretch-card">
+            <div class="card control-panel">
+                <div class="card-body">
+                    <div class="section-title">Workflow Summary</div>
+                    <div class="row g-3">
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['pairs_enabled'] }}</h3>
+                                <p>Enabled Pairs</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['pairs_auto'] }}</h3>
+                                <p>Auto Generate</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['analyses_generated'] }}</h3>
+                                <p>Generated</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['analyses_sent'] }}</h3>
+                                <p>Sent to Agent</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['analyses_completed'] }}</h3>
+                                <p>Completed</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['signals_pending'] }}</h3>
+                                <p>Pending Signals</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['signals_approved'] }}</h3>
+                                <p>Approved</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xl-2">
+                            <div class="mini-stat">
+                                <h3>{{ $workflowSummary['signals_executed'] }}</h3>
+                                <p>Executed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6 grid-margin stretch-card">
+            <div class="card control-panel">
+                <div class="card-body">
+                    <div class="section-title">Recent Technical Analyses</div>
+                    <div class="table-responsive">
+                        <table class="table table-hover dashboard-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Pair</th>
+                                    <th>Bias</th>
+                                    <th>Status</th>
+                                    <th>Decision</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($recentAnalyses as $analysis)
+                                    <tr>
+                                        <td><small>{{ optional($analysis->created_at)->format('Y-m-d H:i') }}</small></td>
+                                        <td><strong>{{ $analysis->symbol }}</strong> <small class="text-muted">{{ $analysis->execution_timeframe }}</small></td>
+                                        <td>{{ $analysis->execution_bias ?: '-' }}</td>
+                                        <td><span class="badge bg-secondary">{{ $analysis->status }}</span></td>
+                                        <td>{{ $analysis->decision ?: '-' }}</td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="5" class="text-center text-muted py-4">Belum ada technical analysis.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 grid-margin stretch-card">
+            <div class="card control-panel">
+                <div class="card-body">
+                    <div class="section-title">Recent Trade Signals</div>
+                    @forelse($recentSignals as $signal)
+                        <div class="dashboard-list-item py-3 d-flex justify-content-between align-items-start gap-3">
+                            <div>
+                                <div class="fw-semibold">{{ $signal->symbol }} <span class="text-muted">{{ $signal->timeframe }}</span></div>
+                                <div class="small text-muted">{{ optional($signal->created_at)->format('Y-m-d H:i') }}</div>
+                                <div class="small mt-1">{{ \Illuminate\Support\Str::limit($signal->reason_summary, 90) }}</div>
+                            </div>
+                            <div class="text-end">
+                                <div>
+                                    @if($signal->decision === 'BUY')
+                                        <span class="badge bg-success">BUY</span>
+                                    @elseif($signal->decision === 'SELL')
+                                        <span class="badge bg-danger">SELL</span>
+                                    @else
+                                        <span class="badge bg-secondary">{{ $signal->decision }}</span>
+                                    @endif
+                                </div>
+                                <div class="mt-2">
+                                    <span class="badge bg-{{ $signalBadge[$signal->status] ?? 'secondary' }}">{{ $signal->status }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center text-muted py-4">Belum ada trade signal.</div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="row">
-  <div class="col-12 col-xl-12 stretch-card">
-    <div class="row flex-grow-1">
-      <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">New Customers</h6>
-              <div class="dropdown mb-2">
-                <button class="btn btn-link p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">3,897</h3>
-                <div class="d-flex align-items-baseline">
-                  <p class="text-success">
-                    <span>+3.3%</span>
-                    <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-md-12 col-xl-7">
-                <div id="customersChart" class="mt-md-3 mt-xl-0"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">New Orders</h6>
-              <div class="dropdown mb-2">
-                <button class="btn btn-link p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">35,084</h3>
-                <div class="d-flex align-items-baseline">
-                  <p class="text-danger">
-                    <span>-2.8%</span>
-                    <i data-feather="arrow-down" class="icon-sm mb-1"></i>
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-md-12 col-xl-7">
-                <div id="ordersChart" class="mt-md-3 mt-xl-0"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">Growth</h6>
-              <div class="dropdown mb-2">
-                <button class="btn btn-link p-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">89.87%</h3>
-                <div class="d-flex align-items-baseline">
-                  <p class="text-success">
-                    <span>+2.8%</span>
-                    <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-md-12 col-xl-7">
-                <div id="growthChart" class="mt-md-3 mt-xl-0"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> <!-- row -->
-
-<div class="row">
-  <div class="col-12 col-xl-12 grid-margin stretch-card">
-    <div class="card overflow-hidden">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
-          <h6 class="card-title mb-0">Revenue</h6>
-          <div class="dropdown">
-            <button class="btn btn-link p-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="row align-items-start mb-2">
-          <div class="col-md-7">
-            <p class="text-muted tx-13 mb-3 mb-md-0">Revenue is the income that a business has from its normal business activities, usually from the sale of goods and services to customers.</p>
-          </div>
-          <div class="col-md-5 d-flex justify-content-md-end">
-            <div class="btn-group mb-3 mb-md-0" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-outline-primary">Today</button>
-              <button type="button" class="btn btn-outline-primary d-none d-md-block">Week</button>
-              <button type="button" class="btn btn-primary">Month</button>
-              <button type="button" class="btn btn-outline-primary">Year</button>
-            </div>
-          </div>
-        </div>
-        <div id="revenueChart"></div>
-      </div>
-    </div>
-  </div>
-</div> <!-- row -->
-
-<div class="row">
-  <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Monthly sales</h6>
-          <div class="dropdown mb-2">
-            <button class="btn btn-link p-0" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-            </div>
-          </div>
-        </div>
-        <p class="text-muted">Sales are activities related to selling or the number of goods or services sold in a given time period.</p>
-        <div id="monthlySalesChart"></div>
-      </div> 
-    </div>
-  </div>
-  <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Cloud storage</h6>
-          <div class="dropdown mb-2">
-            <button class="btn btn-link p-0" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-            </div>
-          </div>
-        </div>
-        <div id="storageChart"></div>
-        <div class="row mb-3">
-          <div class="col-6 d-flex justify-content-end">
-            <div>
-              <label class="d-flex align-items-center justify-content-end tx-10 text-uppercase fw-bolder">Total storage <span class="p-1 ms-1 rounded-circle bg-secondary"></span></label>
-              <h5 class="fw-bolder mb-0 text-end">8TB</h5>
-            </div>
-          </div>
-          <div class="col-6">
-            <div>
-              <label class="d-flex align-items-center tx-10 text-uppercase fw-bolder"><span class="p-1 me-1 rounded-circle bg-primary"></span> Used storage</label>
-              <h5 class="fw-bolder mb-0">~5TB</h5>
-            </div>
-          </div>
-        </div>
-        <div class="d-grid">
-          <button class="btn btn-primary">Upgrade storage</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> <!-- row -->
-
-<div class="row">
-  <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Inbox</h6>
-          <div class="dropdown mb-2">
-            <button class="btn btn-link p-0" type="button" id="dropdownMenuButton6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton6">
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex flex-column">
-          <a href="javascript:;" class="d-flex align-items-center border-bottom pb-3">
-            <div class="me-3">
-              <img src="{{ url('https://via.placeholder.com/35x35') }}" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="fw-normal text-body mb-1">Leonardo Payne</h6>
-                <p class="text-muted tx-12">12.30 PM</p>
-              </div>
-              <p class="text-muted tx-13">Hey! there I'm available...</p>
-            </div>
-          </a>
-          <a href="javascript:;" class="d-flex align-items-center border-bottom py-3">
-            <div class="me-3">
-              <img src="{{ url('https://via.placeholder.com/35x35') }}" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="fw-normal text-body mb-1">Carl Henson</h6>
-                <p class="text-muted tx-12">02.14 AM</p>
-              </div>
-              <p class="text-muted tx-13">I've finished it! See you so..</p>
-            </div>
-          </a>
-          <a href="javascript:;" class="d-flex align-items-center border-bottom py-3">
-            <div class="me-3">
-              <img src="{{ url('https://via.placeholder.com/35x35') }}" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="fw-normal text-body mb-1">Jensen Combs</h6>
-                <p class="text-muted tx-12">08.22 PM</p>
-              </div>
-              <p class="text-muted tx-13">This template is awesome!</p>
-            </div>
-          </a>
-          <a href="javascript:;" class="d-flex align-items-center border-bottom py-3">
-            <div class="me-3">
-              <img src="{{ url('https://via.placeholder.com/35x35') }}" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="fw-normal text-body mb-1">Amiah Burton</h6>
-                <p class="text-muted tx-12">05.49 AM</p>
-              </div>
-              <p class="text-muted tx-13">Nice to meet you</p>
-            </div>
-          </a>
-          <a href="javascript:;" class="d-flex align-items-center border-bottom py-3">
-            <div class="me-3">
-              <img src="{{ url('https://via.placeholder.com/35x35') }}" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="fw-normal text-body mb-1">Yaretzi Mayo</h6>
-                <p class="text-muted tx-12">01.19 AM</p>
-              </div>
-              <p class="text-muted tx-13">Hey! there I'm available...</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-7 col-xl-8 stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Projects</h6>
-          <div class="dropdown mb-2">
-            <button class="btn btn-link p-0" type="button" id="dropdownMenuButton7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton7">
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-hover mb-0">
-            <thead>
-              <tr>
-                <th class="pt-0">#</th>
-                <th class="pt-0">Project Name</th>
-                <th class="pt-0">Start Date</th>
-                <th class="pt-0">Due Date</th>
-                <th class="pt-0">Status</th>
-                <th class="pt-0">Assign</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>NobleUI jQuery</td>
-                <td>01/01/2023</td>
-                <td>26/04/2023</td>
-                <td><span class="badge bg-danger">Released</span></td>
-                <td>Leonardo Payne</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>NobleUI Angular</td>
-                <td>01/01/2023</td>
-                <td>26/04/2023</td>
-                <td><span class="badge bg-success">Review</span></td>
-                <td>Carl Henson</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>NobleUI ReactJs</td>
-                <td>01/05/2023</td>
-                <td>10/09/2023</td>
-                <td><span class="badge bg-info">Pending</span></td>
-                <td>Jensen Combs</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>NobleUI VueJs</td>
-                <td>01/01/2023</td>
-                <td>31/11/2023</td>
-                <td><span class="badge bg-warning">Work in Progress</span>
-                </td>
-                <td>Amiah Burton</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>NobleUI Laravel</td>
-                <td>01/01/2023</td>
-                <td>31/12/2023</td>
-                <td><span class="badge bg-danger">Coming soon</span></td>
-                <td>Yaretzi Mayo</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>NobleUI NodeJs</td>
-                <td>01/01/2023</td>
-                <td>31/12/2023</td>
-                <td><span class="badge bg-primary">Coming soon</span></td>
-                <td>Carl Henson</td>
-              </tr>
-              <tr>
-                <td class="border-bottom">3</td>
-                <td class="border-bottom">NobleUI EmberJs</td>
-                <td class="border-bottom">01/05/2023</td>
-                <td class="border-bottom">10/11/2023</td>
-                <td class="border-bottom"><span class="badge bg-info">Pending</span></td>
-                <td class="border-bottom">Jensen Combs</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div> 
-    </div>
-  </div>
-</div> <!-- row -->
 @endsection
 
 @push('plugin-scripts')
-  <script src="{{ asset('assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
-  <script src="{{ asset('assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
+<script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
 @endpush
 
 @push('custom-scripts')
-  <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+<script>
+    const dashboardCandlesUrl = @json(route('market.chart.candles', [], false));
+    const dashboardSymbol = @json($focusSymbol);
+    const dashboardTimeframe = @json($focusTimeframe);
+    const dashboardLimit = @json($candlesLimit);
+
+    let dashboardChart;
+    let dashboardSeries;
+
+    function initDashboardChart() {
+        const element = document.getElementById('dashboardMarketChart');
+        if (!element) return;
+
+        dashboardChart = LightweightCharts.createChart(element, {
+            width: element.clientWidth,
+            height: 420,
+            layout: {
+                background: { color: '#ffffff' },
+                textColor: '#334155'
+            },
+            grid: {
+                vertLines: { color: '#f1f5f9' },
+                horzLines: { color: '#f1f5f9' }
+            },
+            rightPriceScale: { borderColor: '#e2e8f0' },
+            timeScale: {
+                borderColor: '#e2e8f0',
+                timeVisible: true,
+                secondsVisible: false
+            }
+        });
+
+        dashboardSeries = dashboardChart.addCandlestickSeries({
+            upColor: '#10b981',
+            downColor: '#ef4444',
+            borderUpColor: '#10b981',
+            borderDownColor: '#ef4444',
+            wickUpColor: '#10b981',
+            wickDownColor: '#ef4444'
+        });
+    }
+
+    function parseUtcDateTime(utcTimeString) {
+        const match = /^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[ T]([0-9]{2}):([0-9]{2}):([0-9]{2}))?$/.exec(utcTimeString);
+        if (!match) {
+            const fallback = new Date(utcTimeString + 'Z');
+            return Number.isNaN(fallback.getTime()) ? null : fallback;
+        }
+
+        const [, year, month, day, hour = '0', minute = '0', second = '0'] = match;
+        return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second)));
+    }
+
+    async function loadDashboardChart() {
+        if (!dashboardSymbol || !dashboardTimeframe) return;
+
+        const url = `${dashboardCandlesUrl}?symbol=${encodeURIComponent(dashboardSymbol)}&timeframe=${encodeURIComponent(dashboardTimeframe)}&limit=${encodeURIComponent(dashboardLimit)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        const candles = (result.data ?? []).map((candle) => {
+            const date = parseUtcDateTime(candle.tick_time);
+            return {
+                time: date ? Math.round(date.getTime() / 1000) : candle.time,
+                open: Number(candle.open),
+                high: Number(candle.high),
+                low: Number(candle.low),
+                close: Number(candle.close),
+            };
+        });
+
+        dashboardSeries.setData(candles);
+        dashboardChart.timeScale().fitContent();
+    }
+
+    window.addEventListener('resize', function () {
+        const element = document.getElementById('dashboardMarketChart');
+        if (dashboardChart && element) {
+            dashboardChart.applyOptions({ width: element.clientWidth });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initDashboardChart();
+        loadDashboardChart();
+    });
+</script>
 @endpush

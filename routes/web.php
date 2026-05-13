@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BotPairSettingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketChartController;
 use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\SignalDashboardController;
@@ -24,9 +25,9 @@ Route::post('/auth/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->middleware('permission:view dashboard')->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])
+        ->middleware('permission:view dashboard')
+        ->name('dashboard');
 
     Route::get('/market-chart', [MarketChartController::class, 'index'])
         ->middleware('permission:view market chart')
