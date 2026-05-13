@@ -218,17 +218,25 @@
                 @can('manage users')
                 <li class="dropdown-item py-2">
                   <a href="{{ route('users.index') }}" class="text-body ms-0">
-                    <i class="me-2 icon-md" data-feather="edit"></i>
-                    <span>Manage Users</span>
+                    <i class="me-2 icon-md" data-feather="users"></i>
+                    <span>Users</span>
+                  </a>
+                </li>
+                @endcan
+                @can('manage roles')
+                <li class="dropdown-item py-2">
+                  <a href="{{ route('roles.index') }}" class="text-body ms-0">
+                    <i class="me-2 icon-md" data-feather="shield"></i>
+                    <span>Roles</span>
                   </a>
                 </li>
                 @endcan
                 <li class="dropdown-item py-2">
                   <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="btn btn-link text-body text-decoration-none p-0 ms-0">
-                    <i class="me-2 icon-md" data-feather="log-out"></i>
-                    <span>Log Out</span>
+                    <button type="submit" class="btn btn-link text-body text-decoration-none p-0 ms-0 d-flex align-items-center w-100">
+                      <i class="me-2 icon-md" data-feather="log-out"></i>
+                      <span>Log Out</span>
                     </button>
                   </form>
                 </li>
@@ -283,25 +291,6 @@
           </a>
         </li>
         @endcan
-        @if(auth()->user()?->can('manage users') || auth()->user()?->can('manage roles'))
-        <li class="nav-item {{ active_class(['users', 'users/*', 'roles', 'roles/*']) }}">
-          <a href="#" class="nav-link">
-            <i class="link-icon" data-feather="shield"></i>
-            <span class="menu-title">Access Control</span>
-            <i class="link-arrow"></i>
-          </a>
-          <div class="submenu">
-            <ul class="submenu-item">
-              @can('manage users')
-              <li class="nav-item"><a class="nav-link {{ active_class(['users', 'users/*']) }}" href="{{ route('users.index') }}">Users</a></li>
-              @endcan
-              @can('manage roles')
-              <li class="nav-item"><a class="nav-link {{ active_class(['roles', 'roles/*']) }}" href="{{ route('roles.index') }}">Roles</a></li>
-              @endcan
-            </ul>
-          </div>
-        </li>
-        @endif
       </ul>
     </div>
   </nav>
