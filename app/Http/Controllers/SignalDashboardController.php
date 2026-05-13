@@ -36,7 +36,7 @@ class SignalDashboardController extends Controller
             ")
             ->latest('created_at');
 
-        $signals = $signalsQuery->paginate(20)->withQueryString();
+        $signals = $signalsQuery->get();
 
         $summary = TradeSignal::query()
             ->select('status', DB::raw('COUNT(*) as total'))

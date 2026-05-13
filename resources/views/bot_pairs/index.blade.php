@@ -1,5 +1,10 @@
 @extends('layout.master')
 
+@push('plugin-styles')
+<link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet" />
+@endpush
+
 @section('content')
 
 <div class="page-content">
@@ -152,7 +157,7 @@
             <h6 class="card-title">Bot Pair List</h6>
 
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
+                <table id="botPairsTable" class="table table-hover table-bordered align-middle nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>Symbol</th>
@@ -307,13 +312,36 @@
                 </table>
             </div>
 
-            <div class="mt-3">
-                {{ $pairs->links() }}
-            </div>
-
         </div>
     </div>
 
 </div>
 
 @endsection
+
+@push('plugin-scripts')
+<script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+@endpush
+
+@push('custom-scripts')
+<script>
+    $(document).ready(function () {
+        $('#botPairsTable').DataTable({
+            responsive: true,
+            autoWidth: false,
+            pageLength: 25,
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+            order: [[6, 'desc']],
+            columnDefs: [
+                { orderable: false, targets: [9] }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json'
+            }
+        });
+    });
+</script>
+@endpush

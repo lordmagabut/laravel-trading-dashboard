@@ -351,7 +351,7 @@ def get_nested(data: Any, path: list[Any]) -> Any:
             continue
 
         if not isinstance(current, dict) or key not in current:
-            return None
+            return None 
         current = current[key]
 
     return current

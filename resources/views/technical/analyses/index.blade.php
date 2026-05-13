@@ -1,14 +1,25 @@
 @extends('layout.master')
 
+@push('plugin-styles')
+<link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet" />
+@endpush
+
 @section('content')
 
 @php
     $statusBadge = [
         'GENERATED' => 'warning',
-        'SENT_TO_AI' => 'primary',
-        'AI_COMPLETED' => 'info',
-        'SIGNAL_CREATED' => 'success',
+        'SENT_TO_TECHNICAL_AGENT' => 'primary',
+        'TECHNICAL_COMPLETED' => 'info',
         'FAILED' => 'danger',
+    ];
+
+    $statusLabels = [
+        'GENERATED' => 'Generated',
+        'SENT_TO_TECHNICAL_AGENT' => 'Sent to Technical Agent',
+        'TECHNICAL_COMPLETED' => 'Technical Completed',
+        'FAILED' => 'Failed',
     ];
 @endphp
 
@@ -32,11 +43,11 @@
     @endif
 
     <div class="row">
-        @foreach(['GENERATED', 'SENT_TO_AI', 'AI_COMPLETED', 'SIGNAL_CREATED', 'FAILED'] as $status)
+        @foreach(['GENERATED', 'SENT_TO_TECHNICAL_AGENT', 'TECHNICAL_COMPLETED', 'FAILED'] as $status)
             <div class="col-md-2 stretch-card grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="text-muted mb-2">{{ $status }}</h6>
+                        <h6 class="text-muted mb-2">{{ $statusLabels[$status] ?? $status }}</h6>
                         <h3 class="mb-0">{{ $summary[$status] ?? 0 }}</h3>
                     </div>
                 </div>
@@ -99,7 +110,7 @@
                     <label class="form-label">Status</label>
                     <select name="status" class="form-select">
                         <option value="">All Status</option>
-                        @foreach(['GENERATED', 'SENT_TO_AI', 'AI_COMPLETED', 'SIGNAL_CREATED', 'FAILED'] as $status)
+                        @foreach(['GENERATED', 'SENT_TO_TECHNICAL_AGENT', 'TECHNICAL_COMPLETED', 'FAILED'] as $status)
                             <option value="{{ $status }}" @selected(request('status') === $status)>
                                 {{ $status }}
                             </option>
@@ -146,7 +157,7 @@
             <h6 class="card-title">Analysis List</h6>
 
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
+                <table id="technicalAnalysesTable" class="table table-hover table-bordered align-middle nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>Time</th>
@@ -240,13 +251,36 @@
                 </table>
             </div>
 
-            <div class="mt-3">
-                {{ $analyses->links() }}
-            </div>
-
         </div>
     </div>
 
 </div>
 
 @endsection
+
+@push('plugin-scripts')
+<script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+@endpush
+
+@push('custom-scripts')
+<script>
+    $(document).ready(function () {
+        $('#technicalAnalysesTable').DataTable({
+            responsive: true,
+            autoWidth: false,
+            pageLength: 25,
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+            order: [[0, 'desc']],
+            columnDefs: [
+                { orderable: false, targets: [12] }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json'
+            }
+        });
+    });
+</script>
+@endpush

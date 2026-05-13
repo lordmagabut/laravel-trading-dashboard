@@ -25,8 +25,7 @@ class TechnicalAnalysisWorkflowController extends Controller
                 $query->where('status', $request->status);
             })
             ->latest('created_at')
-            ->paginate(20)
-            ->withQueryString();
+            ->get();
 
         $symbols = TechnicalAnalysis::query()
             ->select('symbol')

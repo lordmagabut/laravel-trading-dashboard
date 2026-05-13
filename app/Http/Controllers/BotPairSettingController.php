@@ -13,15 +13,15 @@ class BotPairSettingController extends Controller
         $pairs = TradingBotPair::query()
             ->orderBy('symbol')
             ->orderBy('entry_timeframe')
-            ->paginate(20);
+            ->get();
 
-        $symbols = $pairs->getCollection()
+        $symbols = $pairs
             ->pluck('symbol')
             ->filter()
             ->unique()
             ->values();
 
-        $timeframes = $pairs->getCollection()
+        $timeframes = $pairs
             ->pluck('entry_timeframe')
             ->filter()
             ->unique()
