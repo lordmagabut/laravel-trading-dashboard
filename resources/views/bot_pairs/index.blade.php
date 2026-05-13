@@ -5,11 +5,97 @@
 <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet" />
 @endpush
 
+@push('style')
+<style>
+    .dashboard-hero {
+        padding: 1.5rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    .dashboard-summary-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .dashboard-summary-card .card-body {
+        min-height: 124px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .dashboard-summary-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 6px;
+        background: #cbd5e1;
+    }
+
+    .summary-kicker {
+        font-size: .75rem;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        font-weight: 700;
+        color: #64748b;
+        margin-bottom: .75rem;
+    }
+
+    .summary-value {
+        margin-bottom: 0;
+        font-size: 2.25rem;
+        line-height: 1.1;
+        font-weight: 700;
+        background: transparent !important;
+    }
+
+    .tone-total { background: #f8fbff; border-color: #bfdbfe; }
+    .tone-total::before, .tone-total .summary-value { background: #2563eb; color: #2563eb; }
+    .tone-enabled { background: #f4fbf6; border-color: #bbf7d0; }
+    .tone-enabled::before, .tone-enabled .summary-value { background: #15803d; color: #15803d; }
+    .tone-auto { background: #f1fbf4; border-color: #86efac; }
+    .tone-auto::before, .tone-auto .summary-value { background: #166534; color: #166534; }
+    .tone-disabled { background: #fff5f5; border-color: #fecaca; }
+    .tone-disabled::before, .tone-disabled .summary-value { background: #dc2626; color: #dc2626; }
+
+    .dashboard-panel {
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .dashboard-table thead th {
+        background: #f8fafc;
+        color: #334155;
+        font-size: .78rem;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+    }
+
+    .dashboard-section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: .02em;
+        color: #0f172a;
+        margin-bottom: 1rem;
+    }
+</style>
+@endpush
+
 @section('content')
 
 <div class="page-content">
 
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+    <div class="dashboard-hero d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
             <h4 class="mb-1">Bot Pair Settings</h4>
             <p class="text-muted mb-0">
@@ -38,45 +124,45 @@
 
     <div class="row">
         <div class="col-md-3 stretch-card grid-margin">
-            <div class="card">
+            <div class="card dashboard-summary-card tone-total">
                 <div class="card-body">
-                    <h6 class="text-muted mb-2">Total Pair</h6>
-                    <h3 class="mb-0">{{ $summary['total'] }}</h3>
+                    <div class="summary-kicker">Total Pair</div>
+                    <h3 class="summary-value">{{ $summary['total'] }}</h3>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 stretch-card grid-margin">
-            <div class="card">
+            <div class="card dashboard-summary-card tone-enabled">
                 <div class="card-body">
-                    <h6 class="text-muted mb-2">Enabled</h6>
-                    <h3 class="mb-0">{{ $summary['enabled'] }}</h3>
+                    <div class="summary-kicker">Enabled</div>
+                    <h3 class="summary-value">{{ $summary['enabled'] }}</h3>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 stretch-card grid-margin">
-            <div class="card">
+            <div class="card dashboard-summary-card tone-auto">
                 <div class="card-body">
-                    <h6 class="text-muted mb-2">Auto Generate</h6>
-                    <h3 class="mb-0">{{ $summary['auto_generate'] }}</h3>
+                    <div class="summary-kicker">Auto Generate</div>
+                    <h3 class="summary-value">{{ $summary['auto_generate'] }}</h3>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3 stretch-card grid-margin">
-            <div class="card">
+            <div class="card dashboard-summary-card tone-disabled">
                 <div class="card-body">
-                    <h6 class="text-muted mb-2">Disabled</h6>
-                    <h3 class="mb-0">{{ $summary['disabled'] }}</h3>
+                    <div class="summary-kicker">Disabled</div>
+                    <h3 class="summary-value">{{ $summary['disabled'] }}</h3>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card mb-4">
+    <div class="card dashboard-panel mb-4">
         <div class="card-body">
-            <h6 class="card-title">Tambah Bot Pair</h6>
+            <div class="dashboard-section-title">Tambah Bot Pair</div>
 
             <form method="POST" action="{{ route('bot-pairs.store') }}" class="row g-3 align-items-end">
                 @csrf
@@ -151,13 +237,13 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card dashboard-panel">
         <div class="card-body">
 
-            <h6 class="card-title">Bot Pair List</h6>
+            <div class="dashboard-section-title">Bot Pair List</div>
 
             <div class="table-responsive">
-                <table id="botPairsTable" class="table table-hover table-bordered align-middle nowrap" style="width:100%">
+                <table id="botPairsTable" class="table table-hover table-bordered align-middle nowrap dashboard-table" style="width:100%">
                     <thead>
                         <tr>
                             <th>Symbol</th>
