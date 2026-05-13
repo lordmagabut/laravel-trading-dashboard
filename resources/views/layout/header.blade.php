@@ -3,7 +3,7 @@
     <div class="container">
       <div class="navbar-content">
         <a href="#" class="navbar-brand">
-          Noble<span>UI</span>
+          Trading<span>Dash</span>
         </a>
         <form class="search-form">
           <div class="input-group">
@@ -204,8 +204,8 @@
                   <img class="wd-80 ht-80 rounded-circle" src="{{ url('https://via.placeholder.com/80x80') }}" alt="">
                 </div>
                 <div class="text-center">
-                  <p class="tx-16 fw-bolder">Amiah Burton</p>
-                  <p class="tx-12 text-muted">amiahburton@gmail.com</p>
+                  <p class="tx-16 fw-bolder">{{ auth()->user()->name ?? 'Guest' }}</p>
+                  <p class="tx-12 text-muted">{{ auth()->user()->email ?? '-' }}</p>
                 </div>
               </div>
               <ul class="list-unstyled p-1">
@@ -215,23 +215,22 @@
                     <span>Profile</span>
                   </a>
                 </li>
+                @can('manage users')
                 <li class="dropdown-item py-2">
-                  <a href="javascript:;" class="text-body ms-0">
+                  <a href="{{ route('users.index') }}" class="text-body ms-0">
                     <i class="me-2 icon-md" data-feather="edit"></i>
-                    <span>Edit Profile</span>
+                    <span>Manage Users</span>
                   </a>
                 </li>
+                @endcan
                 <li class="dropdown-item py-2">
-                  <a href="javascript:;" class="text-body ms-0">
-                    <i class="me-2 icon-md" data-feather="repeat"></i>
-                    <span>Switch User</span>
-                  </a>
-                </li>
-                <li class="dropdown-item py-2">
-                  <a href="javascript:;" class="text-body ms-0">
+                  <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-link text-body text-decoration-none p-0 ms-0">
                     <i class="me-2 icon-md" data-feather="log-out"></i>
                     <span>Log Out</span>
-                  </a>
+                    </button>
+                  </form>
                 </li>
               </ul>
             </div>
@@ -246,6 +245,7 @@
   <nav class="bottom-navbar">
     <div class="container">
       <ul class="nav page-navigation">
+        @if(auth()->user()?->can('view market chart') || auth()->user()?->can('view technical context') || auth()->user()?->can('review trade signals'))
         <li class="nav-item {{ active_class(['signal-dashboard', 'technical-context', 'market-chart']) }}">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="database"></i>
@@ -254,24 +254,54 @@
           </a>
           <div class="submenu">
             <ul class="submenu-item">
+              @can('review trade signals')
               <li class="nav-item"><a class="nav-link {{ active_class(['signal-dashboard']) }}" href="{{ route('signals.index') }}">Signal Dashboard</a></li>
+              @endcan
+              @can('view technical context')
               <li class="nav-item"><a class="nav-link {{ active_class(['technical-context']) }}" href="{{ route('technical.context.page') }}">Technical Context</a></li>
+              @endcan
+              @can('view market chart')
               <li class="nav-item"><a class="nav-link {{ active_class(['market-chart']) }}" href="{{ route('market.chart') }}">Market Chart</a></li>
+              @endcan
             </ul>
           </div>
         </li>
+        @endif
+        @can('manage technical analyses')
         <li class="nav-item {{ function_exists('active_class') ? active_class(['technical-analyses']) : '' }}">
           <a href="{{ route('technical-analyses.index') }}" class="nav-link">
             <i class="link-icon" data-feather="cpu"></i>
             <span class="link-title">Technical Analyses</span>
           </a>
         </li>
+        @endcan
+        @can('manage bot pairs')
         <li class="nav-item {{ function_exists('active_class') ? active_class(['bot-pair-settings', 'bot-pair-settings/*']) : '' }}">
           <a href="{{ route('bot-pairs.index') }}" class="nav-link">
             <i class="link-icon" data-feather="settings"></i>
             <span class="link-title">Bot Pair Settings</span>
           </a>
         </li>
+        @endcan
+        @if(auth()->user()?->can('manage users') || auth()->user()?->can('manage roles'))
+        <li class="nav-item {{ active_class(['users', 'users/*', 'roles', 'roles/*']) }}">
+          <a href="#" class="nav-link">
+            <i class="link-icon" data-feather="shield"></i>
+            <span class="menu-title">Access Control</span>
+            <i class="link-arrow"></i>
+          </a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              @can('manage users')
+              <li class="nav-item"><a class="nav-link {{ active_class(['users', 'users/*']) }}" href="{{ route('users.index') }}">Users</a></li>
+              @endcan
+              @can('manage roles')
+              <li class="nav-item"><a class="nav-link {{ active_class(['roles', 'roles/*']) }}" href="{{ route('roles.index') }}">Roles</a></li>
+              @endcan
+            </ul>
+          </div>
+        </li>
+        @endif
       </ul>
     </div>
   </nav>
