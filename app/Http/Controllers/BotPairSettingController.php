@@ -29,6 +29,14 @@ class BotPairSettingController extends Controller
             ->values();
 
         $latestAnalyses = TechnicalAnalysis::query()
+            ->select([
+                'id',
+                'symbol',
+                'execution_timeframe',
+                'status',
+                'context_candle_time',
+                'created_at',
+            ])
             ->whereIn('symbol', $symbols)
             ->whereIn('execution_timeframe', $timeframes)
             ->latest('created_at')
