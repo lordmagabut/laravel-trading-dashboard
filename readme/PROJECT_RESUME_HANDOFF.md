@@ -2,6 +2,21 @@
 
 Dokumen ini adalah handoff terbaru proyek `laravel-trading-dashboard` agar mudah dilanjutkan di chat lain, termasuk di ChatGPT Web.
 
+## Update Terbaru - 2026-05-14
+
+Perubahan besar terakhir:
+
+- `SmcContextService` sudah di-upgrade menjadi SMC context yang lebih kaya, tetapi tetap menjaga contract lama.
+- SMC sekarang memisahkan `swing` dan `internal` structure, mendeteksi BOS/CHoCH, liquidity sweep, equal high/low, fair value gap, order block, premium/discount, dan strong/weak levels.
+- `raw_context_json` tetap menyimpan context lengkap untuk audit.
+- Prompt Technical Agent sekarang memakai `TechnicalContextCompactorService`, sehingga prompt ke OpenClaw hanya berisi context compact untuk decision making.
+- Bot Pair Settings sekarang punya `agent_risk_mode` per pair: `conservative`, `balanced`, `aggressive`.
+- `agent_risk_mode` hanya mengubah gaya rekomendasi Technical Agent, bukan kalkulasi SMC mentah dan bukan izin eksekusi final.
+- Technical Agent prompt sekarang membawa `agent_profile` dan policy sesuai mode pair.
+- Scheduler dan generate manual sudah sama-sama memakai compact prompt dan `agent_profile`.
+- Halaman `technical-analyses` dan `bot-pair-settings` sudah dioptimalkan agar tidak mengambil kolom besar `raw_context_json` dan `prompt_text` saat list view, untuk mencegah HTTP 500 akibat memory/timeout.
+- Test lokal terakhir: `php artisan test` = 7 passed.
+
 ## 1. Tujuan Proyek
 
 Proyek ini membangun sistem trading bot AI terdistribusi dengan arsitektur:
@@ -85,9 +100,18 @@ Field penting:
 - `enabled`
 - `auto_generate`
 - `higher_timeframes`
+- `agent_risk_mode`
 - `last_checked_at`
 - `last_generated_at`
 - `last_generated_candle_time`
+
+`agent_risk_mode` dipakai sebagai default gaya Technical Agent per pair:
+
+```text
+conservative = lebih selektif, conflict cenderung veto
+balanced     = mode normal, SMC boleh override conflict ringan
+aggressive   = lebih permisif untuk setup awal, terutama LIMIT/STOP dari FVG/OB
+```
 
 ### `technical_analyses`
 
@@ -140,6 +164,7 @@ Fungsi:
 - tambah/edit pair
 - enable/disable pair
 - aktif/nonaktif auto generate
+- set Technical Agent mode per pair: `conservative`, `balanced`, `aggressive`
 - generate manual
 - melihat latest analysis
 
@@ -206,9 +231,13 @@ SMC yang sudah dihitung:
 - BOS
 - CHoCH
 - liquidity sweep
+- equal high / equal low
 - demand zones
 - supply zones
+- order block detail
+- fair value gap
 - premium/discount
+- strong/weak levels
 - support/resistance SMC
 - SMC bias
 
@@ -219,23 +248,34 @@ bias
 summary
 smc
 smc_summary
+agent_profile
 ```
 
-Catatan penting:`r`n`r`n- kondisi terbaru menunjukkan hasil `auto-generate` baru sudah membawa SMC context dan `smc_summary``r`n- secara historis memang pernah ada row lama sebelum update SMC yang belum punya `smc_summary``r`n- jika row historis itu diproses agent, OpenClaw bisa memberi respons seperti `SMC context is unavailable`
+Catatan penting:
+
+- kondisi terbaru menunjukkan hasil `auto-generate` baru sudah membawa SMC context, `smc_summary`, dan `agent_profile`
+- secara historis memang pernah ada row lama sebelum update SMC yang belum punya `smc_summary`
+- jika row historis itu diproses agent, OpenClaw bisa memberi respons seperti `SMC context is unavailable`
 
 ## 6. Prompt Technical Agent
 
 Service:
 
 - [app/Services/TechnicalAnalysisPromptService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalAnalysisPromptService.php)
+- [app/Services/TechnicalContextCompactorService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalContextCompactorService.php)
 
 Prompt saat ini memuat:
 
 - classic summary
 - SMC summary
+- `agent_profile` dari Bot Pair Settings
+- policy Technical Agent sesuai `agent_risk_mode`
+- compact context untuk OpenClaw
 - instruksi output JSON only
 - instruksi bahwa agent hanya mengembalikan technical result
 - tidak membuat `trade_signals`
+
+`raw_context_json` tetap lengkap di database untuk audit, tetapi `prompt_text` memakai hasil compact agar token dan payload lebih kecil.
 
 ## 7. API Technical Agent yang Sudah Ada
 
@@ -398,6 +438,13 @@ Pendekatan:
 - tanpa modal kompleks
 
 Karena DataTables-nya client-side, controller list terkait sudah diubah dari `paginate()` ke `get()` agar semua data masuk ke browser.
+
+Catatan performa terbaru:
+
+- list `technical-analyses` tidak mengambil `raw_context_json`, `prompt_text`, atau `ai_response_json`
+- list `bot-pair-settings` tidak mengambil payload besar dari latest analysis
+- ini penting karena row lama bisa berisi SMC raw context sangat besar dan dapat memicu HTTP 500 akibat memory/timeout
+- detail page tetap boleh membaca payload besar saat user membuka satu analysis tertentu
 
 ### Halaman yang sudah dipoles
 
@@ -622,6 +669,7 @@ Tujuannya agar Laravel scheduler jalan otomatis di CasaOS.
 - [TechnicalContextService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalContextService.php)
 - [SmcContextService.php](C:/np/laravel-trading-dashboard/app/Services/SmcContextService.php)
 - [TechnicalAnalysisPromptService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalAnalysisPromptService.php)
+- [TechnicalContextCompactorService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalContextCompactorService.php)
 
 ### Controllers
 
@@ -686,7 +734,7 @@ Secara lokal sudah pernah berhasil:
 Status test terakhir lokal:
 
 ```text
-2 passed
+7 passed
 ```
 
 ## 17. Kondisi Proyek Sekarang
@@ -697,7 +745,8 @@ Yang sudah selesai:
 - classic technical context
 - SMC context objektif
 - simpan `smc_summary` ke `raw_context_json`
-- prompt Technical Agent
+- compact prompt Technical Agent
+- agent risk mode per pair di Bot Pair Settings
 - endpoint pending technical analysis
 - endpoint submit technical result
 - Technical Agent runner
@@ -710,10 +759,10 @@ Yang sudah selesai:
 - manajemen user dan role
 - navbar sesuai urutan workflow
 - fix mixed-content chart untuk domain HTTPS
+- fix HTTP 500 pada list `technical-analyses` dan `bot-pair-settings` akibat query mengambil payload JSON besar
 
 Yang belum stabil / belum selesai:
 
-- pastikan semua hasil scheduler baru selalu memuat `smc_summary`
 - jalankan Technical Agent runner end-to-end sampai konsisten `TECHNICAL_COMPLETED`
 - deploy RBAC/auth dengan benar di server/domain
 - `fundamental_analyses`
@@ -727,16 +776,17 @@ Yang belum stabil / belum selesai:
 Urutan lanjutan yang paling aman:
 
 1. Pastikan environment server/domain sinkron dengan dependency terbaru, terutama Spatie.
-2. Abaikan atau bersihkan hanya row historis lama yang dibuat sebelum update SMC, bila masih mengganggu testing.
-3. Restart scheduler CasaOS agar pasti memakai generator terbaru.
-4. Test runner Technical Agent end-to-end pada analysis baru yang jelas punya SMC.
-5. Verifikasi status:
+2. Jalankan `php artisan optimize:clear` setelah deploy perubahan prompt/compactor/controller.
+3. Abaikan atau bersihkan hanya row historis lama yang dibuat sebelum update SMC, bila masih mengganggu testing.
+4. Restart scheduler CasaOS agar pasti memakai generator terbaru.
+5. Test runner Technical Agent end-to-end pada analysis baru yang jelas punya SMC dan `agent_profile`.
+6. Verifikasi status:
 
 ```text
 GENERATED -> SENT_TO_TECHNICAL_AGENT -> TECHNICAL_COMPLETED
 ```
 
-6. Setelah Technical Agent stabil, lanjut desain tabel/workflow:
+7. Setelah Technical Agent stabil, lanjut desain tabel/workflow:
 
 ```text
 fundamental_analyses
@@ -745,7 +795,7 @@ entry_rules
 manager_decisions
 ```
 
-7. Setelah itu, pindahkan pembentukan `trade_signals` sepenuhnya ke workflow Manager Agent.
+8. Setelah itu, pindahkan pembentukan `trade_signals` sepenuhnya ke workflow Manager Agent.
 
 ## 19. Ringkasan Singkat untuk Handoff
 
@@ -753,10 +803,12 @@ Kalau ingin melanjutkan di chat lain, inti konteks terbarunya adalah:
 
 ```text
 Laravel dashboard sudah bisa auto-generate technical_analyses dari market_data per pair/timeframe.
-Technical context classic dan SMC sudah ada, lalu hasilnya dikirim ke Technical Agent OpenClaw lewat runner Python.
+Technical context classic dan SMC sudah ada, prompt ke Technical Agent sekarang compact, dan hasilnya dikirim ke OpenClaw lewat runner Python.
+Bot Pair Settings punya agent_risk_mode per pair: conservative, balanced, aggressive.
 Technical Agent tidak membuat trade_signals.
 Dashboard utama sudah diganti menjadi control room trading.
 Auth + role + permission dengan Spatie sudah ditambahkan, termasuk halaman Users dan Roles.
 Navbar sudah dirapikan mengikuti workflow, dan menu access control dipindah ke dropdown user.
+List Technical Analyses dan Bot Pair Settings sudah dioptimalkan agar tidak load raw_context_json/prompt_text besar di halaman index.
 Masalah utama yang tersisa sekarang adalah memastikan deploy server/domain sinkron dengan dependency terbaru dan memastikan workflow Technical Agent stabil end-to-end.
 ```
