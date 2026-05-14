@@ -15,7 +15,22 @@ class TechnicalAnalysisWorkflowController extends Controller
     public function index(Request $request)
     {
         $analyses = TechnicalAnalysis::query()
-            ->with('tradeSignals')
+            ->select([
+                'id',
+                'analysis_uuid',
+                'symbol',
+                'execution_timeframe',
+                'higher_timeframe_bias',
+                'execution_bias',
+                'preferred_action',
+                'current_price',
+                'decision',
+                'confidence',
+                'status',
+                'context_candle_time',
+                'created_at',
+            ])
+            ->withCount('tradeSignals')
             ->when($request->filled('symbol'), function ($query) use ($request) {
                 $query->where('symbol', $request->symbol);
             })

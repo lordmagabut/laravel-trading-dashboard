@@ -352,9 +352,9 @@
                                 </td>
 
                                 <td>
-                                    @if($analysis->tradeSignals->count())
+                                    @if($analysis->trade_signals_count)
                                         <span class="badge bg-success">
-                                            {{ $analysis->tradeSignals->count() }} signal
+                                            {{ $analysis->trade_signals_count }} signal
                                         </span>
                                     @else
                                         <span class="text-muted">-</span>
