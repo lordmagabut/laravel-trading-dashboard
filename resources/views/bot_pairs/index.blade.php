@@ -188,13 +188,24 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label class="form-label">Higher TF</label>
                     <input type="text"
                            name="higher_timeframes"
                            class="form-control"
                            value="{{ old('higher_timeframes', 'D1,H4,H1') }}"
                            placeholder="D1,H4,H1">
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Agent Mode</label>
+                    <select name="agent_risk_mode" class="form-select" required>
+                        @foreach(\App\Models\TradingBotPair::AGENT_RISK_MODES as $mode)
+                            <option value="{{ $mode }}" @selected(old('agent_risk_mode', 'balanced') === $mode)>
+                                {{ ucfirst($mode) }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="col-md-2">
@@ -219,7 +230,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <label class="form-label">Notes</label>
                     <input type="text"
                            name="notes"
@@ -249,6 +260,7 @@
                             <th>Symbol</th>
                             <th>Entry TF</th>
                             <th>Higher TF</th>
+                            <th>Agent Mode</th>
                             <th>Enabled</th>
                             <th>Auto Generate</th>
                             <th>Scheduler Status</th>
@@ -298,6 +310,19 @@
                                     @empty
                                         <span class="text-muted">-</span>
                                     @endforelse
+                                </td>
+
+                                <td>
+                                    @php
+                                        $modeBadge = match($pair->agent_risk_mode) {
+                                            'conservative' => 'secondary',
+                                            'aggressive' => 'danger',
+                                            default => 'info',
+                                        };
+                                    @endphp
+                                    <span class="badge bg-{{ $modeBadge }}">
+                                        {{ ucfirst($pair->agent_risk_mode ?? 'balanced') }}
+                                    </span>
                                 </td>
 
                                 <td>
@@ -389,7 +414,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" class="text-center text-muted py-4">
+                                <td colspan="11" class="text-center text-muted py-4">
                                     Belum ada bot pair setting.
                                 </td>
                             </tr>
@@ -420,9 +445,9 @@
             autoWidth: false,
             pageLength: 25,
             lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-            order: [[6, 'desc']],
+            order: [[7, 'desc']],
             columnDefs: [
-                { orderable: false, targets: [9] }
+                { orderable: false, targets: [10] }
             ],
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json'

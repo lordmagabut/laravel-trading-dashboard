@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\TechnicalAnalysis;
+use App\Models\TradingBotPair;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -42,6 +43,7 @@ class TechnicalAnalysisGeneratorService
         $context['symbol'] = $context['symbol'] ?? $symbol;
         $context['execution_timeframe'] = $context['execution_timeframe'] ?? $executionTimeframe;
         $context['context_candle_time'] = $latestCandleTime;
+        $context['agent_profile'] = $this->resolveAgentProfile($symbol, $executionTimeframe);
 
         $promptText = $this->promptService->build($context);
 
@@ -105,6 +107,16 @@ class TechnicalAnalysisGeneratorService
         throw new \RuntimeException(
             'TechnicalContextService tidak punya method build/generate/getContext/analyze. Sesuaikan nama method di TechnicalAnalysisGeneratorService.'
         );
+    }
+
+    private function resolveAgentProfile(string $symbol, string $executionTimeframe): array
+    {
+        $pair = TradingBotPair::query()
+            ->where('symbol', $symbol)
+            ->where('entry_timeframe', $executionTimeframe)
+            ->first();
+
+        return $pair?->agentProfile() ?? TradingBotPair::defaultAgentProfile();
     }
 
     private function contextValue(array $context, array $paths, mixed $default = null): mixed

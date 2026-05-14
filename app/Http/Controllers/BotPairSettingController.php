@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TechnicalAnalysis;
 use App\Models\TradingBotPair;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BotPairSettingController extends Controller
 {
@@ -59,6 +60,7 @@ class BotPairSettingController extends Controller
             'symbol' => ['required', 'string', 'max:30'],
             'entry_timeframe' => ['required', 'string', 'max:10'],
             'higher_timeframes' => ['nullable', 'string'],
+            'agent_risk_mode' => ['required', Rule::in(TradingBotPair::AGENT_RISK_MODES)],
             'enabled' => ['nullable'],
             'auto_generate' => ['nullable'],
             'notes' => ['nullable', 'string'],
@@ -82,6 +84,7 @@ class BotPairSettingController extends Controller
             'symbol' => $symbol,
             'entry_timeframe' => $entryTimeframe,
             'higher_timeframes' => $this->parseHigherTimeframes($validated['higher_timeframes'] ?? null),
+            'agent_risk_mode' => $validated['agent_risk_mode'],
             'enabled' => $request->boolean('enabled'),
             'auto_generate' => $request->boolean('auto_generate'),
             'notes' => $validated['notes'] ?? null,
@@ -103,6 +106,7 @@ class BotPairSettingController extends Controller
             'symbol' => ['required', 'string', 'max:30'],
             'entry_timeframe' => ['required', 'string', 'max:10'],
             'higher_timeframes' => ['nullable', 'string'],
+            'agent_risk_mode' => ['required', Rule::in(TradingBotPair::AGENT_RISK_MODES)],
             'enabled' => ['nullable'],
             'auto_generate' => ['nullable'],
             'notes' => ['nullable', 'string'],
@@ -127,6 +131,7 @@ class BotPairSettingController extends Controller
             'symbol' => $symbol,
             'entry_timeframe' => $entryTimeframe,
             'higher_timeframes' => $this->parseHigherTimeframes($validated['higher_timeframes'] ?? null),
+            'agent_risk_mode' => $validated['agent_risk_mode'],
             'enabled' => $request->boolean('enabled'),
             'auto_generate' => $request->boolean('auto_generate'),
             'notes' => $validated['notes'] ?? null,

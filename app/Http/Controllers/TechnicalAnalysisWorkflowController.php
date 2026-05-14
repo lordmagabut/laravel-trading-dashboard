@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TechnicalAnalysis;
+use App\Models\TradingBotPair;
 use App\Services\TechnicalAnalysisPromptService;
 use App\Services\TechnicalContextService;
 use Illuminate\Http\Request;
@@ -73,6 +74,7 @@ class TechnicalAnalysisWorkflowController extends Controller
 
         $context['symbol'] = $context['symbol'] ?? $symbol;
         $context['execution_timeframe'] = $context['execution_timeframe'] ?? $executionTimeframe;
+        $context['agent_profile'] = $this->resolveAgentProfile($symbol, $executionTimeframe);
 
         $promptText = $promptService->build($context);
 
@@ -285,6 +287,16 @@ class TechnicalAnalysisWorkflowController extends Controller
         }
 
         return $default;
+    }
+
+    private function resolveAgentProfile(string $symbol, string $executionTimeframe): array
+    {
+        $pair = TradingBotPair::query()
+            ->where('symbol', $symbol)
+            ->where('entry_timeframe', $executionTimeframe)
+            ->first();
+
+        return $pair?->agentProfile() ?? TradingBotPair::defaultAgentProfile();
     }
 
     private function appendNote(?string $oldNote, ?string $newNote): string

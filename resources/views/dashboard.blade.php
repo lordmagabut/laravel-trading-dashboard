@@ -136,7 +136,10 @@
             </div>
             <div class="text-md-end">
                 <div class="metric-label">Feed terakhir</div>
-                <div class="fw-semibold text-dark">{{ $lastFeedTime ?: '-' }}</div>
+                <div class="fw-semibold text-dark" id="lastFeedTimeDisplay" data-utc="{{ $lastFeedTime ?: '' }}">
+                    {{ $lastFeedTime ?: '-' }}
+                </div>
+                <small class="text-muted" id="lastFeedTimeZone"></small>
             </div>
         </div>
     </div>
@@ -354,6 +357,49 @@
     let dashboardChart;
     let dashboardSeries;
 
+    function formatUtcToUserTime(utcTimeString) {
+        if (!utcTimeString) {
+            return { text: '-', zone: '' };
+        }
+
+        const date = parseUtcDateTime(utcTimeString);
+        if (!date) {
+            return { text: utcTimeString, zone: '' };
+        }
+
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const formatter = new Intl.DateTimeFormat('id-ID', {
+            timeZone: userTimeZone,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        return {
+            text: formatter.format(date),
+            zone: userTimeZone
+        };
+    }
+
+    function updateLastFeedTimeDisplay() {
+        const display = document.getElementById('lastFeedTimeDisplay');
+        const zone = document.getElementById('lastFeedTimeZone');
+
+        if (!display) return;
+
+        const utcTime = display.dataset.utc || '';
+        const formatted = formatUtcToUserTime(utcTime);
+
+        display.textContent = formatted.text;
+
+        if (zone) {
+            zone.textContent = formatted.zone ? `Timezone: ${formatted.zone}` : '';
+        }
+    }
+
     function initDashboardChart() {
         const element = document.getElementById('dashboardMarketChart');
         if (!element) return;
@@ -427,6 +473,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
+        updateLastFeedTimeDisplay();
         initDashboardChart();
         loadDashboardChart();
     });

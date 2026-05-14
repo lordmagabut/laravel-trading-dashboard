@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TradingBotPair;
 use App\Services\TechnicalContextService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,9 +31,19 @@ class TechnicalContextController extends Controller
 
         $symbol = strtoupper($request->query('symbol'));
         $executionTimeframe = strtoupper($request->query('execution_timeframe', 'M15'));
+        $context = $service->build($symbol, $executionTimeframe);
+        $context['agent_profile'] = $this->resolveAgentProfile($symbol, $executionTimeframe);
 
-        return response()->json(
-            $service->build($symbol, $executionTimeframe)
-        );
+        return response()->json($context);
+    }
+
+    private function resolveAgentProfile(string $symbol, string $executionTimeframe): array
+    {
+        $pair = TradingBotPair::query()
+            ->where('symbol', $symbol)
+            ->where('entry_timeframe', $executionTimeframe)
+            ->first();
+
+        return $pair?->agentProfile() ?? TradingBotPair::defaultAgentProfile();
     }
 }

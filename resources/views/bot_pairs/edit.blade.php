@@ -71,6 +71,20 @@
                     </div>
 
                     <div class="col-md-4">
+                        <label class="form-label">Technical Agent Mode</label>
+                        <select name="agent_risk_mode" class="form-select" required>
+                            @foreach(\App\Models\TradingBotPair::AGENT_RISK_MODES as $mode)
+                                <option value="{{ $mode }}" @selected(old('agent_risk_mode', $tradingBotPair->agent_risk_mode ?? 'balanced') === $mode)>
+                                    {{ ucfirst($mode) }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <small class="text-muted">
+                            Conservative lebih selektif, balanced normal, aggressive lebih cepat memberi setup.
+                        </small>
+                    </div>
+
+                    <div class="col-md-4">
                         <label class="form-label d-block">Enabled</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input"

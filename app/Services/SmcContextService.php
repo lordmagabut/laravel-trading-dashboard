@@ -4,8 +4,10 @@ namespace App\Services;
 
 class SmcContextService
 {
-    public function analyze(array $candles, string $timeframe): array
+    public function analyze(array $candles, string $timeframe, array $config = []): array
     {
+        $config = array_merge($this->defaultConfig(), $config);
+
         if (count($candles) < 30) {
             return [
                 'timeframe' => $timeframe,
@@ -17,16 +19,41 @@ class SmcContextService
             ];
         }
 
-        $externalSwings = $this->detectSwings($candles, 5);
-        $internalSwings = $this->detectSwings($candles, 2);
-        $events = $this->detectStructureEvents($candles, $externalSwings);
+        $swingDepth = $this->usableDepth($candles, (int) $config['swing_length']);
+        $internalDepth = $this->usableDepth($candles, (int) $config['internal_length']);
+
+        $externalSwings = $this->detectSwings($candles, $swingDepth);
+        $internalSwings = $this->detectSwings($candles, $internalDepth);
+
+        $events = $this->detectStructureEvents($candles, $externalSwings, 'swing');
+        $internalEvents = $this->detectStructureEvents($candles, $internalSwings, 'internal');
+
         $lastEvent = $this->last($events);
+        $lastInternalEvent = $this->last($internalEvents);
         $structure = $this->resolveStructure($events, $externalSwings);
+        $internalStructure = $this->resolveStructure($internalEvents, $internalSwings);
+
         $liquiditySweeps = $this->detectLiquiditySweeps($candles, $externalSwings);
-        $zones = $this->buildZones($candles, $events);
+        $equalHighsLows = $config['enable_equal_high_low']
+            ? $this->detectEqualHighsLows(
+                $candles,
+                $this->usableDepth($candles, (int) $config['equal_high_low_length']),
+                (float) $config['equal_high_low_threshold'],
+                (int) $config['atr_period']
+            )
+            : ['equal_highs' => [], 'equal_lows' => []];
+
+        $swingOrderBlocks = $this->buildOrderBlocks($candles, $events, 'swing', $config);
+        $internalOrderBlocks = $this->buildOrderBlocks($candles, $internalEvents, 'internal', $config);
+        $zones = $this->buildLegacyZones($swingOrderBlocks);
+
         $lastCandle = $this->last($candles);
         $currentPrice = (float) $lastCandle['close'];
         $dealingRange = $this->buildDealingRange($externalSwings, $currentPrice);
+        $fairValueGaps = $config['enable_fvg']
+            ? $this->detectFairValueGaps($candles, (bool) $config['fvg_auto_threshold'])
+            : ['bullish' => [], 'bearish' => []];
+        $strongWeakLevels = $this->buildStrongWeakLevels($externalSwings, $structure);
         $smcSupportResistance = $this->buildSmcSupportResistance(
             $zones,
             $externalSwings,
@@ -36,15 +63,20 @@ class SmcContextService
         [$bias, $score, $reason] = $this->buildBias(
             $structure,
             $lastEvent,
+            $internalStructure,
+            $lastInternalEvent,
             $liquiditySweeps,
             $zones,
             $dealingRange,
+            $fairValueGaps,
             $currentPrice
         );
 
         return [
             'timeframe' => $timeframe,
             'status' => 'ok',
+
+            // Legacy keys kept for dashboard, smc_summary, and Technical Agent prompt.
             'structure' => $structure,
             'bias' => $bias,
             'score' => $score,
@@ -65,7 +97,70 @@ class SmcContextService
             'support_resistance' => $smcSupportResistance,
             'premium_discount' => $dealingRange,
             'reason' => $reason,
+
+            // New richer SMC context, modeled conceptually after Lux-style components.
+            'config' => [
+                'swing_length' => $swingDepth,
+                'internal_length' => $internalDepth,
+                'atr_period' => $config['atr_period'],
+                'order_block_mitigation' => $config['order_block_mitigation'],
+            ],
+            'structure_detail' => [
+                'swing' => [
+                    'trend' => $structure,
+                    'last_event' => $lastEvent,
+                    'events' => array_slice($events, -20),
+                    'swings' => [
+                        'highs' => array_slice($externalSwings['highs'], -20),
+                        'lows' => array_slice($externalSwings['lows'], -20),
+                    ],
+                ],
+                'internal' => [
+                    'trend' => $internalStructure,
+                    'last_event' => $lastInternalEvent,
+                    'events' => array_slice($internalEvents, -20),
+                    'swings' => [
+                        'highs' => array_slice($internalSwings['highs'], -20),
+                        'lows' => array_slice($internalSwings['lows'], -20),
+                    ],
+                ],
+            ],
+            'order_blocks' => [
+                'swing' => $swingOrderBlocks,
+                'internal' => $internalOrderBlocks,
+            ],
+            'liquidity' => [
+                'sweeps' => array_slice($liquiditySweeps, -10),
+                'equal_highs' => array_slice($equalHighsLows['equal_highs'], -10),
+                'equal_lows' => array_slice($equalHighsLows['equal_lows'], -10),
+            ],
+            'fair_value_gaps' => $fairValueGaps,
+            'strong_weak_levels' => $strongWeakLevels,
         ];
+    }
+
+    private function defaultConfig(): array
+    {
+        return [
+            'swing_length' => 50,
+            'internal_length' => 5,
+            'equal_high_low_length' => 3,
+            'equal_high_low_threshold' => 0.1,
+            'atr_period' => 200,
+            'order_block_filter' => 'atr',
+            'order_block_mitigation' => 'high_low',
+            'max_order_blocks' => 8,
+            'enable_fvg' => true,
+            'fvg_auto_threshold' => true,
+            'enable_equal_high_low' => true,
+        ];
+    }
+
+    private function usableDepth(array $candles, int $requestedDepth): int
+    {
+        $maxDepth = max(2, intdiv(max(0, count($candles) - 2), 2));
+
+        return max(2, min($requestedDepth, $maxDepth));
     }
 
     private function detectSwings(array $candles, int $depth): array
@@ -117,58 +212,101 @@ class SmcContextService
         ];
     }
 
-    private function detectStructureEvents(array $candles, array $swings): array
+    private function detectStructureEvents(array $candles, array $swings, string $scope = 'swing'): array
     {
         $events = [];
-        $structure = 'unknown';
+        $trend = 'unknown';
         $brokenHighs = [];
         $brokenLows = [];
 
         foreach ($candles as $index => $candle) {
             $close = (float) $candle['close'];
+            $previousClose = $index > 0 ? (float) $candles[$index - 1]['close'] : null;
             $lastHigh = $this->lastSwingBefore($swings['highs'], $index);
             $lastLow = $this->lastSwingBefore($swings['lows'], $index);
 
-            if ($lastHigh && $close > $lastHigh['price'] && ! $this->isBroken($brokenHighs, $lastHigh)) {
-                $type = $structure === 'bearish' ? 'bullish_choch' : 'bullish_bos';
+            if (
+                $lastHigh
+                && $this->crossedAbove($previousClose, $close, (float) $lastHigh['price'])
+                && ! $this->isBroken($brokenHighs, $lastHigh)
+            ) {
+                $previousTrend = $trend;
+                $type = $trend === 'bearish' ? 'bullish_choch' : 'bullish_bos';
+                $tag = str_ends_with($type, 'choch') ? 'CHoCH' : 'BOS';
                 $protectedLow = $this->lastSwingBefore($swings['lows'], $index);
 
                 $events[] = [
+                    'scope' => $scope,
                     'type' => $type,
+                    'tag' => $tag,
                     'direction' => 'bullish',
                     'time' => $candle['time'],
                     'index' => $index,
+                    'break_index' => $index,
+                    'break_time' => $candle['time'],
                     'break_price' => $lastHigh['price'],
+                    'pivot_level' => $lastHigh['price'],
+                    'pivot_index' => $lastHigh['index'],
                     'close' => $close,
+                    'previous_trend' => $previousTrend,
+                    'new_trend' => 'bullish',
                     'broken_swing' => $lastHigh,
                     'protected_level' => $protectedLow,
                 ];
 
                 $brokenHighs[] = $lastHigh;
-                $structure = 'bullish';
+                $trend = 'bullish';
             }
 
-            if ($lastLow && $close < $lastLow['price'] && ! $this->isBroken($brokenLows, $lastLow)) {
-                $type = $structure === 'bullish' ? 'bearish_choch' : 'bearish_bos';
+            if (
+                $lastLow
+                && $this->crossedBelow($previousClose, $close, (float) $lastLow['price'])
+                && ! $this->isBroken($brokenLows, $lastLow)
+            ) {
+                $previousTrend = $trend;
+                $type = $trend === 'bullish' ? 'bearish_choch' : 'bearish_bos';
+                $tag = str_ends_with($type, 'choch') ? 'CHoCH' : 'BOS';
                 $protectedHigh = $this->lastSwingBefore($swings['highs'], $index);
 
                 $events[] = [
+                    'scope' => $scope,
                     'type' => $type,
+                    'tag' => $tag,
                     'direction' => 'bearish',
                     'time' => $candle['time'],
                     'index' => $index,
+                    'break_index' => $index,
+                    'break_time' => $candle['time'],
                     'break_price' => $lastLow['price'],
+                    'pivot_level' => $lastLow['price'],
+                    'pivot_index' => $lastLow['index'],
                     'close' => $close,
+                    'previous_trend' => $previousTrend,
+                    'new_trend' => 'bearish',
                     'broken_swing' => $lastLow,
                     'protected_level' => $protectedHigh,
                 ];
 
                 $brokenLows[] = $lastLow;
-                $structure = 'bearish';
+                $trend = 'bearish';
             }
         }
 
         return $events;
+    }
+
+    private function crossedAbove(?float $previousClose, float $close, float $level): bool
+    {
+        return $previousClose === null
+            ? $close > $level
+            : $previousClose <= $level && $close > $level;
+    }
+
+    private function crossedBelow(?float $previousClose, float $close, float $level): bool
+    {
+        return $previousClose === null
+            ? $close < $level
+            : $previousClose >= $level && $close < $level;
     }
 
     private function detectLiquiditySweeps(array $candles, array $swings): array
@@ -208,37 +346,140 @@ class SmcContextService
         return $sweeps;
     }
 
-    private function buildZones(array $candles, array $events): array
+    private function buildOrderBlocks(array $candles, array $events, string $scope, array $config): array
     {
-        $demand = [];
-        $supply = [];
+        $bullish = [];
+        $bearish = [];
+        $volatilityMeasure = $this->volatilityMeasure($candles, $config);
 
         foreach ($events as $event) {
-            if ($event['direction'] === 'bullish') {
-                $origin = $this->findLastOppositeCandle($candles, $event['index'], 'bearish');
+            $origin = $this->findExtremeOrderBlockOrigin($candles, $event, $volatilityMeasure);
 
-                if ($origin) {
-                    $demand[] = $this->makeZone('demand', $origin, $event, $candles);
-                }
+            if (! $origin) {
+                continue;
             }
 
-            if ($event['direction'] === 'bearish') {
-                $origin = $this->findLastOppositeCandle($candles, $event['index'], 'bullish');
+            $zone = $this->makeZone(
+                $event['direction'] === 'bullish' ? 'demand' : 'supply',
+                $origin,
+                $event,
+                $candles,
+                (string) $config['order_block_mitigation']
+            );
 
-                if ($origin) {
-                    $supply[] = $this->makeZone('supply', $origin, $event, $candles);
-                }
+            $block = array_merge($zone, [
+                'scope' => $scope,
+                'type' => $event['direction'] === 'bullish' ? 'bullish_ob' : 'bearish_ob',
+                'bias' => $event['direction'],
+                'mitigation_status' => $zone['status'],
+                'break_index' => $event['break_index'] ?? $event['index'],
+            ]);
+
+            if ($event['direction'] === 'bullish') {
+                $bullish[] = $block;
+            } else {
+                $bearish[] = $block;
             }
         }
 
         return [
-            'demand' => array_slice($demand, -8),
-            'supply' => array_slice($supply, -8),
+            'bullish' => array_slice($bullish, -((int) $config['max_order_blocks'])),
+            'bearish' => array_slice($bearish, -((int) $config['max_order_blocks'])),
         ];
     }
 
-    private function makeZone(string $type, array $origin, array $event, array $candles): array
+    private function findExtremeOrderBlockOrigin(array $candles, array $event, float $volatilityMeasure): ?array
     {
+        $start = max(0, (int) ($event['pivot_index'] ?? data_get($event, 'broken_swing.index', 0)));
+        $end = max($start, (int) ($event['break_index'] ?? $event['index']));
+        $selectedIndex = null;
+        $selectedValue = null;
+        $selectedParsed = null;
+
+        for ($i = $start; $i <= $end && $i < count($candles); $i++) {
+            $parsed = $this->parsedHighLow($candles[$i], $volatilityMeasure);
+
+            if ($event['direction'] === 'bullish') {
+                if ($selectedValue === null || $parsed['low'] < $selectedValue) {
+                    $selectedValue = $parsed['low'];
+                    $selectedIndex = $i;
+                    $selectedParsed = $parsed;
+                }
+            } elseif ($selectedValue === null || $parsed['high'] > $selectedValue) {
+                $selectedValue = $parsed['high'];
+                $selectedIndex = $i;
+                $selectedParsed = $parsed;
+            }
+        }
+
+        if ($selectedIndex === null || $selectedParsed === null) {
+            return null;
+        }
+
+        return [
+            'index' => $selectedIndex,
+            'candle' => array_merge($candles[$selectedIndex], [
+                'high' => $selectedParsed['high'],
+                'low' => $selectedParsed['low'],
+            ]),
+        ];
+    }
+
+    private function parsedHighLow(array $candle, float $volatilityMeasure): array
+    {
+        $high = (float) $candle['high'];
+        $low = (float) $candle['low'];
+        $isHighVolatility = $volatilityMeasure > 0 && ($high - $low) >= (2 * $volatilityMeasure);
+
+        return [
+            'high' => $isHighVolatility ? $low : $high,
+            'low' => $isHighVolatility ? $high : $low,
+        ];
+    }
+
+    private function volatilityMeasure(array $candles, array $config): float
+    {
+        if (($config['order_block_filter'] ?? 'atr') === 'cumulative_mean_range') {
+            $ranges = array_map(
+                fn ($candle) => (float) $candle['high'] - (float) $candle['low'],
+                $candles
+            );
+
+            return count($ranges) > 0 ? array_sum($ranges) / count($ranges) : 0.0;
+        }
+
+        return $this->atr($candles, (int) $config['atr_period']) ?? 0.0;
+    }
+
+    private function buildLegacyZones(array $swingOrderBlocks): array
+    {
+        return [
+            'demand' => array_map(
+                fn ($block) => $this->legacyZone($block, 'demand'),
+                $swingOrderBlocks['bullish'] ?? []
+            ),
+            'supply' => array_map(
+                fn ($block) => $this->legacyZone($block, 'supply'),
+                $swingOrderBlocks['bearish'] ?? []
+            ),
+        ];
+    }
+
+    private function legacyZone(array $block, string $type): array
+    {
+        unset($block['bias']);
+        $block['type'] = $type;
+
+        return $block;
+    }
+
+    private function makeZone(
+        string $type,
+        array $origin,
+        array $event,
+        array $candles,
+        string $mitigationMode = 'close'
+    ): array {
         $low = (float) $origin['candle']['low'];
         $high = (float) $origin['candle']['high'];
         $mitigated = false;
@@ -253,12 +494,20 @@ class SmcContextService
                 $mitigated = true;
             }
 
-            if ($type === 'demand' && $candleClose < $low) {
-                $invalidated = true;
+            if ($type === 'demand') {
+                $mitigationSource = $mitigationMode === 'high_low' ? $candleLow : $candleClose;
+
+                if ($mitigationSource < $low) {
+                    $invalidated = true;
+                }
             }
 
-            if ($type === 'supply' && $candleClose > $high) {
-                $invalidated = true;
+            if ($type === 'supply') {
+                $mitigationSource = $mitigationMode === 'high_low' ? $candleHigh : $candleClose;
+
+                if ($mitigationSource > $high) {
+                    $invalidated = true;
+                }
             }
         }
 
@@ -278,6 +527,122 @@ class SmcContextService
         ];
     }
 
+    private function detectEqualHighsLows(array $candles, int $length, float $threshold, int $atrPeriod): array
+    {
+        $swings = $this->detectSwings($candles, $length);
+        $atr = $this->atr($candles, $atrPeriod) ?? $this->meanRange($candles);
+        $maxDifference = $threshold * $atr;
+
+        return [
+            'equal_highs' => $this->matchingLevels($swings['highs'], $maxDifference),
+            'equal_lows' => $this->matchingLevels($swings['lows'], $maxDifference),
+        ];
+    }
+
+    private function matchingLevels(array $swings, float $maxDifference): array
+    {
+        $matches = [];
+
+        for ($i = 1; $i < count($swings); $i++) {
+            $first = $swings[$i - 1];
+            $second = $swings[$i];
+            $difference = abs((float) $first['price'] - (float) $second['price']);
+
+            if ($difference <= $maxDifference) {
+                $matches[] = [
+                    'first_index' => $first['index'],
+                    'first_time' => $first['time'],
+                    'second_index' => $second['index'],
+                    'second_time' => $second['time'],
+                    'level' => round(((float) $first['price'] + (float) $second['price']) / 2, 5),
+                    'difference' => round($difference, 5),
+                    'threshold' => round($maxDifference, 5),
+                ];
+            }
+        }
+
+        return $matches;
+    }
+
+    private function detectFairValueGaps(array $candles, bool $autoThreshold = true): array
+    {
+        $bullish = [];
+        $bearish = [];
+        $deltas = [];
+
+        for ($i = 2; $i < count($candles); $i++) {
+            $previous = $candles[$i - 1];
+            $delta = abs($this->barDeltaPercent($previous));
+            $deltas[] = $delta;
+            $threshold = $autoThreshold && count($deltas) > 0
+                ? (array_sum($deltas) / count($deltas)) * 2
+                : 0.0;
+
+            $current = $candles[$i];
+            $twoBack = $candles[$i - 2];
+            $previousClose = (float) $previous['close'];
+            $bullishBottom = (float) $twoBack['high'];
+            $bullishTop = (float) $current['low'];
+            $bearishTop = (float) $twoBack['low'];
+            $bearishBottom = (float) $current['high'];
+            $barDelta = $this->barDeltaPercent($previous);
+
+            if ($bullishTop > $bullishBottom && $previousClose > $bullishBottom && $barDelta > $threshold) {
+                $bullish[] = $this->makeFairValueGap('bullish', $i, $current['time'], $bullishTop, $bullishBottom, $candles);
+            }
+
+            if ($bearishBottom < $bearishTop && $previousClose < $bearishTop && -$barDelta > $threshold) {
+                $bearish[] = $this->makeFairValueGap('bearish', $i, $current['time'], $bearishTop, $bearishBottom, $candles);
+            }
+        }
+
+        return [
+            'bullish' => array_slice($bullish, -10),
+            'bearish' => array_slice($bearish, -10),
+        ];
+    }
+
+    private function makeFairValueGap(
+        string $direction,
+        int $index,
+        string $time,
+        float $top,
+        float $bottom,
+        array $candles
+    ): array {
+        $filled = false;
+
+        for ($i = $index + 1; $i < count($candles); $i++) {
+            if ($direction === 'bullish' && (float) $candles[$i]['low'] <= $bottom) {
+                $filled = true;
+            }
+
+            if ($direction === 'bearish' && (float) $candles[$i]['high'] >= $top) {
+                $filled = true;
+            }
+        }
+
+        return [
+            'index' => $index,
+            'time' => $time,
+            'top' => $top,
+            'bottom' => $bottom,
+            'midpoint' => round(($top + $bottom) / 2, 5),
+            'status' => $filled ? 'filled' : 'open',
+        ];
+    }
+
+    private function barDeltaPercent(array $candle): float
+    {
+        $open = (float) $candle['open'];
+
+        if ($open == 0.0) {
+            return 0.0;
+        }
+
+        return (((float) $candle['close'] - $open) / $open) * 100;
+    }
+
     private function buildDealingRange(array $swings, float $currentPrice): array
     {
         $lastHigh = $this->last($swings['highs']);
@@ -293,14 +658,18 @@ class SmcContextService
         $high = max($lastHigh['price'], $lastLow['price']);
         $low = min($lastHigh['price'], $lastLow['price']);
         $equilibrium = round(($high + $low) / 2, 5);
-        $area = 'equilibrium';
+        $premiumBottom = round((0.95 * $high) + (0.05 * $low), 5);
+        $discountTop = round((0.95 * $low) + (0.05 * $high), 5);
+        $equilibriumTop = round((0.525 * $high) + (0.475 * $low), 5);
+        $equilibriumBottom = round((0.525 * $low) + (0.475 * $high), 5);
+        $area = 'range_middle';
 
-        if ($currentPrice > $equilibrium) {
+        if ($currentPrice >= $premiumBottom) {
             $area = 'premium';
-        }
-
-        if ($currentPrice < $equilibrium) {
+        } elseif ($currentPrice <= $discountTop) {
             $area = 'discount';
+        } elseif ($currentPrice >= $equilibriumBottom && $currentPrice <= $equilibriumTop) {
+            $area = 'equilibrium';
         }
 
         return [
@@ -310,8 +679,43 @@ class SmcContextService
             'equilibrium' => $equilibrium,
             'current_price' => $currentPrice,
             'current_area' => $area,
+            'zones' => [
+                'premium' => [
+                    'top' => $high,
+                    'bottom' => $premiumBottom,
+                ],
+                'equilibrium' => [
+                    'top' => $equilibriumTop,
+                    'bottom' => $equilibriumBottom,
+                ],
+                'discount' => [
+                    'top' => $discountTop,
+                    'bottom' => $low,
+                ],
+            ],
             'high_source' => $lastHigh,
             'low_source' => $lastLow,
+        ];
+    }
+
+    private function buildStrongWeakLevels(array $swings, string $structure): array
+    {
+        $lastHigh = $this->last($swings['highs']);
+        $lastLow = $this->last($swings['lows']);
+
+        return [
+            'high' => $lastHigh ? [
+                'type' => $structure === 'bearish' ? 'strong_high' : 'weak_high',
+                'price' => $lastHigh['price'],
+                'time' => $lastHigh['time'],
+                'index' => $lastHigh['index'],
+            ] : null,
+            'low' => $lastLow ? [
+                'type' => $structure === 'bullish' ? 'strong_low' : 'weak_low',
+                'price' => $lastLow['price'],
+                'time' => $lastLow['time'],
+                'index' => $lastLow['index'],
+            ] : null,
         ];
     }
 
@@ -350,9 +754,12 @@ class SmcContextService
     private function buildBias(
         string $structure,
         ?array $lastEvent,
+        string $internalStructure,
+        ?array $lastInternalEvent,
         array $liquiditySweeps,
         array $zones,
         array $dealingRange,
+        array $fairValueGaps,
         float $currentPrice
     ): array {
         $score = 0;
@@ -360,32 +767,52 @@ class SmcContextService
 
         if ($structure === 'bullish') {
             $score += 2;
-            $reason[] = 'Struktur SMC terakhir bullish.';
+            $reason[] = 'Struktur SMC swing terakhir bullish.';
         }
 
         if ($structure === 'bearish') {
             $score -= 2;
-            $reason[] = 'Struktur SMC terakhir bearish.';
+            $reason[] = 'Struktur SMC swing terakhir bearish.';
         }
 
         if ($lastEvent && $lastEvent['type'] === 'bullish_bos') {
             $score += 2;
-            $reason[] = 'Bullish BOS terakhir mengindikasikan continuation bullish.';
+            $reason[] = 'Bullish swing BOS terakhir mengindikasikan continuation bullish.';
         }
 
         if ($lastEvent && $lastEvent['type'] === 'bearish_bos') {
             $score -= 2;
-            $reason[] = 'Bearish BOS terakhir mengindikasikan continuation bearish.';
+            $reason[] = 'Bearish swing BOS terakhir mengindikasikan continuation bearish.';
         }
 
         if ($lastEvent && $lastEvent['type'] === 'bullish_choch') {
             $score += 1;
-            $reason[] = 'Bullish CHoCH terakhir mengindikasikan potensi reversal ke bullish.';
+            $reason[] = 'Bullish swing CHoCH terakhir mengindikasikan potensi reversal ke bullish.';
         }
 
         if ($lastEvent && $lastEvent['type'] === 'bearish_choch') {
             $score -= 1;
-            $reason[] = 'Bearish CHoCH terakhir mengindikasikan potensi reversal ke bearish.';
+            $reason[] = 'Bearish swing CHoCH terakhir mengindikasikan potensi reversal ke bearish.';
+        }
+
+        if ($internalStructure === 'bullish' && $structure !== 'bearish') {
+            $score += 1;
+            $reason[] = 'Internal structure mendukung arah bullish.';
+        }
+
+        if ($internalStructure === 'bearish' && $structure !== 'bullish') {
+            $score -= 1;
+            $reason[] = 'Internal structure mendukung arah bearish.';
+        }
+
+        if ($lastInternalEvent && $lastInternalEvent['direction'] === 'bullish' && $structure === 'bullish') {
+            $score += 1;
+            $reason[] = 'Internal event terakhir searah dengan swing bullish.';
+        }
+
+        if ($lastInternalEvent && $lastInternalEvent['direction'] === 'bearish' && $structure === 'bearish') {
+            $score -= 1;
+            $reason[] = 'Internal event terakhir searah dengan swing bearish.';
         }
 
         if (($dealingRange['current_area'] ?? null) === 'discount') {
@@ -400,12 +827,22 @@ class SmcContextService
 
         if ($this->hasValidNearbyZone($zones['demand'], $currentPrice, 'demand')) {
             $score += 1;
-            $reason[] = 'Ada demand/order-block valid dekat harga saat ini.';
+            $reason[] = 'Ada bullish order-block/demand valid dekat harga saat ini.';
         }
 
         if ($this->hasValidNearbyZone($zones['supply'], $currentPrice, 'supply')) {
             $score -= 1;
-            $reason[] = 'Ada supply/order-block valid dekat harga saat ini.';
+            $reason[] = 'Ada bearish order-block/supply valid dekat harga saat ini.';
+        }
+
+        if ($this->hasOpenNearbyFvg($fairValueGaps['bullish'] ?? [], $currentPrice)) {
+            $score += 1;
+            $reason[] = 'Ada bullish fair value gap terbuka dekat harga saat ini.';
+        }
+
+        if ($this->hasOpenNearbyFvg($fairValueGaps['bearish'] ?? [], $currentPrice)) {
+            $score -= 1;
+            $reason[] = 'Ada bearish fair value gap terbuka dekat harga saat ini.';
         }
 
         $lastSweep = $this->last($liquiditySweeps);
@@ -429,30 +866,19 @@ class SmcContextService
         return [$bias, $score, $reason];
     }
 
-    private function findLastOppositeCandle(array $candles, int $eventIndex, string $direction): ?array
+    private function hasOpenNearbyFvg(array $gaps, float $currentPrice): bool
     {
-        $start = max(0, $eventIndex - 20);
-
-        for ($i = $eventIndex - 1; $i >= $start; $i--) {
-            $open = (float) $candles[$i]['open'];
-            $close = (float) $candles[$i]['close'];
-
-            if ($direction === 'bearish' && $close < $open) {
-                return [
-                    'index' => $i,
-                    'candle' => $candles[$i],
-                ];
+        foreach (array_reverse($gaps) as $gap) {
+            if (($gap['status'] ?? null) !== 'open') {
+                continue;
             }
 
-            if ($direction === 'bullish' && $close > $open) {
-                return [
-                    'index' => $i,
-                    'candle' => $candles[$i],
-                ];
+            if ($gap['bottom'] <= $currentPrice && $gap['top'] >= $currentPrice) {
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     private function hasValidNearbyZone(array $zones, float $currentPrice, string $type): bool
@@ -526,6 +952,43 @@ class SmcContextService
         }
 
         return false;
+    }
+
+    private function atr(array $candles, int $period): ?float
+    {
+        if (count($candles) < 2) {
+            return null;
+        }
+
+        $trueRanges = [];
+
+        for ($i = 1; $i < count($candles); $i++) {
+            $high = (float) $candles[$i]['high'];
+            $low = (float) $candles[$i]['low'];
+            $previousClose = (float) $candles[$i - 1]['close'];
+
+            $trueRanges[] = max(
+                $high - $low,
+                abs($high - $previousClose),
+                abs($low - $previousClose)
+            );
+        }
+
+        $ranges = count($trueRanges) >= $period
+            ? array_slice($trueRanges, -$period)
+            : $trueRanges;
+
+        return count($ranges) > 0 ? array_sum($ranges) / count($ranges) : null;
+    }
+
+    private function meanRange(array $candles): float
+    {
+        $ranges = array_map(
+            fn ($candle) => (float) $candle['high'] - (float) $candle['low'],
+            $candles
+        );
+
+        return count($ranges) > 0 ? array_sum($ranges) / count($ranges) : 0.0;
     }
 
     private function last(array $items): mixed

@@ -253,6 +253,15 @@
   <nav class="bottom-navbar">
     <div class="container">
       <ul class="nav page-navigation">
+        @can('view dashboard')
+        <li class="nav-item {{ function_exists('active_class') ? active_class(['/']) : '' }}">
+          <a href="{{ route('dashboard') }}" class="nav-link">
+            <i class="link-icon" data-feather="home"></i>
+            <span class="link-title">Dashboard</span>
+          </a>
+        </li>
+        @endcan
+
         @can('manage bot pairs')
         <li class="nav-item {{ function_exists('active_class') ? active_class(['bot-pair-settings', 'bot-pair-settings/*']) : '' }}">
           <a href="{{ route('bot-pairs.index') }}" class="nav-link">

@@ -1,6 +1,6 @@
 # Resume Proyek Trading Dashboard + Technical Agent
 
-Dokumen ini adalah resume kerja dari awal sampai kondisi terakhir proyek, agar mudah dilanjutkan di chat lain, termasuk di ChatGPT Web.
+Dokumen ini adalah handoff terbaru proyek `laravel-trading-dashboard` agar mudah dilanjutkan di chat lain, termasuk di ChatGPT Web.
 
 ## 1. Tujuan Proyek
 
@@ -40,31 +40,43 @@ Prinsip penting:
 Technical Agent hanya memberi analisa teknikal.
 Technical Agent tidak membuat trade_signals.
 Technical Agent tidak mengeksekusi order.
+Trade signal final nantinya dibuat oleh workflow Manager Agent.
 ```
 
-## 2. Arsitektur yang Sudah Ditetapkan
+## 2. Status Arsitektur Saat Ini
 
-### Data market
+Yang sudah aktif:
 
-Data OHLC disimpan di tabel:
+- Python feeder mengisi `market_data`
+- Laravel dashboard membaca `market_data` untuk chart dan technical context
+- `technical_analyses` bisa di-generate otomatis/manual per pair dan timeframe
+- Technical Agent OpenClaw mengambil pending analysis via API
+- hasil Technical Agent dikirim balik ke `technical_analyses`
+- dashboard utama sudah diganti menjadi control room trading
+- autentikasi login + role + permission sudah ditambahkan
 
-```text
-market_data
-```
+Yang belum aktif:
 
-Data ini berasal dari Python feeder dan dipakai oleh Laravel untuk:
+- `fundamental_analyses`
+- `risk_rules`
+- `entry_rules`
+- `manager_decisions`
+- workflow final pembentukan `trade_signals` oleh Manager Agent
+
+## 3. Struktur Data Penting
+
+### `market_data`
+
+Sumber data OHLC dari Python feeder. Dipakai untuk:
 
 - chart market
 - technical context
 - auto generate technical analyses
+- dashboard market overview
 
-### Pair configuration
+### `trading_bot_pairs`
 
-Pair yang dianalisa disimpan di:
-
-```text
-trading_bot_pairs
-```
+Konfigurasi pair yang dianalisa.
 
 Field penting:
 
@@ -77,13 +89,9 @@ Field penting:
 - `last_generated_at`
 - `last_generated_candle_time`
 
-### Technical analysis
+### `technical_analyses`
 
-Hasil generate context disimpan di:
-
-```text
-technical_analyses
-```
+Tempat menyimpan hasil generate context + prompt + hasil Technical Agent.
 
 Field penting:
 
@@ -104,17 +112,20 @@ Field penting:
 - `reasons_json`
 - `status`
 
-### Trade signal
-
-Trade signal tetap ada di tabel:
+Status yang sekarang dipakai:
 
 ```text
-trade_signals
+GENERATED
+SENT_TO_TECHNICAL_AGENT
+TECHNICAL_COMPLETED
+FAILED
 ```
 
-Tetapi sesuai arsitektur final, tabel ini nantinya harus dibuat oleh Manager Agent, bukan Technical Agent.
+### `trade_signals`
 
-## 3. Workflow Laravel yang Sudah Berjalan
+Masih ada dan dipakai oleh dashboard signal, tetapi secara arsitektur final seharusnya nanti dibentuk oleh Manager Agent, bukan oleh Technical Agent.
+
+## 4. Workflow Laravel yang Sudah Berjalan
 
 ### Bot Pair Settings
 
@@ -126,78 +137,68 @@ Halaman:
 
 Fungsi:
 
-- tambah pair
-- edit pair
-- enable/disable
-- auto/manual generate
-- lihat status scheduler
-- lihat latest analysis
+- tambah/edit pair
+- enable/disable pair
+- aktif/nonaktif auto generate
+- generate manual
+- melihat latest analysis
 
 ### Scheduler
 
-Laravel scheduler menjalankan command:
+Command utama:
 
 ```bash
 php artisan technical-analysis:auto-generate-all
 ```
 
-Command ini:
+Logikanya:
 
-1. membaca pair dari `trading_bot_pairs`
-2. mengambil pair yang `enabled = true` dan `auto_generate = true`
-3. mengecek candle terbaru sesuai `symbol + entry_timeframe`
-4. jika belum ada analysis untuk candle tersebut, maka generate technical analysis baru
+1. baca pair dari `trading_bot_pairs`
+2. ambil pair `enabled = true` dan `auto_generate = true`
+3. cek candle terbaru sesuai `symbol + entry_timeframe`
+4. bila candle itu belum punya analysis, generate row baru di `technical_analyses`
+
+Catatan penting:
+
+- scheduler CasaOS dirancang sebagai container/service terpisah
+- pernah ada kasus scheduler masih pakai proses lama sehingga hasilnya belum memuat SMC terbaru
+- bila kode generator berubah, scheduler perlu direstart
 
 ### Generate Technical Analysis
 
 Service utama:
 
-```text
-app/Services/TechnicalAnalysisGeneratorService.php
-```
+- [app/Services/TechnicalAnalysisGeneratorService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalAnalysisGeneratorService.php)
 
-Logic utama:
+Flow:
 
-1. cari candle terbaru dari `market_data`
-2. cek apakah `technical_analyses` dengan `symbol + timeframe + context_candle_time` sudah ada
-3. build context
-4. build prompt
-5. simpan row baru dengan status:
+1. cari latest candle di `market_data`
+2. cek duplikasi berdasarkan `symbol + timeframe + context_candle_time`
+3. bangun technical context
+4. bangun prompt
+5. simpan row `technical_analyses` dengan status `GENERATED`
 
-```text
-GENERATED
-```
-
-### Technical Context
+## 5. Technical Context dan SMC
 
 Service:
 
-```text
-app/Services/TechnicalContextService.php
-```
+- [app/Services/TechnicalContextService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalContextService.php)
+- [app/Services/SmcContextService.php](C:/np/laravel-trading-dashboard/app/Services/SmcContextService.php)
 
-Menghasilkan:
-
-- bias classic
-- summary classic
-- smc per timeframe
-- smc_summary
-
-Timeframe yang dianalisa:
+Timeframe utama:
 
 ```text
 D1, H4, H1, M15, M5
 ```
 
-## 4. SMC Context yang Sudah Ditambahkan
+Technical context sekarang memuat:
 
-Service baru:
+- bias classic
+- summary classic
+- SMC per timeframe
+- `smc_summary`
 
-```text
-app/Services/SmcContextService.php
-```
-
-SMC context yang sudah dihitung:
+SMC yang sudah dihitung:
 
 - external swing
 - internal swing
@@ -208,43 +209,39 @@ SMC context yang sudah dihitung:
 - demand zones
 - supply zones
 - premium/discount
-- SMC support/resistance
+- support/resistance SMC
 - SMC bias
 
-Output sekarang tersimpan di `raw_context_json` di bawah:
+Output sekarang tersimpan di `raw_context_json`:
 
 ```text
+bias
+summary
 smc
 smc_summary
 ```
 
-Catatan:
+Catatan penting:`r`n`r`n- kondisi terbaru menunjukkan hasil `auto-generate` baru sudah membawa SMC context dan `smc_summary``r`n- secara historis memang pernah ada row lama sebelum update SMC yang belum punya `smc_summary``r`n- jika row historis itu diproses agent, OpenClaw bisa memberi respons seperti `SMC context is unavailable`
 
-Technical analyses baru yang digenerate manual sudah mengandung `smc_summary`.
-Technical analyses lama yang dibuat sebelum SMC ditambahkan tidak memiliki data SMC.
-
-## 5. Prompt Technical Agent
+## 6. Prompt Technical Agent
 
 Service:
 
-```text
-app/Services/TechnicalAnalysisPromptService.php
-```
+- [app/Services/TechnicalAnalysisPromptService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalAnalysisPromptService.php)
 
-Prompt sekarang sudah memuat:
+Prompt saat ini memuat:
 
 - classic summary
 - SMC summary
-- instruksi agar output hanya JSON
-- instruksi bahwa Technical Agent hanya memberi technical result
+- instruksi output JSON only
+- instruksi bahwa agent hanya mengembalikan technical result
+- tidak membuat `trade_signals`
 
-## 6. Endpoint API yang Sudah Ada
+## 7. API Technical Agent yang Sudah Ada
 
 File:
 
-```text
-routes/api.php
-```
+- [routes/api.php](C:/np/laravel-trading-dashboard/routes/api.php)
 
 Endpoint penting:
 
@@ -257,22 +254,11 @@ POST /api/technical-analyses/{id}/ai-result
 
 Catatan:
 
-- `technical-result` adalah endpoint baru yang benar sesuai workflow final
-- `ai-result` saat ini dibuat sebagai alias ke logic baru
-- keduanya sekarang tidak lagi membuat `trade_signals`
+- `technical-result` adalah jalur yang benar untuk workflow final
+- `ai-result` dipertahankan sebagai alias ke logic baru
+- endpoint ini tidak lagi membuat `trade_signals`
 
-## 7. Status Workflow Technical Agent
-
-Status `technical_analyses` yang dipakai sekarang:
-
-```text
-GENERATED
-SENT_TO_TECHNICAL_AGENT
-TECHNICAL_COMPLETED
-FAILED
-```
-
-Flow:
+Flow status:
 
 ```text
 GENERATED
@@ -284,7 +270,7 @@ TECHNICAL_COMPLETED
 
 ## 8. Technical Agent Runner
 
-Folder runner:
+Folder:
 
 ```text
 agents/technical-agent-runner
@@ -297,9 +283,7 @@ File penting:
 - [agents/technical-agent-runner/.env.example](C:/np/laravel-trading-dashboard/agents/technical-agent-runner/.env.example)
 - [agents/technical-agent-runner/requirements.txt](C:/np/laravel-trading-dashboard/agents/technical-agent-runner/requirements.txt)
 
-### Fungsi runner
-
-Runner ini:
+Fungsi runner:
 
 1. GET pending analysis dari Laravel
 2. compact `raw_context_json`
@@ -308,35 +292,39 @@ Runner ini:
 5. parse output JSON OpenClaw
 6. POST hasil teknikal ke Laravel
 
-### Command OpenClaw yang dipakai
-
-Format panggilan yang sudah terbukti berjalan:
+Command OpenClaw yang sudah terbukti berjalan:
 
 ```bash
 openclaw agent --local --session-id technical-analysis-<id> --message "<prompt>" --json --thinking off --timeout 900
 ```
 
-### Command test OpenClaw yang sudah berhasil
+Command test yang pernah berhasil:
 
 ```bash
 openclaw agent --local --session-id technical-agent-test --message "Return only valid JSON with fields decision, confidence, reason_summary, reasons. Use decision NO_TRADE." --json
 ```
 
-Output OpenClaw berhasil diparse dari:
+Output OpenClaw diparse dari:
 
 ```text
 meta.finalAssistantRawText
 ```
 
-## 9. Setup VM Technical Agent
+Perbaikan runner yang sudah ada:
 
-Kondisi yang sudah dipastikan:
+- `mark_sent=1` / `mark_sent=0`
+- `DRY_RUN=true` tidak menandai analysis sebagai sent
+- error non-JSON dari Laravel menampilkan status, content-type, dan body preview
 
-- OpenClaw sudah terinstall di VM terpisah
-- VM OpenClaw sudah bisa ping IP Laravel
+## 9. Kondisi VM Technical Agent
+
+Yang sudah dipastikan:
+
+- OpenClaw terpasang di VM terpisah
+- VM OpenClaw bisa ping IP Laravel
 - endpoint Laravel bisa diakses dari VM
 
-Test yang berhasil:
+Contoh test yang berhasil:
 
 ```bash
 curl -i http://192.168.70.50:8000/api/technical-analyses/pending?limit=1
@@ -349,100 +337,264 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 ```
 
-### Catatan penting
-
-Untuk query boolean ke Laravel, `mark_sent` harus dikirim sebagai:
+Catatan query boolean ke Laravel:
 
 ```text
 mark_sent=1
 mark_sent=0
 ```
 
-Bukan `true/false` string.
+Jangan pakai string `true/false`.
 
-## 10. Technical Agent Runner Behavior
+## 10. Dashboard Utama
 
-### Test dry run
+Homepage `/` sudah tidak lagi memakai template admin default. Sekarang sudah diganti menjadi dashboard operasional trading.
 
-Sudah berhasil:
+Controller:
 
-```bash
-DRY_RUN=true python technical_agent_runner.py --once
-```
+- [app/Http/Controllers/DashboardController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/DashboardController.php)
 
-### Test real run
+View:
 
-Sudah berhasil mencapai tahap:
+- [resources/views/dashboard.blade.php](C:/np/laravel-trading-dashboard/resources/views/dashboard.blade.php)
 
-```text
-[runner] processing analysis #...
-[openclaw] running: openclaw agent ...
-```
+Yang sekarang tampil di homepage:
 
-Artinya integrasi dasar runner ke OpenClaw sudah jalan.
+- chart market utama
+- focus symbol dan timeframe
+- current price
+- perubahan harga
+- market condition
+- HTF bias
+- execution bias
+- preferred action
+- SMC structure
+- last event
+- workflow summary
+- recent technical analyses
+- recent trade signals
 
-### Perbaikan yang sudah dibuat
+Perbaikan tambahan:
 
-- runner sekarang mengirim `mark_sent=1` atau `mark_sent=0`
-- `DRY_RUN=true` tidak lagi menandai analysis sebagai sent
-- error non-JSON dari Laravel sekarang menampilkan status, content-type, dan body preview
+- `Feed terakhir` sekarang ditampilkan sesuai timezone browser user
+- market chart di dashboard memakai endpoint candle yang sudah ada
 
-## 11. Halaman Laravel yang Sudah Diperbarui
+## 11. UI, Tabel, dan Navigasi
 
-### Technical Context page
+### DataTables ringan
 
-Halaman:
-
-```text
-/technical-context
-```
-
-Sudah menampilkan:
-
-- summary classic
-- summary SMC
-- tabel SMC per timeframe
-- demand/supply zones
-- raw JSON
-
-### Technical Analysis detail page
-
-Halaman detail sudah menampilkan:
-
-- summary basic
-- SMC summary
-- execution SMC context
-- demand zones
-- supply zones
-- raw context JSON
-- AI response JSON
-
-### Tabel DataTables ringan
-
-Halaman-halaman ini sudah diubah memakai DataTables Bootstrap 5 versi ringan:
+Halaman berikut memakai DataTables Bootstrap 5 client-side versi ringan:
 
 - [resources/views/technical/analyses/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/technical/analyses/index.blade.php)
 - [resources/views/signals/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/signals/index.blade.php)
 - [resources/views/bot_pairs/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/bot_pairs/index.blade.php)
 
-Pendekatan yang dipakai:
+Pendekatan:
 
 - searchable
 - sortable
 - responsive
+- tanpa animasi berat
 - tanpa modal kompleks
-- tanpa animasi tambahan berat
 
-### Perbaikan UI yang sudah dibuat
+Karena DataTables-nya client-side, controller list terkait sudah diubah dari `paginate()` ke `get()` agar semua data masuk ke browser.
 
-Card status di `Technical Analyses` sudah dirapikan. Label yang dipakai:
+### Halaman yang sudah dipoles
 
-- `Generated`
-- `Sent to Technical Agent`
-- `Technical Completed`
-- `Failed`
+- Technical Context
+- Technical Analyses
+- Signal Dashboard
+- Bot Pair Settings
+- Dashboard utama
 
-## 12. Scheduler CasaOS
+### Navbar dan urutan workflow
+
+Navbar sekarang mengikuti alur kerja dan lebih bersih.
+
+Urutan menu:
+
+1. `Dashboard`
+2. `Bot Pair Settings`
+3. `Workflow`
+   - Market Chart
+   - Technical Context
+   - Technical Analyses
+   - Signal Dashboard
+
+Catatan:
+
+- `Bot Pair Settings` sengaja berdiri sendiri
+- menu `Users` dan `Roles` dipindah ke dropdown user
+- logout hanya ada di dropdown user
+
+## 12. Auth, Role, dan Permission
+
+Fitur auth + RBAC sekarang sudah ditambahkan dengan Spatie.
+
+Package:
+
+```text
+spatie/laravel-permission
+```
+
+Bagian penting:
+
+- [app/User.php](C:/np/laravel-trading-dashboard/app/User.php) memakai `HasRoles`
+- [app/Http/Kernel.php](C:/np/laravel-trading-dashboard/app/Http/Kernel.php) sudah punya alias middleware:
+  - `role`
+  - `permission`
+  - `role_or_permission`
+- [app/Providers/AuthServiceProvider.php](C:/np/laravel-trading-dashboard/app/Providers/AuthServiceProvider.php) sudah punya `Gate::before` untuk `super-admin`
+- [app/Http/Controllers/AuthController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/AuthController.php) menangani login/register/logout
+
+Route utama sekarang dilindungi `auth` dan permission sesuai area.
+
+Contoh permission:
+
+- `view dashboard`
+- `view market chart`
+- `view technical context`
+- `manage technical analyses`
+- `manage bot pairs`
+- `review trade signals`
+- `manage users`
+- `manage roles`
+
+### Model RBAC yang dipakai sekarang
+
+Alur UI sudah direfactor menjadi:
+
+```text
+User -> punya Role
+Role -> punya Permissions
+```
+
+Bukan direct user permission sebagai alur utama.
+
+### Roles default
+
+Seeder:
+
+- [database/seeders/RolesAndPermissionsSeeder.php](C:/np/laravel-trading-dashboard/database/seeders/RolesAndPermissionsSeeder.php)
+
+Role default:
+
+- `super-admin`
+- `admin`
+- `analyst`
+- `reviewer`
+- `viewer`
+
+User admin default:
+
+```text
+email    : admin@nomaden.site
+password : ChangeMe123!
+```
+
+Catatan:
+
+- password ini sebaiknya diganti setelah deploy
+
+### Manajemen user dan role
+
+Controller:
+
+- [app/Http/Controllers/UserManagementController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/UserManagementController.php)
+- [app/Http/Controllers/RoleManagementController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/RoleManagementController.php)
+
+View:
+
+- [resources/views/users/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/users/index.blade.php)
+- [resources/views/users/create.blade.php](C:/np/laravel-trading-dashboard/resources/views/users/create.blade.php)
+- [resources/views/users/edit.blade.php](C:/np/laravel-trading-dashboard/resources/views/users/edit.blade.php)
+- [resources/views/roles/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/roles/index.blade.php)
+- [resources/views/roles/create.blade.php](C:/np/laravel-trading-dashboard/resources/views/roles/create.blade.php)
+- [resources/views/roles/edit.blade.php](C:/np/laravel-trading-dashboard/resources/views/roles/edit.blade.php)
+
+Perilaku UI:
+
+- menu `Users` hanya muncul untuk user dengan permission `manage users`
+- menu `Roles` hanya muncul untuk user dengan permission `manage roles`
+- keduanya berada di dropdown user/header
+
+## 13. Masalah Domain/Deploy yang Sudah Ditemukan
+
+### Mixed content pada chart ketika diakses via domain HTTPS
+
+Masalah:
+
+- halaman dibuka lewat `https://...`
+- JavaScript fetch candle ke URL `http://...`
+- browser memblokir request sebagai `blocked:mixed-content`
+
+Perbaikan yang sudah dibuat:
+
+- [resources/views/market/chart.blade.php](C:/np/laravel-trading-dashboard/resources/views/market/chart.blade.php)
+- [resources/views/technical/context.blade.php](C:/np/laravel-trading-dashboard/resources/views/technical/context.blade.php)
+
+Route fetch diubah menjadi URL relatif:
+
+```php
+route('market.chart.candles', [], false)
+route('technical.context.api', [], false)
+```
+
+Saran konfigurasi:
+
+```env
+APP_URL=https://trade.nomaden.site
+```
+
+Lalu clear cache Laravel dan restart container web.
+
+### Error domain: `Trait "Spatie\Permission\Traits\HasRoles" not found`
+
+Ini bukan bug kode lokal. Ini terjadi karena environment server/container belum sinkron dengan dependency terbaru.
+
+Masalah yang ditemukan:
+
+- `composer.json` di server berubah
+- `composer.lock` di server belum sinkron
+- package `spatie/laravel-permission` belum benar-benar tersedia di `vendor`
+
+Di server pernah muncul error:
+
+```text
+Required package "spatie/laravel-permission" is not present in the lock file.
+```
+
+dan saat dicoba require di container:
+
+```text
+./composer.json is not writable.
+```
+
+Implikasinya:
+
+- lokal bisa jalan
+- domain/container bisa gagal load auth/RBAC
+
+Solusi deployment yang pernah dibahas:
+
+1. update `composer.lock` di source yang dideploy
+2. install/update dependency di host atau container
+3. jalankan:
+
+```bash
+php artisan optimize:clear
+php artisan migrate --force
+php artisan db:seed --class="Database\\Seeders\\RolesAndPermissionsSeeder" --force
+```
+
+4. restart container web dan scheduler
+
+Catatan:
+
+- pada setup CasaOS, source app dimount dari host
+- seringkali lebih aman menjalankan `composer require/install` dari host path proyek daripada dari user default di container
+
+## 14. Scheduler CasaOS
 
 File YAML yang dibahas:
 
@@ -450,7 +602,7 @@ File YAML yang dibahas:
 C:\Users\User\Downloads\web.yaml
 ```
 
-Sudah ditambahkan service:
+Sudah ada konsep service/container terpisah untuk scheduler:
 
 ```yaml
 scheduler:
@@ -460,71 +612,53 @@ scheduler:
     - schedule:work
 ```
 
-Tujuannya agar Laravel scheduler berjalan otomatis di CasaOS sebagai container terpisah.
+Tujuannya agar Laravel scheduler jalan otomatis di CasaOS.
 
-## 13. Masalah yang Pernah Ditemukan
+## 15. File dan Script Penting
 
-### Technical analysis lama belum punya SMC
-
-Row lama di `technical_analyses` yang dibuat sebelum SMC service ditambahkan akan punya:
-
-```text
-smc_summary = null / {}
-execution_smc kosong
-```
-
-Akibatnya OpenClaw bisa menjawab:
-
-```text
-SMC context is unavailable
-```
-
-### Manual generate vs scheduler generate
-
-Ditemukan bahwa:
-
-- hasil manual generate sudah punya `smc_summary`
-- hasil scheduler sempat belum punya `smc_summary`
-
-Kemungkinan penyebab:
-
-```text
-process schedule:work lama belum restart setelah perubahan kode
-```
-
-Solusi:
-
-- restart scheduler container/service
-- generate ulang analysis baru
-
-## 14. Script dan File Penting
-
-### Laravel Services
+### Services
 
 - [TechnicalAnalysisGeneratorService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalAnalysisGeneratorService.php)
 - [TechnicalContextService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalContextService.php)
 - [SmcContextService.php](C:/np/laravel-trading-dashboard/app/Services/SmcContextService.php)
 - [TechnicalAnalysisPromptService.php](C:/np/laravel-trading-dashboard/app/Services/TechnicalAnalysisPromptService.php)
 
-### Laravel Controllers
+### Controllers
 
+- [DashboardController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/DashboardController.php)
 - [TechnicalAnalysisWorkflowController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/TechnicalAnalysisWorkflowController.php)
 - [SignalDashboardController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/SignalDashboardController.php)
 - [BotPairSettingController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/BotPairSettingController.php)
 - [TechnicalContextController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/TechnicalContextController.php)
+- [AuthController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/AuthController.php)
+- [UserManagementController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/UserManagementController.php)
+- [RoleManagementController.php](C:/np/laravel-trading-dashboard/app/Http/Controllers/RoleManagementController.php)
 
-### Laravel Views
+### Views
 
+- [resources/views/dashboard.blade.php](C:/np/laravel-trading-dashboard/resources/views/dashboard.blade.php)
+- [resources/views/market/chart.blade.php](C:/np/laravel-trading-dashboard/resources/views/market/chart.blade.php)
 - [resources/views/technical/context.blade.php](C:/np/laravel-trading-dashboard/resources/views/technical/context.blade.php)
 - [resources/views/technical/analyses/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/technical/analyses/index.blade.php)
 - [resources/views/technical/analyses/show.blade.php](C:/np/laravel-trading-dashboard/resources/views/technical/analyses/show.blade.php)
 - [resources/views/signals/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/signals/index.blade.php)
 - [resources/views/bot_pairs/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/bot_pairs/index.blade.php)
+- [resources/views/layout/header.blade.php](C:/np/laravel-trading-dashboard/resources/views/layout/header.blade.php)
+- [resources/views/pages/auth/login.blade.php](C:/np/laravel-trading-dashboard/resources/views/pages/auth/login.blade.php)
+- [resources/views/pages/auth/register.blade.php](C:/np/laravel-trading-dashboard/resources/views/pages/auth/register.blade.php)
+- [resources/views/users/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/users/index.blade.php)
+- [resources/views/roles/index.blade.php](C:/np/laravel-trading-dashboard/resources/views/roles/index.blade.php)
 
 ### Routes
 
 - [routes/web.php](C:/np/laravel-trading-dashboard/routes/web.php)
 - [routes/api.php](C:/np/laravel-trading-dashboard/routes/api.php)
+
+### Seeder dan migration auth/RBAC
+
+- [database/migrations/2026_05_13_120000_create_permission_tables.php](C:/np/laravel-trading-dashboard/database/migrations/2026_05_13_120000_create_permission_tables.php)
+- [database/seeders/RolesAndPermissionsSeeder.php](C:/np/laravel-trading-dashboard/database/seeders/RolesAndPermissionsSeeder.php)
+- [database/seeders/DatabaseSeeder.php](C:/np/laravel-trading-dashboard/database/seeders/DatabaseSeeder.php)
 
 ### Runner
 
@@ -535,47 +669,74 @@ Solusi:
 
 - [WORKFLOW.md](C:/np/laravel-trading-dashboard/WORKFLOW.md)
 - [PROJECT_RESUME_HANDOFF.md](C:/np/laravel-trading-dashboard/PROJECT_RESUME_HANDOFF.md)
+- [readme/PROJECT_RESUME_HANDOFF.md](C:/np/laravel-trading-dashboard/readme/PROJECT_RESUME_HANDOFF.md)
 
-## 15. Kondisi Sekarang
+## 16. Verifikasi yang Sudah Pernah Berhasil
+
+Secara lokal sudah pernah berhasil:
+
+- `php artisan migrate --force`
+- `php artisan db:seed --class="Database\\Seeders\\RolesAndPermissionsSeeder" --force`
+- `php artisan route:list`
+- `php artisan route:list --path=users`
+- `php artisan route:list --path=roles`
+- `php artisan view:cache`
+- `php artisan test`
+
+Status test terakhir lokal:
+
+```text
+2 passed
+```
+
+## 17. Kondisi Proyek Sekarang
 
 Yang sudah selesai:
 
-- Technical Context classic
-- SMC Context objektif
-- penyimpanan SMC ke raw context
-- prompt untuk Technical Agent
+- auto generate `technical_analyses` dari `market_data`
+- classic technical context
+- SMC context objektif
+- simpan `smc_summary` ke `raw_context_json`
+- prompt Technical Agent
 - endpoint pending technical analysis
 - endpoint submit technical result
 - Technical Agent runner
 - test OpenClaw CLI
 - test akses API dari VM OpenClaw
+- dashboard utama baru
 - DataTables ringan di halaman utama
-- scheduler container concept untuk CasaOS
+- auth login/register/logout
+- role dan permission dengan Spatie
+- manajemen user dan role
+- navbar sesuai urutan workflow
+- fix mixed-content chart untuk domain HTTPS
 
-Yang belum selesai:
+Yang belum stabil / belum selesai:
 
-- pastikan semua generated analysis baru dari scheduler sudah mengandung `smc_summary`
+- pastikan semua hasil scheduler baru selalu memuat `smc_summary`
 - jalankan Technical Agent runner end-to-end sampai konsisten `TECHNICAL_COMPLETED`
-- bikin `fundamental_analyses`
-- bikin `risk_rules`
-- bikin `entry_rules`
-- bikin `manager_decisions`
-- pindahkan pembuatan `trade_signals` ke Manager Agent workflow
+- deploy RBAC/auth dengan benar di server/domain
+- `fundamental_analyses`
+- `risk_rules`
+- `entry_rules`
+- `manager_decisions`
+- workflow final pembentukan `trade_signals` oleh Manager Agent
 
-## 16. Langkah Lanjut yang Direkomendasikan
+## 18. Langkah Lanjut yang Direkomendasikan
 
 Urutan lanjutan yang paling aman:
 
-1. Bersihkan `technical_analyses` lama yang belum punya SMC, lalu generate ulang.
-2. Pastikan scheduler CasaOS benar-benar restart dan memakai kode terbaru.
-3. Test runner Technical Agent end-to-end pada analysis baru yang pasti punya `smc_summary`.
-4. Verifikasi status berubah:
+1. Pastikan environment server/domain sinkron dengan dependency terbaru, terutama Spatie.
+2. Abaikan atau bersihkan hanya row historis lama yang dibuat sebelum update SMC, bila masih mengganggu testing.
+3. Restart scheduler CasaOS agar pasti memakai generator terbaru.
+4. Test runner Technical Agent end-to-end pada analysis baru yang jelas punya SMC.
+5. Verifikasi status:
 
 ```text
 GENERATED -> SENT_TO_TECHNICAL_AGENT -> TECHNICAL_COMPLETED
 ```
 
-5. Setelah Technical Agent stabil, baru lanjut ke desain:
+6. Setelah Technical Agent stabil, lanjut desain tabel/workflow:
 
 ```text
 fundamental_analyses
@@ -584,14 +745,18 @@ entry_rules
 manager_decisions
 ```
 
-## 17. Ringkasan Singkat untuk Handoff
+7. Setelah itu, pindahkan pembentukan `trade_signals` sepenuhnya ke workflow Manager Agent.
 
-Kalau ingin melanjutkan di chat lain, inti konteksnya adalah:
+## 19. Ringkasan Singkat untuk Handoff
+
+Kalau ingin melanjutkan di chat lain, inti konteks terbarunya adalah:
 
 ```text
 Laravel dashboard sudah bisa auto-generate technical_analyses dari market_data per pair/timeframe.
-Technical context classic dan SMC sudah ada.
-Technical Agent OpenClaw tidak membuat trade_signals.
-Technical Agent runner Python sudah dibuat dan sudah bisa bicara ke Laravel API dan OpenClaw CLI.
-Saat ini fokus utamanya adalah memastikan seluruh analysis baru dari scheduler mengandung smc_summary dan runner berjalan stabil end-to-end.
+Technical context classic dan SMC sudah ada, lalu hasilnya dikirim ke Technical Agent OpenClaw lewat runner Python.
+Technical Agent tidak membuat trade_signals.
+Dashboard utama sudah diganti menjadi control room trading.
+Auth + role + permission dengan Spatie sudah ditambahkan, termasuk halaman Users dan Roles.
+Navbar sudah dirapikan mengikuti workflow, dan menu access control dipindah ke dropdown user.
+Masalah utama yang tersisa sekarang adalah memastikan deploy server/domain sinkron dengan dependency terbaru dan memastikan workflow Technical Agent stabil end-to-end.
 ```
