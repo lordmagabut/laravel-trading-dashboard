@@ -26,6 +26,14 @@ Route::post('/technical-analyses/{technicalAnalysis}/technical-result', [Technic
 Route::post('/technical-analyses/{technicalAnalysis}/ai-result', [TechnicalAnalysisWorkflowController::class, 'aiResult'])
     ->name('api.technical-analyses.ai-result');
 
+Route::apiResource('fundamental-analyses', App\Http\Controllers\FundamentalAnalysisController::class);
+Route::get('fundamental-analyses/latest', [App\Http\Controllers\FundamentalAnalysisController::class, 'latest'])
+    ->name('api.fundamental-analyses.latest');
+Route::get('fundamental-analyses/pending', [App\Http\Controllers\FundamentalAnalysisController::class, 'pendingFundamentalAnalyses'])
+    ->name('api.fundamental-analyses.pending');
+Route::post('fundamental-analyses/{id}/submit-result', [App\Http\Controllers\FundamentalAnalysisController::class, 'submitResult'])
+    ->name('api.fundamental-analyses.submit-result');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

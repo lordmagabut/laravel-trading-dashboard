@@ -294,8 +294,11 @@
               @can('manage technical analyses')
               <li class="nav-item"><a class="nav-link {{ active_class(['technical-analyses', 'technical-analyses/*']) }}" href="{{ route('technical-analyses.index') }}">3. Technical Analyses</a></li>
               @endcan
+              @can('manage fundamental analyses')
+              <li class="nav-item"><a class="nav-link {{ active_class(['fundamental-analyses', 'fundamental-analyses/*']) }}" href="{{ route('fundamental-analyses.index') }}">4. Fundamental Analyses</a></li>
+              @endcan
               @can('review trade signals')
-              <li class="nav-item"><a class="nav-link {{ active_class(['signal-dashboard']) }}" href="{{ route('signals.index') }}">4. Signal Dashboard</a></li>
+              <li class="nav-item"><a class="nav-link {{ active_class(['signal-dashboard']) }}" href="{{ route('signals.index') }}">5. Signal Dashboard</a></li>
               @endcan
             </ul>
           </div>

@@ -20,6 +20,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view market chart',
             'view technical context',
             'manage technical analyses',
+            'manage fundamental analyses',
             'manage bot pairs',
             'review trade signals',
             'manage users',
@@ -38,6 +39,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view market chart',
                 'view technical context',
                 'manage technical analyses',
+                'manage fundamental analyses',
                 'manage bot pairs',
             ],
             'reviewer' => [

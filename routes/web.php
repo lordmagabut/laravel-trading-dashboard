@@ -56,6 +56,11 @@ Route::middleware('auth')->group(function () {
             ->name('technical-analyses.show');
     });
 
+    Route::middleware('permission:manage fundamental analyses')->group(function () {
+        Route::get('/fundamental-analyses', [App\Http\Controllers\FundamentalAnalysisPageController::class, 'index'])
+            ->name('fundamental-analyses.index');
+    });
+
     Route::middleware('permission:manage bot pairs')->group(function () {
         Route::get('/bot-pair-settings', [BotPairSettingController::class, 'index'])
             ->name('bot-pairs.index');
